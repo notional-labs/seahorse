@@ -1,0 +1,15 @@
+FROM archlinux/base
+
+RUN pacman --noconfirm -Syu \
+	&& pacman --needed --noconfirm -S \
+		base-devel \
+		arp-scan \
+		python \
+		parted \
+		dosfstools \
+		rsync \
+	&& (pacman --noconfirm -Sc || true)
+
+RUN mkdir /tools
+COPY install-binfmt /tools/
+COPY docker-extract /tools/
