@@ -69,7 +69,7 @@ rm -rf images | true
 mkdir -p images
 
 # Make the image file
-fallocate -l 3.5G "images/starport.img"
+fallocate -l 8G "images/starport.img"
 
 losetup -d /dev/loop0 || true
 
