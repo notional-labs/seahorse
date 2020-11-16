@@ -23,8 +23,5 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
       
-      
       - name: Build it
-        run: |
-          cd starport
-          bash build.sh
+        run: bash build.sh
