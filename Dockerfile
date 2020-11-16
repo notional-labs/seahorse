@@ -1,9 +1,13 @@
 # =================================================================
-# INIT: Consume args and the root filesystem
+# INIT: Import the root filesystem.
+# Later, we can use ARG + ENV to build for any arm64 device:
+# https://archlinuxarm.org/platforms/armv8
 # =================================================================
 
 # Start with nothing
 FROM scratch
+
+MAINTAINER jacobgadikian@gmail.com
 
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
 ADD ArchLinuxARM-rpi-aarch64-latest.tar.gz /
@@ -66,6 +70,7 @@ RUN pacman --noconfirm -Syyu \
 				bc \
 				e2fsprogs \
 				parted \
+				wget \
 				bash-completion
 
 
@@ -80,16 +85,30 @@ RUN pacman --noconfirm -Syyu \
 				unbound
 
 
+# give the wheel group sudo
+RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
+
 # disable dnssec
 RUN echo "DNSSEC=no" >> /etc/systemd/resolved.conf && \
 		systemctl enable systemd-resolved
 
 
+# Make a user called build and let him use
+# Yay is not happening
+# RUN useradd -m --shell=/bin/false build && usermod -L build
+# RUN echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# RUN mkdir /app; chmod 777 /app
+# WORKDIR /app
+# RUN wget "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=yay-git" -O PKGBUILD
+# USER build
+# RUN makepkg -s --noconfirm
+# USER root
+
 # yay
-RUN	useradd builduser -m && \
-		passwd -d builduser && \
-		printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
-		sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
+# RUN	useradd builduser -m && \
+#		passwd -d builduser && \
+#		printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
+#		sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
 
 
 # Set up wifi, which has the side effect of allowing us to finish the build
@@ -124,7 +143,9 @@ COPY motd /etc/
 # Set root password to root
 RUN echo "root:root" | chpasswd && \
 		echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
-		userdel -r -f alarm
+		echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
+		userdel -r -f alarm && \
+		systemctl enable sshd
 
 # First Boot service
 COPY firstboot.sh /usr/local/bin/firstboot.sh
@@ -162,11 +183,6 @@ RUN systemctl enable systemd-resolved
 
 # enable zerotier-one
 RUN systemctl enable zerotier-one
-
-# give the wheel group sudo
-RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
-
-
 
 # mdns makes it easy to find your pi
 # RUN pacman -S --noconfirm avahi nss-mdns && \

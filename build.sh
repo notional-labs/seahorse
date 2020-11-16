@@ -65,7 +65,7 @@ bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
 
 # Create a folder for images
 
-rm -rf images | true
+rm -rf images || true
 mkdir -p images
 
 # Make the image file
