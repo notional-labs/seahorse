@@ -5,6 +5,9 @@
 # Fail on error
 set -euo pipefail
 
+# Print each command
+set -o xtrace
+
 # Update and install qemu packages
 sudo apt update
 sudo apt install -y qemu-user-static
@@ -53,6 +56,7 @@ sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
 # Run in chroot
 # =======================================================================
 
+ls /mnt/usr/bin/ba*
 
 
 sudo chroot /mnt /usr/bin/bash <<"EOT"
