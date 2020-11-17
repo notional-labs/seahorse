@@ -3,7 +3,7 @@
 # https://disconnected.systems/blog/raspberry-pi-archlinuxarm-setup/
 
 set -euo pipefail
-
+sudo apt install -y qemu-arm-static
 
 # =======================================================================
 # Device Setup
