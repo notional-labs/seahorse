@@ -1,9 +1,9 @@
-name: spos
+name: spos bare arch chroot
 
 on: [push, pull_request]
 
 jobs:
-  buildx:
+  chroot:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -13,10 +13,13 @@ jobs:
         uses: docker/setup-qemu-action@v1
         with:
           platforms: all
-
-      - name: Available platforms
-        run: echo ${{ steps.buildx.outputs.platforms }}
       
       - name: create image
         run: bash test.bash
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Starport PI
+          path: custom-pi.img
 
