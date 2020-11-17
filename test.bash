@@ -41,7 +41,7 @@ sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
 
 
 
-sudo chroot /mnt /bin/bash <<"EOT"
+sudo chroot /mnt /usr/bin/bash <<"EOT"
 
 pacman -Syyu vim bash-completion
 echo starport-pi > /etc/hostname
