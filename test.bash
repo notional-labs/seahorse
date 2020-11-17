@@ -29,7 +29,7 @@ sudo mount /dev/loop0p2 /mnt
 sudo mkdir /mnt/boot
 sudo mount /dev/loop0p1 /mnt/boot
 
-wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
+wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 sudo tar -xpf "ArchLinuxARM-rpi-aarch64-latest.tar.gz" -C /mnt
 sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
 
