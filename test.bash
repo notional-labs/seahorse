@@ -59,7 +59,7 @@ sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
 ls /mnt/usr/bin/ba*
 
 
-sudo chroot /mnt /usr/bin/bash <<"EOT"
+sudo chroot /mnt /mnt/usr/bin/bash <<"EOT"
 
 set -euo pipefail
 
