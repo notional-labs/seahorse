@@ -18,7 +18,7 @@ export device=$(sudo losetup --find --show "custom-pi.img")
 
 sudo parted --script /dev/loop0 mklabel msdos
 sudo parted --script /dev/loop0 mkpart primary fat32 0% 200M
-sudo parted --script /dev/loop0 mkpart primary ext4 100M 100%
+sudo parted --script /dev/loop0 mkpart primary ext4 200M 100%
 sudo mkfs.vfat -F32 /dev/loop0p1
 sudo mkfs.ext4 -F /dev/loop0p2
 sudo mount /dev/loop0p2 /mnt
