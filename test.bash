@@ -9,20 +9,24 @@ set -euo pipefail
 set -o xtrace
 
 # Update and install qemu packages
-sudo apt update
-sudo apt install -y qemu-user-static
+# sudo apt update
+# sudo apt install -y qemu-user-static
 
 # =======================================================================
 # Device Setup
 # =======================================================================
 
-# Make a file full of zeros
-fallocate -l 2G "custom-pi.img"
-
 
 # Detach loopback in case earlier runs have been interrupted
 sudo losetup --detach "/dev/loop0" || true
 
+# Unmount loopback partitionos
+sudo umount /mnt/boot || true
+sudo umount /mnt || true
+
+
+# Make a file full of zeros
+fallocate -l 4G "custom-pi.img"
 
 # Create the looopback device
 sudo losetup --find --show "custom-pi.img"
@@ -52,36 +56,54 @@ sudo mv /mnt/etc/resolv.conf /mnt/etc/resolv.conf.bak
 sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
 
 
+
 # =======================================================================
 # Run in chroot
 # =======================================================================
 
-ls /mnt/usr/bin/ba*
 
-
-sudo chroot /mnt /mnt/usr/bin/bash <<"EOT"
+sudo arch-chroot /mnt /usr/bin/bash <<"EOT"
 
 set -euo pipefail
 
-pacman -Syyu vim bash-completion
+
+# Pacman Keyring
+pacman-key --init 
+pacman-key --populate archlinuxarm
+
+# vim and bash completion
+pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go
+
+# Set hostname to starport-pi
 echo starport-pi > /etc/hostname
 
+
+# make alarm "pi" with password "pi"
 sed -i "s/alarm/pi/g" /etc/passwd /etc/group /etc/shadow
 mv /home/alarm "/home/pi"
 echo -e "secret\nsecret" | passwd "pi"
 
+
+# Builduser and yay
+useradd builduser -m 
+passwd -d builduser 
+printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers 		
+sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
+
+
+# starport-pi.local mdns
 pacman -S --noconfirm avahi nss-mdns
 sed -i '/^hosts: /s/files dns/files mdns dns/' /etc/nsswitch.conf
 ln -sf /usr/lib/systemd/system/avahi-daemon.service /etc/systemd/system/multi-user.target.wants/avahi-daemon.service
 
-sed -i 's/mmcblk0/mmcblk1/g' root/etc/fstab
 
-# Unmount devices
-sudo umount /mnt/dev
-sudo umount /mnt/proc
-sudo umount /mnt/sys
 
 EOT
+
+
+#=========================================================================
+# Cleanup
+#========================================================================
 
 # Restore resolv.conf to original form
 sudo rm /mnt/etc/resolv.conf
@@ -89,10 +111,6 @@ sudo mv /mnt/etc/resolv.conf.bak /mnt/etc/resolv.conf
 
 # Remove qemu-arm-static
 sudo rm /mnt/usr/bin/qemu-arm-static
-
-# Unmount loopback partitionos
-sudo umount /mnt/boot
-sudo umount /mnt
 
 # Detach loop-mouted disk
 sudo losetup --detach "/dev/loop0"
