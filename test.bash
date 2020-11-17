@@ -2,8 +2,12 @@
 
 # https://disconnected.systems/blog/raspberry-pi-archlinuxarm-setup/
 
+# Fail on error
 set -euo pipefail
-sudo apt install -y qemu-arm-static
+
+# Update and install qemu packages
+sudo apt update
+sudo apt install -y qemu-user-static
 
 # =======================================================================
 # Device Setup
