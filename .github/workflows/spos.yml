@@ -1,4 +1,4 @@
-name: spos
+name: spos buildx
 
 on: [push, pull_request]
 
