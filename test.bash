@@ -2,6 +2,8 @@
 
 # https://disconnected.systems/blog/raspberry-pi-archlinuxarm-setup/
 
+set -euo pipefail
+
 
 # =======================================================================
 # Device Setup
