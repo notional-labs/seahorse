@@ -11,7 +11,7 @@ set -euo pipefail
 
 
 fallocate -l 2G "custom-pi.img"
-DEVICE = $(sudo losetup --find --show "custom-pi.img")
+export DEVICE = $(sudo losetup --find --show "custom-pi.img")
 sudo parted --script /dev/loop0 mklabel msdos
 sudo parted --script /dev/loop0 mkpart primary fat32 0% 200M
 sudo parted --script /dev/loop0 mkpart primary ext4 100M 100%
@@ -34,6 +34,7 @@ sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
 
 
 sudo chroot /mnt /bin/bash <<"EOT"
+
 pacman -Syyu vim bash-completion
 echo custom-pi > /etc/hostname
 
