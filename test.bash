@@ -24,10 +24,11 @@ sudo umount /spos || true
 sudo losetup --detach "/dev/loop0" || true
 
 # Remove /spos for hygene.  Make new /spos
-rm -rf /spos
-mkdir /spos || true
+sudo rm -rf /spos || true
+sudo mkdir /spos || true
 
 # Make a file full of zeros
+rm starport-pi.img
 fallocate -l 4G "starport-pi.img"
 
 # Create the looopback device
@@ -53,17 +54,19 @@ sudo tar -xpf "ArchLinuxARM-rpi-aarch64-latest.tar.gz" -C /spos
 sudo cp /usr/bin/qemu-arm-static /spos/usr/bin/
 
 # Remove empty kernel module arrray
-sed -e s/"MODULES=()"//g /spos/etc/mkinitcpio.conf
+sudo sed -e s/"MODULES=()"//g /spos/etc/mkinitcpio.conf
 
 # Add needed kernel modules for networking
 
-echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
+sudo echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
 
 # Use host resolv.conf
 sudo mv /spos/etc/resolv.conf /spos/etc/resolv.conf.bak
 sudo cp /etc/resolv.conf /spos/etc/resolv.conf
 
-
+# Copy first boot script
+sudo cp firstboot.sh /spos/usr/local/bin/firstboot.sh
+sudo cp firstboot.service /spos/etc/systemd/system/firstboot.service
 
 # =======================================================================
 # Run in chroot
@@ -106,6 +109,8 @@ sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git 
 # Systemd-networkd
 systemctl enable systemd-networkd
 systemctl enable systemd-resolved
+systemctl enable sshd
+systemctl enable firstboot
 
 # starport-pi.local mdns
 # pacman -S --noconfirm avahi nss-mdns

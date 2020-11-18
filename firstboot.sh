@@ -1,5 +1,4 @@
 #!/bin/bash
-set -ex
 
 rm -f /etc/ssh/ssh_host_*
 ssh-keygen -v -A
