@@ -57,7 +57,6 @@ sudo cp /usr/bin/qemu-arm-static /spos/usr/bin/
 sudo sed -e s/"MODULES=()"//g /spos/etc/mkinitcpio.conf
 
 # Add needed kernel modules for networking
-
 sudo echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
 
 # Use host resolv.conf
@@ -84,7 +83,7 @@ pacman-key --init
 pacman-key --populate archlinuxarm
 
 # vim and bash completion
-pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go go-ipfs npm yarn
+pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go go-ipfs npm yarn dropbear
 
 # Set hostname to starport-pi
 echo starport-pi > /etc/hostname
@@ -107,9 +106,10 @@ printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
 
 # Systemd-networkd
+systemctl disable sshd
 systemctl enable systemd-networkd
 systemctl enable systemd-resolved
-systemctl enable sshd
+systemctl enable dropbear
 systemctl enable firstboot
 
 # starport-pi.local mdns
