@@ -28,7 +28,7 @@ sudo rm -rf /spos || true
 sudo mkdir /spos || true
 
 # Make a file full of zeros
-rm starport-pi.img
+rm starport-pi.img || true
 fallocate -l 4G "starport-pi.img"
 
 # Create the looopback device
