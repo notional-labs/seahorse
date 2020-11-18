@@ -1,4 +1,4 @@
-#!/bin/bash
+i#!/bin/bash
 
 # https://disconnected.systems/blog/raspberry-pi-archlinuxarm-setup/
 
@@ -28,11 +28,12 @@ sudo rm -rf /spos || true
 sudo mkdir /spos || true
 
 # Make a file full of zeros
+# Use the date command for a timestamp
 rm starport-pi.img || true
-fallocate -l 4G "starport-pi.img"
+fallocate -l 4G "spos-$(date +%F_%T).img"
 
 # Create the looopback device
-sudo losetup --find --show "starport-pi.img"
+sudo losetup --find --show "spos-$(date +%F_%T).img"
 
 # Partition the loop-mounted disk
 sudo parted --script /dev/loop0 mklabel msdos
@@ -53,12 +54,6 @@ wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM
 sudo tar -xpf "ArchLinuxARM-rpi-aarch64-latest.tar.gz" -C /spos
 sudo cp /usr/bin/qemu-arm-static /spos/usr/bin/
 
-# Remove empty kernel module arrray
-sudo sed -e s/"MODULES=()"//g /spos/etc/mkinitcpio.conf
-
-# Add needed kernel modules for networking
-sudo echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
-
 # Use host resolv.conf
 sudo mv /spos/etc/resolv.conf /spos/etc/resolv.conf.bak
 sudo cp /etc/resolv.conf /spos/etc/resolv.conf
@@ -78,12 +73,26 @@ sudo arch-chroot /spos /usr/bin/bash <<"EOT"
 # fail on error
 set -euo pipefail
 
+# ONLY NEEDED IF USING LINUX-AARCH64
+# Remove empty kernel module arrray
+# sudo sed -e s/"MODULES=()"//g /spos/etc/mkinitcpio.conf
+# Add needed kernel modules for networking
+# sudo echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
+
 # Pacman Keyring
 pacman-key --init 
 pacman-key --populate archlinuxarm
 
 # vim and bash completion
-pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go go-ipfs npm yarn dropbear
+pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go go-ipfs npm yarn dropbear wget
+
+# Remove conflicting packages
+pacman -R --noconfirm linux-aarch64 uboot-raspberrypi
+
+# Fancy foriegn kernel
+wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz
+wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz
+pacman -U --noconfirm *.tar.xz
 
 # Set hostname to starport-pi
 echo starport-pi > /etc/hostname
@@ -92,7 +101,7 @@ echo starport-pi > /etc/hostname
 echo "MulticastDNS=true" >> /etc/systemd/network/en*
 echo "MulticastDNS=true" >> /etc/systemd/network/et*
 
-# make alarm "pi" with password "pi"
+# make alarm "pi" with password "secret"
 sed -i "s/alarm/pi/g" /etc/passwd /etc/group /etc/shadow
 mv /home/alarm "/home/pi"
 echo -e "secret\nsecret" | passwd "pi"
