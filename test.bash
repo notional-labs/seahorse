@@ -26,10 +26,10 @@ sudo umount /mnt || true
 
 
 # Make a file full of zeros
-fallocate -l 4G "custom-pi.img"
+fallocate -l 4G "custom-pi$(date).img"
 
 # Create the looopback device
-sudo losetup --find --show "custom-pi.img"
+sudo losetup --find --show "custom-pi$(date).img"
 
 # Partition the loop-mounted disk
 sudo parted --script /dev/loop0 mklabel msdos
@@ -59,12 +59,17 @@ sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
 
 # =======================================================================
 # Run in chroot
+# We Install the OS in a chroot
 # =======================================================================
 
 
 sudo arch-chroot /mnt /usr/bin/bash <<"EOT"
 
+# fail on error
 set -euo pipefail
+
+# Modules alleged to solve network issues
+echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
 
 
 # Pacman Keyring
@@ -72,10 +77,14 @@ pacman-key --init
 pacman-key --populate archlinuxarm
 
 # vim and bash completion
-pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go
+pacman -Syyu --noconfirm vim bash-completion sudo base-devel git go go-ipfs npm yarn
 
 # Set hostname to starport-pi
 echo starport-pi > /etc/hostname
+
+# Enable mdns
+echo "MulticastDNS=true" >> /etc/systemd/network/en*
+echo "MulticastDNS=true" >> /etc/systemd/network/et*
 
 
 # make alarm "pi" with password "pi"
@@ -84,19 +93,20 @@ mv /home/alarm "/home/pi"
 echo -e "secret\nsecret" | passwd "pi"
 
 
-# Builduser and yay
+# Builduser
 useradd builduser -m 
 passwd -d builduser 
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers 		
+
+
+# Yay AUR manager
 sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
 
 
 # starport-pi.local mdns
-pacman -S --noconfirm avahi nss-mdns
-sed -i '/^hosts: /s/files dns/files mdns dns/' /etc/nsswitch.conf
-ln -sf /usr/lib/systemd/system/avahi-daemon.service /etc/systemd/system/multi-user.target.wants/avahi-daemon.service
-
-
+# pacman -S --noconfirm avahi nss-mdns
+# sed -i '/^hosts: /s/files dns/files mdns dns/' /etc/nsswitch.conf
+# ln -sf /usr/lib/systemd/system/avahi-daemon.service /etc/systemd/system/multi-user.target.wants/avahi-daemon.service
 
 EOT
 
