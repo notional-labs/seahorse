@@ -16,22 +16,25 @@ set -o xtrace
 # Device Setup
 # =======================================================================
 
+# CLEAR PRIOR ROOTFS
+rm -rf /spos
+
+
+mkdir /spos || true
 
 # Detach loopback in case earlier runs have been interrupted
 sudo losetup --detach "/dev/loop0" || true
 
-# CLEAR PRIOR ROOTFS
-rm -rf /mnt/*
-
 # Unmount loopback partitionos
-sudo umount /mnt/boot || true
-sudo umount /mnt || true
+sudo umount /spos/boot || true
+sudo umount /spos || true
+
 
 # Make a file full of zeros
-fallocate -l 4G "starport-pi$(date).img"
+fallocate -l 4G "starport-pi.img"
 
 # Create the looopback device
-sudo losetup --find --show "starport-pi$(date).img"
+sudo losetup --find --show "starport-pi.img"
 
 # Partition the loop-mounted disk
 sudo parted --script /dev/loop0 mklabel msdos
@@ -43,25 +46,25 @@ sudo mkfs.vfat -F32 /dev/loop0p1
 sudo mkfs.ext4 -F /dev/loop0p2
 
 # Mounting the loopback device
-sudo mount /dev/loop0p2 /mnt
-sudo mkdir /mnt/boot
-sudo mount /dev/loop0p1 /mnt/boot
+sudo mount /dev/loop0p2 /spos
+sudo mkdir /spos/boot
+sudo mount /dev/loop0p1 /spos/boot
 
 # Download root filesystem
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
-sudo tar -xpf "ArchLinuxARM-rpi-aarch64-latest.tar.gz" -C /mnt
-sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
+sudo tar -xpf "ArchLinuxARM-rpi-aarch64-latest.tar.gz" -C /spos
+sudo cp /usr/bin/qemu-arm-static /spos/usr/bin/
 
 # Remove empty kernel module arrray
-sed -e s/"MODULES=()"//g /mnt/etc/mkinitcpio.conf
+sed -e s/"MODULES=()"//g /spos/etc/mkinitcpio.conf
 
 # Add needed kernel modules for networking
 
 echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
 
 # Use host resolv.conf
-sudo mv /mnt/etc/resolv.conf /mnt/etc/resolv.conf.bak
-sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
+sudo mv /spos/etc/resolv.conf /spos/etc/resolv.conf.bak
+sudo cp /etc/resolv.conf /spos/etc/resolv.conf
 
 
 
@@ -71,7 +74,7 @@ sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
 # =======================================================================
 
 
-sudo arch-chroot /mnt /usr/bin/bash <<"EOT"
+sudo arch-chroot /spos /usr/bin/bash <<"EOT"
 
 # fail on error
 set -euo pipefail
@@ -120,11 +123,11 @@ EOT
 #========================================================================
 
 # Restore resolv.conf to original form
-sudo rm /mnt/etc/resolv.conf
-sudo mv /mnt/etc/resolv.conf.bak /mnt/etc/resolv.conf
+sudo rm /spos/etc/resolv.conf
+sudo mv /spos/etc/resolv.conf.bak /spos/etc/resolv.conf
 
 # Remove qemu-arm-static
-sudo rm /mnt/usr/bin/qemu-arm-static
+sudo rm /spos/usr/bin/qemu-arm-static
 
 # Detach loop-mouted disk
 sudo losetup --detach "/dev/loop0"
