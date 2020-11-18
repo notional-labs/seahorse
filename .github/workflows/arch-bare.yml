@@ -9,12 +9,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
+      - name: Arch install scripts
+        run: apt install arch-install-scripts
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1.0.1
+        with:
+          platforms: all
+      
       - name: create image
         run: bash test.bash
+    
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Starport PI
-          path: custom-pi.img
+          path: starport-pi.img
 
