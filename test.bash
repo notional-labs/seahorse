@@ -20,15 +20,12 @@ set -o xtrace
 # Detach loopback in case earlier runs have been interrupted
 sudo losetup --detach "/dev/loop0" || true
 
-
 # CLEAR PRIOR ROOTFS
 rm -rf /mnt/*
-
 
 # Unmount loopback partitionos
 sudo umount /mnt/boot || true
 sudo umount /mnt || true
-
 
 # Make a file full of zeros
 fallocate -l 4G "starport-pi$(date).img"
@@ -55,6 +52,13 @@ wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM
 sudo tar -xpf "ArchLinuxARM-rpi-aarch64-latest.tar.gz" -C /mnt
 sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
 
+# Remove empty kernel module arrray
+sed -e s/"MODULES=()"//g /mnt/etc/mkinitcpio.conf
+
+# Add needed kernel modules for networking
+
+echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
+
 # Use host resolv.conf
 sudo mv /mnt/etc/resolv.conf /mnt/etc/resolv.conf.bak
 sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
@@ -72,10 +76,6 @@ sudo arch-chroot /mnt /usr/bin/bash <<"EOT"
 # fail on error
 set -euo pipefail
 
-# Modules alleged to solve network issues
-echo "MODULES=(bcm_phy_lib broadcom mdio_bcm_unimac genet)" >> /etc/mkinitcpio.conf
-
-
 # Pacman Keyring
 pacman-key --init 
 pacman-key --populate archlinuxarm
@@ -90,22 +90,22 @@ echo starport-pi > /etc/hostname
 echo "MulticastDNS=true" >> /etc/systemd/network/en*
 echo "MulticastDNS=true" >> /etc/systemd/network/et*
 
-
 # make alarm "pi" with password "pi"
 sed -i "s/alarm/pi/g" /etc/passwd /etc/group /etc/shadow
 mv /home/alarm "/home/pi"
 echo -e "secret\nsecret" | passwd "pi"
-
 
 # Builduser
 useradd builduser -m 
 passwd -d builduser 
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers 		
 
-
 # Yay AUR manager
 sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
 
+# Systemd-networkd
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
 
 # starport-pi.local mdns
 # pacman -S --noconfirm avahi nss-mdns
