@@ -16,19 +16,16 @@ set -o xtrace
 # Device Setup
 # =======================================================================
 
-# CLEAR PRIOR ROOTFS
-rm -rf /spos
-
-
-mkdir /spos || true
-
-# Detach loopback in case earlier runs have been interrupted
-sudo losetup --detach "/dev/loop0" || true
-
 # Unmount loopback partitionos
 sudo umount /spos/boot || true
 sudo umount /spos || true
 
+# Detach loopback in case earlier runs have been interrupted
+sudo losetup --detach "/dev/loop0" || true
+
+# Remove /spos for hygene.  Make new /spos
+rm -rf /spos
+mkdir /spos || true
 
 # Make a file full of zeros
 fallocate -l 4G "starport-pi.img"
