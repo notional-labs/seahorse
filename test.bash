@@ -20,16 +20,21 @@ set -o xtrace
 # Detach loopback in case earlier runs have been interrupted
 sudo losetup --detach "/dev/loop0" || true
 
+
+# CLEAR PRIOR ROOTFS
+rm -rf /mnt/*
+
+
 # Unmount loopback partitionos
 sudo umount /mnt/boot || true
 sudo umount /mnt || true
 
 
 # Make a file full of zeros
-fallocate -l 4G "custom-pi$(date).img"
+fallocate -l 4G "starport-pi$(date).img"
 
 # Create the looopback device
-sudo losetup --find --show "custom-pi$(date).img"
+sudo losetup --find --show "starport-pi$(date).img"
 
 # Partition the loop-mounted disk
 sudo parted --script /dev/loop0 mklabel msdos
@@ -44,7 +49,6 @@ sudo mkfs.ext4 -F /dev/loop0p2
 sudo mount /dev/loop0p2 /mnt
 sudo mkdir /mnt/boot
 sudo mount /dev/loop0p1 /mnt/boot
-
 
 # Download root filesystem
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
