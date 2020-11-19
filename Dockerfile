@@ -34,9 +34,9 @@ RUN pacman --noconfirm -Syy && \
 				glibc \
 				pacman && \
 		pacman-db-upgrade && \
-		pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
-		curl https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz --output linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
-		curl https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz --output linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
+		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
+		curl -O https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
+		curl -O https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
 		pacman -U --noconfirm *.tar.xz && \
 		rm *.tar.xz && \
 		pacman --noconfirm -Syu && \
@@ -54,7 +54,6 @@ RUN pacman --noconfirm -Syyu \
 				rng-tools \
 				e2fsprogs \
 				dropbear \
-				wget \
 				sudo \
 				git \
 				base-devel
@@ -64,15 +63,9 @@ RUN pacman --noconfirm -Syyu \
 RUN pacman --noconfirm -Syyu \
 				npm \
 				zerotier-one \
-				jq \
 				unbound
 
-RUN pacman -R --noconfirm openssh
-
-
-
-# Disable openssh
-RUN systemctl disable sshd
+# Enable dropbear
 RUN systemctl enable dropbear
 
 # give the wheel group sudo
