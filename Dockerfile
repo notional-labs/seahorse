@@ -29,15 +29,13 @@ RUN pacman-key --init \
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 # Make Pacman Work
-RUN pacman --noconfirm -Syy && \
-		pacman --noconfirm -S \
-				glibc \
-				pacman && \
-		pacman-db-upgrade && \
-		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
-		curl -LO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
-		curl -LO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
-		pacman -U --noconfirm *.tar.xz && \
+RUN pacman --noconfirm -Syy
+RUN pacman --noconfirm -S glibc pacman
+RUN pacman-db-upgrade
+RUN pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi
+RUN curl -LJO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz
+RUN curl -LJO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz
+RUN pacman -U --noconfirm *.tar.xz && \
 		rm *.tar.xz && \
 		pacman --noconfirm -Syu && \
 		pacman --noconfirm -S && \
