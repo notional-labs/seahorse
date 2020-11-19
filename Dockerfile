@@ -44,40 +44,19 @@ RUN pacman --noconfirm -Syy \
 # Utilities
 RUN pacman --noconfirm -Syyu \
 				base \
-				base-devel \
-				vim \
-				colordiff \
-				tree \
-				wget \
-				unzip \
-				unrar \
-				htop \
-				nmap \
-				iftop \
-				iotop \
-				strace \
-				lsof \
-				git \
-				jshon \
-				rng-tools \
-				nano \
-				bc \
-				e2fsprogs \
+				bash-completion \
 				parted \
-				wget \
-				bash-completion
+				rng-tools \
+				e2fsprogs \
+				dropbear
 
 
 # dependencies is specific to our work
 RUN pacman --noconfirm -Syyu \
-				go \
 				npm \
-				go-ipfs \
 				zerotier-one \
-				yarn \
 				jq \
-				unbound \
-				dropbear
+				unbound
 
 # Fix the kernel
 RUN pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
@@ -86,7 +65,7 @@ RUN pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
 	pacman -U --noconfirm *.tar.xz && \
 	rm *.tar.xz
 
-# Disable openssh				
+# Disable openssh
 RUN systemctl disable sshd
 RUN systemctl enable dropbear
 
@@ -101,22 +80,27 @@ RUN echo "DNSSEC=no" >> /etc/systemd/resolved.conf && \
 RUN useradd builduser -m && \
 	passwd -d builduser && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
-	sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -s --noconfirm'
+	sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -si --noconfirm --removemake'
 
+USER builduser
+RUN git clone https://github.com/faddat/hnsd-git && \
+		cd hnsd-git && \
+		makepkg -si --noconfirm --removemake
+USER root
 
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl disable haveged && \
 		systemctl enable rngd
 
-# Greet Users
+# Greet Users Warmly
 COPY motd /etc/
 
 # Set root password to root
 RUN echo "root:root" | chpasswd && \
 		echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
 		echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
-		userdel -r -f alarm 
+		userdel -r -f alarm
 
 # First Boot service
 COPY firstboot.sh /usr/local/bin/firstboot.sh
@@ -128,11 +112,10 @@ COPY ipfs.service /etc/systemd/system/ipfs.service
 RUN systemctl enable ipfs
 
 # Get HSD and put bins on PATH
-RUN git clone https://github.com/handshake-org/hsd && \
-		cd hsd && \
-		npm install --production --global
-COPY hsd.service /etc/systemd/system/hsd.service
-RUN systemctl enable hsd
+# RUN git clone https://github.com/handshake-org/hnsd && \
+#		cd hnsd && \
+# COPY hnsd.service /etc/systemd/system/hnsd.service
+# RUN systemctl enable hsd
 
 # symlink systemd-resolved stub resolver to /etc/resolv/conf
 RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
