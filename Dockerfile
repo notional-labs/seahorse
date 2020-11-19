@@ -50,7 +50,8 @@ RUN pacman --noconfirm -Syyu \
 				e2fsprogs \
 				dropbear \
 				wget \
-				sudo
+				sudo \
+				git
 
 
 # dependencies is specific to our work
