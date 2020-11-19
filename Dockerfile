@@ -48,7 +48,9 @@ RUN pacman --noconfirm -Syyu \
 				parted \
 				rng-tools \
 				e2fsprogs \
-				dropbear
+				dropbear \
+				wget \
+				sudo
 
 
 # dependencies is specific to our work
@@ -57,6 +59,8 @@ RUN pacman --noconfirm -Syyu \
 				zerotier-one \
 				jq \
 				unbound
+
+RUN pacman -R --noconfirm openssh
 
 # Fix the kernel
 RUN pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
