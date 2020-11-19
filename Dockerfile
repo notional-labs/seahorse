@@ -75,19 +75,28 @@ RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 RUN echo "DNSSEC=no" >> /etc/systemd/resolved.conf && \
 		systemctl enable systemd-resolved
 
-# yay and builduser
+# Add builduser
 RUN useradd builduser -m && \
 	passwd -d builduser && \
-	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
-	sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -si --noconfirm --clean --rmdeps'
+	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
-COPY hnsd.service /etc/systemd/system/hnsd.service
+
+# INSTALL YAY: WE BECOME THE BUILDUSER HERE
 USER builduser
-RUN git clone https://github.com/faddat/hnsd-git && \
+RUN cd ~/ && \
+		git clone https://aur.archlinux.org/yay.git yay && \
+		cd yay && \
+		makepkg -si --noconfirm --clean --rmdeps
+
+# INSTALL HNSD
+RUN cd ~/
+		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean && \
-		systemctl enable hnsd
 USER root
+COPY hnsd.service /etc/systemd/system/hnsd.service
+RUN systemctl enable hnsd
+
 
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
