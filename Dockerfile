@@ -89,10 +89,10 @@ RUN cd ~/ && \
 		makepkg -si --noconfirm --clean --rmdeps
 
 # INSTALL HNSD
-RUN cd ~/
+RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean && \
+		makepkg -si --noconfirm --rmdeps --clean
 USER root
 COPY hnsd.service /etc/systemd/system/hnsd.service
 RUN systemctl enable hnsd
