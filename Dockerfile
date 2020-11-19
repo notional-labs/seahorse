@@ -31,7 +31,6 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 # Make Pacman Work
 RUN pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi
 RUN pacman --noconfirm -Syyu glibc pacman
-RUN pacman --noconfirm -S
 RUN pacman-db-upgrade
 
 # GET AND INSTALL KERNEL
