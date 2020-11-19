@@ -34,4 +34,3 @@ WatchdogSec=3min
 
 [Install]
 WantedBy=multi-user.target
-Alias=dbus-org.freedesktop.resolve1.service
