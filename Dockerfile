@@ -29,13 +29,18 @@ RUN pacman-key --init \
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 # Make Pacman Work
-RUN pacman --noconfirm -Syy \
-		&& pacman --noconfirm -S \
+RUN pacman --noconfirm -Syy && \
+		pacman --noconfirm -S && \
 				glibc \
 				pacman \
-		&& pacman-db-upgrade \
-		&& pacman --noconfirm -Syu \
-		&& pacman --noconfirm -S \
+		pacman-db-upgrade && \
+		pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
+		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
+		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
+		pacman -U --noconfirm *.tar.xz && \
+		rm *.tar.xz && \
+		pacman --noconfirm -Syu && \
+		pacman --noconfirm -S && \
 				archlinux-keyring \
 				ca-certificates \
 				ca-certificates-mozilla \
@@ -64,12 +69,7 @@ RUN pacman --noconfirm -Syyu \
 
 RUN pacman -R --noconfirm openssh
 
-# Fix the kernel
-RUN pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
-	wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
-	wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
-	pacman -U --noconfirm *.tar.xz && \
-	rm *.tar.xz
+
 
 # Disable openssh
 RUN systemctl disable sshd
