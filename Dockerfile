@@ -91,7 +91,7 @@ COPY hnsd.service /etc/systemd/system/hnsd.service
 USER builduser
 RUN git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean
+		makepkg -si --noconfirm --rmdeps --clean && \
 		systemctl enable hnsd
 USER root
 
