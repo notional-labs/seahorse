@@ -107,10 +107,7 @@ RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 COPY motd /etc/
 
 # Set root password to root
-RUN echo "root:root" | chpasswd && \
-		echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
-		echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
-		userdel -r -f alarm
+RUN echo "root:root" | chpasswd
 
 # First Boot service
 COPY firstboot.sh /usr/local/bin/firstboot.sh
