@@ -30,9 +30,9 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 # Make Pacman Work
 RUN pacman --noconfirm -Syy && \
-		pacman --noconfirm -S && \
+		pacman --noconfirm -S \
 				glibc \
-				pacman \
+				pacman && \
 		pacman-db-upgrade && \
 		pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
 		curl https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz --output linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
