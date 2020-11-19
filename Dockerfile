@@ -41,7 +41,7 @@ RUN curl -LJO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/dow
 		rm *.tar.xz
 
 # FINISH GETTING PACMAN TO LIFE
-RUN pacman --noconfirm -Syyu
+RUN pacman --noconfirm -Syyu \
 				archlinux-keyring \
 				ca-certificates \
 				ca-certificates-mozilla \
