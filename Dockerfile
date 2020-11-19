@@ -51,7 +51,8 @@ RUN pacman --noconfirm -Syyu \
 				dropbear \
 				wget \
 				sudo \
-				git
+				git \
+				base-devel
 
 
 # dependencies is specific to our work
