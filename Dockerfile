@@ -87,10 +87,12 @@ RUN useradd builduser -m && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
 	sudo -u builduser bash -c 'cd ~/ && git clone https://aur.archlinux.org/yay.git yay && cd yay && makepkg -si --noconfirm --clean --rmdeps'
 
+COPY hnsd.service /etc/systemd/system/hnsd.service
 USER builduser
 RUN git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
+		systemctl enable hnsd
 USER root
 
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
@@ -115,12 +117,6 @@ RUN systemctl enable firstboot
 # IPFS systemD service
 COPY ipfs.service /etc/systemd/system/ipfs.service
 RUN systemctl enable ipfs
-
-# Get HSD and put bins on PATH
-# RUN git clone https://github.com/handshake-org/hnsd && \
-#		cd hnsd && \
-# COPY hnsd.service /etc/systemd/system/hnsd.service
-# RUN systemctl enable hsd
 
 # symlink systemd-resolved stub resolver to /etc/resolv/conf
 RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
