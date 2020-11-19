@@ -35,8 +35,8 @@ RUN pacman --noconfirm -Syy && \
 				pacman \
 		pacman-db-upgrade && \
 		pacman -R --noconfirm linux-aarch64 uboot-raspberrypi && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
+		curl https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz --output linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
+		curl https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz --output linux-raspberrypi4-aarch64-headers-5.4.72-1-aarch64.pkg.tar.xz && \
 		pacman -U --noconfirm *.tar.xz && \
 		rm *.tar.xz && \
 		pacman --noconfirm -Syu && \
