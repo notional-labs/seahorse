@@ -21,17 +21,7 @@ set -o xtrace
 # Get the 64 bit rpi rootfs for Pi 3 and 4
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
-# PiShrink, also auto-expands on first boot.  Magic.
-# wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
-# chmod +x pishrink.sh
-# sudo mv pishrink.sh /usr/local/bin
-
-# Reintroduce later
-# export ROOT_PASSWD=root
-
-
 # BUILD IMAGE
-# --build-arg ROOT_PASSWD
 docker buildx build --tag starport --platform linux/arm64 --load --progress plain .
 
 
@@ -63,13 +53,26 @@ bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
 # https://disconnected.systems/blog/raspberry-pi-archlinuxarm-setup/
 # ===================================================================================
 
-# Create a folder for images
 
+# Unmount anything on the loop device
+sudo umount /dev/loop0p2 || true
+sudo umount /dev/loop0p1 || true
+
+
+# Detach from the loop device
+losetup -d /dev/loop0 || true
+
+# Unmount anything on the loop device
+sudo umount /dev/loop0p2 || true
+sudo umount /dev/loop0p1 || true
+
+
+# Create a folder for images
 rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 8G "images/starport.img"
+fallocate -l 4G "images/starport.img"
 
 losetup -d /dev/loop0 || true
 
@@ -102,7 +105,7 @@ docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir
 	"
 
 # Tell pi where its memory card is
-sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
+# sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
 
 # Drop the loop mount
 losetup -d /dev/loop0
