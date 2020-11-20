@@ -95,7 +95,7 @@ RUN cd ~/ && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
 USER root
-COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
+COPY ./contrib/hnsd.service /etc/systemd/system/hnsd.service
 RUN systemctl enable hnsd
 
 
@@ -105,25 +105,25 @@ RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl enable rngd
 
 # Greet Users Warmly
-COPY contrib/motd /etc/
+COPY ./contrib/motd /etc/
 
 # Set root password to root
 RUN echo "root:root" | chpasswd
 
 # First Boot service
-COPY contrib/firstboot.sh /usr/local/bin/firstboot.sh
-COPY contrib/firstboot.service /etc/systemd/system/firstboot.service
+COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
+COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 RUN systemctl enable firstboot
 
 # IPFS systemD service
-COPY contrib/ipfs.service /etc/systemd/system/ipfs.service
+COPY ./contrib/ipfs.service /etc/systemd/system/ipfs.service
 RUN systemctl enable ipfs
 
 # symlink systemd-resolved stub resolver to /etc/resolv/conf
 RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
 # Copy DNS configuration so that stub resolver goes to hsd
-COPY contrib/dns /etc/systemd/resolved.conf.d/dns_servers.conf
+COPY ./contrib/dns /etc/systemd/resolved.conf.d/dns_servers.conf
 
 # enable systemd-resolved
 RUN systemctl enable systemd-resolved
