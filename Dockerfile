@@ -4,13 +4,10 @@
 # https://archlinuxarm.org/platforms/armv8
 # =================================================================
 
-# Start with nothing
-FROM scratch
+# Start with SOS base image
+FROM docker.io/faddat/sos-base
 
 MAINTAINER jacobgadikian@gmail.com
-
-# Add and decompress Arch Linux ARM rpi arm64 rootfs at /
-ADD ArchLinuxARM-rpi-aarch64-latest.tar.gz /
 
 # =================================================================
 # OS: This is where we set up the operating system.
@@ -81,14 +78,6 @@ RUN useradd builduser -m && \
 	passwd -d builduser && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
-
-# INSTALL YAY: WE BECOME THE BUILDUSER HERE
-USER builduser
-RUN cd ~/ && \
-		git clone https://aur.archlinux.org/yay.git yay && \
-		cd yay && \
-		makepkg -si --noconfirm --clean --rmdeps
-
 # INSTALL HNSD
 RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
@@ -97,7 +86,6 @@ RUN cd ~/ && \
 USER root
 COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
 RUN systemctl enable hnsd
-
 
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
@@ -134,6 +122,9 @@ RUN systemctl enable zerotier-one
 # =================================================================
 # CLEANUP: Make the OS new and shiny.
 # =================================================================
+
+# Remove build tools
+RUN pacman -R --noconfirm base-devel
 
 # Remove cruft
 RUN rm -rf \
