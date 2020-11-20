@@ -104,10 +104,6 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 RUN systemctl enable firstboot
 
-# IPFS systemD service
-COPY contrib/ipfs.service /etc/systemd/system/ipfs.service
-RUN systemctl enable ipfs
-
 # symlink systemd-resolved stub resolver to /etc/resolv/conf
 RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
