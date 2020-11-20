@@ -63,6 +63,9 @@ RUN pacman --noconfirm -Syyu \
 				zerotier-one \
 				unbound
 
+# build with the whole pi by default
+RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
+
 # Enable dropbear
 RUN systemctl enable dropbear
 

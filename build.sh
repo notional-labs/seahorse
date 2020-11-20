@@ -72,11 +72,10 @@ rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 4G "images/starport.img"
-
+fallocate -l 4G "images/sos.img"
 
 # loop-mount the image file so it becomes a disk
-sudo losetup --find --show images/starport.img
+sudo losetup --find --show images/sos.img
 
 # partition the loop-mounted disk
 sudo parted --script /dev/loop0 mklabel msdos
@@ -87,22 +86,19 @@ sudo parted --script /dev/loop0 mkpart primary ext4 200M 100%
 sudo mkfs.vfat -F32 /dev/loop0p1
 sudo mkfs.ext4 -F /dev/loop0p2
 
-
-# Use the toolbox to copy the rootfs into the filesystem
+# Use the toolbox to copy the rootfs into the filesystem we formatted above.
 # * mount the disk's /boot and / partitions
 # * use rsync to copy files into the filesystem
 # make a folder so we can mount the boot partition
 # soon will not use toolbox
 
-docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox bash -c " \
-		mkdir -p mnt/boot mnt/rootfs && \
-		mount /dev/loop0p1 mnt/boot && \
-		mount /dev/loop0p2 mnt/rootfs && \
-		rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot && \
-		rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot && \
-		mkdir mnt/rootfs/boot && \
-		umount mnt/boot mnt/rootfs
-	"
+mkdir -p mnt/boot mnt/rootfs
+mount /dev/loop0p1 mnt/boot
+mount /dev/loop0p2 mnt/rootfs
+rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot
+rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot
+mkdir mnt/rootfs/boot
+umount mnt/boot mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
@@ -111,4 +107,4 @@ docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir
 sudo losetup -d /dev/loop0
 
 # Compress the image
-pishrink.sh -Z -a -p images/starport.img
+pishrink.sh -Z -a -p images/sos.img

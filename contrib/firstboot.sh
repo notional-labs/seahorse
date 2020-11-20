@@ -13,14 +13,8 @@ ssh-keygen -v -A
 # Later, make this automatic based on location.
 timedatectl set-timezone UTC
 
-# ipfs with default settings
-ipfs init
-
 # mdns
 systemd-resolve --set-mdns=yes --interface=eth0
-
-# zerotier
-zerotier-cli join 35c192ce9bf02045
 
 # Don't run again
 systemctl disable pikvm-firstboot
