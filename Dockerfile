@@ -79,6 +79,7 @@ RUN useradd builduser -m && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
 # INSTALL HNSD
+USER builduser
 RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
