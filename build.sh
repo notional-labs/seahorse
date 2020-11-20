@@ -43,8 +43,8 @@ docker save --output ./.tmp/result-rootfs.tar starport
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
 
-# Set hostname
-bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
+# Set hostname while the image is just in the filesystem.
+sudo bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
 
 
 # ===================================================================================
@@ -104,7 +104,7 @@ docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir
 		umount mnt/boot mnt/rootfs
 	"
 
-# Tell pi where its memory card is
+# Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
 
 # Drop the loop mount
