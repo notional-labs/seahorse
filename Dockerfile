@@ -121,7 +121,8 @@ RUN systemctl enable zerotier-one
 # =================================================================
 
 # Remove build tools
-RUN pacman -R --noconfirm base-devel
+# RUN pacman -R --noconfirm base-devel
+# Leave base-devel for now so we can ship a build.  Later figure out how to cleanly remove it.
 
 # Remove cruft
 RUN rm -rf \
