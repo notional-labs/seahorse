@@ -95,7 +95,7 @@ RUN cd ~/ && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
 USER root
-COPY cotrib/hnsd.service /etc/systemd/system/hnsd.service
+COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
 RUN systemctl enable hnsd
 
 
