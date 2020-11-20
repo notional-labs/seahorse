@@ -60,7 +60,7 @@ sudo umount /dev/loop0p1 || true
 
 
 # Detach from the loop device
-losetup -d /dev/loop0 || true
+sudo losetup -d /dev/loop0 || true
 
 # Unmount anything on the loop device
 sudo umount /dev/loop0p2 || true
@@ -74,19 +74,18 @@ mkdir -p images
 # Make the image file
 fallocate -l 4G "images/starport.img"
 
-losetup -d /dev/loop0 || true
 
 # loop-mount the image file so it becomes a disk
-losetup --find --show images/starport.img
+sudo losetup --find --show images/starport.img
 
 # partition the loop-mounted disk
-parted --script /dev/loop0 mklabel msdos
-parted --script /dev/loop0 mkpart primary fat32 0% 200M
-parted --script /dev/loop0 mkpart primary ext4 200M 100%
+sudo parted --script /dev/loop0 mklabel msdos
+sudo parted --script /dev/loop0 mkpart primary fat32 0% 200M
+sudo parted --script /dev/loop0 mkpart primary ext4 200M 100%
 
 # format the newly partitioned loop-mounted disk
-mkfs.vfat -F32 /dev/loop0p1
-mkfs.ext4 -F /dev/loop0p2
+sudo mkfs.vfat -F32 /dev/loop0p1
+sudo mkfs.ext4 -F /dev/loop0p2
 
 
 # Use the toolbox to copy the rootfs into the filesystem
@@ -108,7 +107,7 @@ docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
 
 # Drop the loop mount
-losetup -d /dev/loop0
+sudo losetup -d /dev/loop0
 
 # Compress the image
 pishrink.sh -Z -a -p images/starport.img
