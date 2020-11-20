@@ -18,8 +18,8 @@ set -exo pipefail
 # Print each command
 set -o xtrace
 
-# Get the 64 bit rpi rootfs for Pi 3 and 4
-wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
+# Get the 64 bit rpi rootfs for Pi 3 and 4: Moved to sos-base
+# wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
 docker buildx build --tag starport --platform linux/arm64 --load --progress plain .
