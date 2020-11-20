@@ -92,6 +92,7 @@ sudo mkfs.ext4 -F /dev/loop0p2
 # * mount the disk's /boot and / partitions
 # * use rsync to copy files into the filesystem
 # make a folder so we can mount the boot partition
+# soon will not use toolbox
 
 docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox bash -c " \
 		mkdir -p mnt/boot mnt/rootfs && \

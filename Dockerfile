@@ -30,8 +30,6 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 # Make Pacman Work
 RUN pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi
-RUN pacman --noconfirm -Syyu glibc pacman
-RUN pacman-db-upgrade
 
 # GET AND INSTALL KERNEL
 RUN curl -LJO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-1/linux-raspberrypi4-aarch64-5.4.72-1-aarch64.pkg.tar.xz && \
@@ -39,7 +37,10 @@ RUN curl -LJO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/dow
 		pacman -U --noconfirm *.tar.xz && \
 		rm *.tar.xz
 
+
 # FINISH GETTING PACMAN TO LIFE
+RUN pacman --noconfirm -Syyu glibc pacman
+RUN pacman-db-upgrade
 RUN pacman --noconfirm -Syyu \
 				archlinux-keyring \
 				ca-certificates \
@@ -94,7 +95,7 @@ RUN cd ~/ && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
 USER root
-COPY hnsd.service /etc/systemd/system/hnsd.service
+COPY cotrib/hnsd.service /etc/systemd/system/hnsd.service
 RUN systemctl enable hnsd
 
 
@@ -104,25 +105,25 @@ RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl enable rngd
 
 # Greet Users Warmly
-COPY motd /etc/
+COPY contrib/motd /etc/
 
 # Set root password to root
 RUN echo "root:root" | chpasswd
 
 # First Boot service
-COPY firstboot.sh /usr/local/bin/firstboot.sh
-COPY firstboot.service /etc/systemd/system/firstboot.service
+COPY contrib/firstboot.sh /usr/local/bin/firstboot.sh
+COPY contrib/firstboot.service /etc/systemd/system/firstboot.service
 RUN systemctl enable firstboot
 
 # IPFS systemD service
-COPY ipfs.service /etc/systemd/system/ipfs.service
+COPY contrib/ipfs.service /etc/systemd/system/ipfs.service
 RUN systemctl enable ipfs
 
 # symlink systemd-resolved stub resolver to /etc/resolv/conf
 RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
 # Copy DNS configuration so that stub resolver goes to hsd
-COPY dns /etc/systemd/resolved.conf.d/dns_servers.conf
+COPY contrib/dns /etc/systemd/resolved.conf.d/dns_servers.conf
 
 # enable systemd-resolved
 RUN systemctl enable systemd-resolved
