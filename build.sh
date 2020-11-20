@@ -18,8 +18,8 @@ set -exo pipefail
 # Print each command
 set -o xtrace
 
-# Get the 64 bit rpi rootfs for Pi 3 and 4
-wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
+# Get the 64 bit rpi rootfs for Pi 3 and 4: Moved to sos-base
+# wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
 docker buildx build --tag starport --platform linux/arm64 --load --progress plain .
@@ -43,8 +43,8 @@ docker save --output ./.tmp/result-rootfs.tar starport
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
 
-# Set hostname
-bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
+# Set hostname while the image is just in the filesystem.
+sudo bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
 
 
 # ===================================================================================
@@ -60,7 +60,7 @@ sudo umount /dev/loop0p1 || true
 
 
 # Detach from the loop device
-losetup -d /dev/loop0 || true
+sudo losetup -d /dev/loop0 || true
 
 # Unmount anything on the loop device
 sudo umount /dev/loop0p2 || true
@@ -72,43 +72,39 @@ rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 4G "images/starport.img"
-
-losetup -d /dev/loop0 || true
+fallocate -l 4G "images/sos.img"
 
 # loop-mount the image file so it becomes a disk
-losetup --find --show images/starport.img
+sudo losetup --find --show images/sos.img
 
 # partition the loop-mounted disk
-parted --script /dev/loop0 mklabel msdos
-parted --script /dev/loop0 mkpart primary fat32 0% 200M
-parted --script /dev/loop0 mkpart primary ext4 200M 100%
+sudo parted --script /dev/loop0 mklabel msdos
+sudo parted --script /dev/loop0 mkpart primary fat32 0% 200M
+sudo parted --script /dev/loop0 mkpart primary ext4 200M 100%
 
 # format the newly partitioned loop-mounted disk
-mkfs.vfat -F32 /dev/loop0p1
-mkfs.ext4 -F /dev/loop0p2
+sudo mkfs.vfat -F32 /dev/loop0p1
+sudo mkfs.ext4 -F /dev/loop0p2
 
-
-# Use the toolbox to copy the rootfs into the filesystem
+# Use the toolbox to copy the rootfs into the filesystem we formatted above.
 # * mount the disk's /boot and / partitions
 # * use rsync to copy files into the filesystem
 # make a folder so we can mount the boot partition
+# soon will not use toolbox
 
-docker run --rm --tty --privileged --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox bash -c " \
-		mkdir -p mnt/boot mnt/rootfs && \
-		mount /dev/loop0p1 mnt/boot && \
-		mount /dev/loop0p2 mnt/rootfs && \
-		rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot && \
-		rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot && \
-		mkdir mnt/rootfs/boot && \
-		umount mnt/boot mnt/rootfs
-	"
+mkdir -p mnt/boot mnt/rootfs
+mount /dev/loop0p1 mnt/boot
+mount /dev/loop0p2 mnt/rootfs
+rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot
+rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot
+mkdir mnt/rootfs/boot
+umount mnt/boot mnt/rootfs
 
-# Tell pi where its memory card is
+# Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
 
 # Drop the loop mount
-losetup -d /dev/loop0
+sudo losetup -d /dev/loop0
 
 # Compress the image
-pishrink.sh -Z -a -p images/starport.img
+pishrink.sh -Z -a -p images/sos.img
