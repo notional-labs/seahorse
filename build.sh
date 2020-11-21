@@ -92,13 +92,13 @@ sudo mkfs.ext4 -F /dev/loop0p2
 # make a folder so we can mount the boot partition
 # soon will not use toolbox
 
-mkdir -p mnt/boot mnt/rootfs
-mount /dev/loop0p1 mnt/boot
-mount /dev/loop0p2 mnt/rootfs
-rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot
-rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot
-mkdir mnt/rootfs/boot
-umount mnt/boot mnt/rootfs
+sudo mkdir -p mnt/boot mnt/rootfs
+sudo mount /dev/loop0p1 mnt/boot
+sudo mount /dev/loop0p2 mnt/rootfs
+sudo rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot
+sudo rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot
+sudo mkdir mnt/rootfs/boot
+sudo umount mnt/boot mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
@@ -107,4 +107,4 @@ umount mnt/boot mnt/rootfs
 sudo losetup -d /dev/loop0
 
 # Compress the image
-pishrink.sh -Z -a -p images/sos.img
+sudo pishrink.sh -Z -a -p images/sos.img
