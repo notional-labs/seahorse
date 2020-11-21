@@ -22,7 +22,11 @@ set -o xtrace
 # wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
-docker buildx build --tag starport --platform linux/arm64 --load --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos:cache .
+docker buildx build --tag sos --platform linux/arm64 --load --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos --output ./.tmp/result-rootfs.tar .
+
+# TAG AND PUSH
+docker tag sos faddat/sos
+docker push faddat/sos
 
 
 # PREPARE TOOLBOX
@@ -38,13 +42,13 @@ mkdir .tmp
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox rm -rf ./.tmp/result-rootfs
 
 # save the image to result-rootfs.tar
-docker save --output ./.tmp/result-rootfs.tar starport
+# docker save --output ./.tmp/result-rootfs.tar sos
 
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
 
 # Set hostname while the image is just in the filesystem.
-sudo bash -c "echo starport > ./.tmp/result-rootfs/etc/hostname"
+sudo bash -c "echo sos > ./.tmp/result-rootfs/etc/hostname"
 
 
 # ===================================================================================
