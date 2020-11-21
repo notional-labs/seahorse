@@ -29,3 +29,9 @@ jobs:
 
       - name: Build
         run: bash build.sh
+      
+      - name: Upload image
+        uses: actions/upload-artifact@v2
+        with:
+          name: sos
+          path: images/sos.img.xz
