@@ -22,7 +22,7 @@ set -o xtrace
 # wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
-docker buildx build --tag starport --platform linux/arm64 --load --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos:cache .
+docker buildx build --tag starport --platform linux/arm64 --load --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos .
 
 
 # PREPARE TOOLBOX
