@@ -88,30 +88,15 @@ RUN cd ~/ && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
 USER root
-COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
-RUN systemctl enable hnsd
+
 
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl disable haveged && \
 		systemctl enable rngd
 
-# Greet Users Warmly
-COPY contrib/motd /etc/
-
 # Set root password to root
 RUN echo "root:root" | chpasswd
-
-# First Boot service
-COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
-COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
-RUN systemctl enable firstboot
-
-# symlink systemd-resolved stub resolver to /etc/resolv/conf
-RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-
-# Copy DNS configuration so that stub resolver goes to hsd
-COPY contrib/dns /etc/systemd/resolved.conf.d/dns_servers.conf
 
 # enable systemd-resolved
 RUN systemctl enable systemd-resolved
@@ -143,4 +128,22 @@ RUN rm -rf \
 
 # In the future, check that there is enough space
 RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+
+# First Boot service
+COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
+COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
+RUN systemctl enable firstboot
+
+# HNSD Service
+COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
+RUN systemctl enable hnsd
+
+# Greet Users Warmly
+COPY contrib/motd /etc/
+
+# symlink systemd-resolved stub resolver to /etc/resolv/conf
+RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+# Copy DNS configuration so that stub resolver goes to hsd
+COPY contrib/dns /etc/systemd/resolved.conf.d/dns_servers.conf
 
