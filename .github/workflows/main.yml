@@ -1,4 +1,4 @@
-name: sos buildx
+name: arm64-base
 
 on: [push, pull_request]
 
