@@ -86,7 +86,8 @@ USER builduser
 RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean
+		makepkg -si --noconfirm --rmdeps --clean && \
+		chmod +x /usr/bin/hnsd
 USER root
 
 
