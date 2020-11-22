@@ -3,7 +3,7 @@ name: sos
 on: [push, pull_request]
 
 jobs:
-  buildx:
+  sos:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
