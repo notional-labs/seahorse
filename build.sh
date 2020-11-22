@@ -109,4 +109,4 @@ sudo umount mnt/boot mnt/rootfs
 sudo losetup -d /dev/loop0
 
 # Compress the image
-sudo pishrink.sh -Z -a -p images/sos.img
+sudo pishrink.sh -a -p images/sos.img
