@@ -1,4 +1,4 @@
-name: sos buildx
+name: sos
 
 on: [push, pull_request]
 
