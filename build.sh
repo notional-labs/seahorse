@@ -97,8 +97,8 @@ sudo mkfs.ext4 -F /dev/loop0p2
 sudo mkdir -p mnt/boot mnt/rootfs
 sudo mount /dev/loop0p1 mnt/boot
 sudo mount /dev/loop0p2 mnt/rootfs
-sudo rsync -a --info=progress2 ./.tmp/result-rootfs/boot/* mnt/boot
-sudo rsync -a --info=progress2 ./.tmp/result-rootfs/* mnt/rootfs --exclude boot
+sudo rsync -a ./.tmp/result-rootfs/boot/* mnt/boot
+sudo rsync -a ./.tmp/result-rootfs/* mnt/rootfs --exclude boot
 sudo mkdir mnt/rootfs/boot
 sudo umount mnt/boot mnt/rootfs
 
