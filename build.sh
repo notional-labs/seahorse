@@ -22,14 +22,14 @@ set -o xtrace
 # wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
-docker buildx build --tag sos --platform linux/arm64 --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos --load .
+docker buildx build --tag sos --platform linux/arm64 --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos:cache --load .
 
 # TAG AND PUSH
 docker tag sos faddat/sos
 docker push faddat/sos
 
 # PREPARE TOOLBOX
-docker buildx build --rm --tag toolbox --file toolbox/Dockerfile.root --load --progress plain toolbox
+# docker buildx build --rm --tag toolbox --file toolbox/Dockerfile.root --load  --progress plain toolbox
 
 # EXTRACT IMAGE
 # Make a temporary directory
@@ -37,13 +37,13 @@ rm -rf .tmp | true
 mkdir .tmp
 
 # remove anything in the way of extraction
-docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox rm -rf ./.tmp/result-rootfs
+docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox rm -rf ./.tmp/result-rootfs
 
 # save the image to result-rootfs.tar
 docker save --output ./.tmp/result-rootfs.tar sos
 
 # Extract the image using docker-extract
-docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
+docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
 
 # Set hostname while the image is just in the filesystem.
 sudo bash -c "echo sos > ./.tmp/result-rootfs/etc/hostname"
