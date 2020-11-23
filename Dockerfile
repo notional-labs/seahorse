@@ -87,7 +87,7 @@ RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean && \
-		chmod +x /usr/bin/hnsd
+		sudo chmod +x /usr/bin/hnsd
 USER root
 
 
@@ -133,7 +133,8 @@ RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 # First Boot service
 COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
-RUN systemctl enable firstboot
+RUN systemctl enable firstboot && \
+	chmod +x /usr/local/bin/firstboot.sh
 
 # HNSD Service
 COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
