@@ -22,15 +22,15 @@ RUN useradd builduser -m && \
 
 USER builduser
 
-# give the wheel group sudo
-RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
-
 # YAY
 RUN cd ~/ && \
 		git clone https://aur.archlinux.org/yay.git yay && \
 		cd yay && \
 		makepkg -si --noconfirm --clean --rmdeps
 USER root
+
+# give the wheel group sudo
+RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 
 # In the future, check that there is enough space
 RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
