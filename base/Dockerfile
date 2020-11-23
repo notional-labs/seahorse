@@ -13,7 +13,7 @@ RUN pacman-key --init \
 # Don't check disk space because we are in a container
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
-RUN pacman -Syyu --noconfirm git sudo
+RUN pacman -Syyu --noconfirm git sudo base-devel
 
 # Add builduser
 RUN useradd builduser -m && \
@@ -21,6 +21,9 @@ RUN useradd builduser -m && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
 USER builduser
+
+# give the wheel group sudo
+RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 
 # YAY
 RUN cd ~/ && \
