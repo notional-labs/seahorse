@@ -64,11 +64,6 @@ RUN systemctl enable dropbear
 RUN echo "DNSSEC=no" >> /etc/systemd/resolved.conf && \
 		systemctl enable systemd-resolved
 
-# Add builduser
-RUN useradd builduser -m && \
-	passwd -d builduser && \
-	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
-
 # INSTALL HNSD
 USER builduser
 RUN cd ~/ && \
