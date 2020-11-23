@@ -13,7 +13,7 @@ RUN pacman-key --init \
 # Don't check disk space because we are in a container
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
-RUN pacman -Syyu --noconfirm git
+RUN pacman -Syyu --noconfirm git sudo
 
 # Add builduser
 RUN useradd builduser -m && \
