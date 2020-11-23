@@ -21,6 +21,8 @@ RUN useradd builduser -m && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
 USER builduser
+
+# YAY
 RUN cd ~/ && \
 		git clone https://aur.archlinux.org/yay.git yay && \
 		cd yay && \
