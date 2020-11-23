@@ -27,15 +27,14 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
 
-      - name: Install PiShrink
-        run: |
-          wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
-          chmod +x pishrink.sh
-          sudo mv pishrink.sh /usr/local/bin
-
       - name: Build
         run: bash build.sh
       
+      - name: Compress
+        run: |
+          sudo apt install -y pbzip2
+          pbzip2 images/sos.img
+         
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
