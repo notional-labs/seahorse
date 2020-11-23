@@ -36,16 +36,12 @@ RUN curl -LJO https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/dow
 
 
 # FINISH GETTING PACMAN TO LIFE
-RUN pacman --noconfirm -Syyu glibc pacman
 RUN pacman-db-upgrade
 RUN pacman --noconfirm -Syyu \
 				archlinux-keyring \
 				ca-certificates \
 				ca-certificates-mozilla \
-				ca-certificates-utils
-
-# Utilities
-RUN pacman --noconfirm -Syyu \
+				ca-certificates-utils \
 				base \
 				bash-completion \
 				parted \
@@ -54,40 +50,26 @@ RUN pacman --noconfirm -Syyu \
 				dropbear \
 				sudo \
 				git \
-				base-devel
-
-
-# dependencies is specific to our work
-RUN pacman --noconfirm -Syyu \
-				npm \
-				zerotier-one \
+				base-devel \
 				unbound
 
+				
 # build with the whole pi by default
 RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 
 # Enable dropbear
 RUN systemctl enable dropbear
 
-# give the wheel group sudo
-RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
-
 # disable dnssec
 RUN echo "DNSSEC=no" >> /etc/systemd/resolved.conf && \
 		systemctl enable systemd-resolved
-
-# Add builduser
-RUN useradd builduser -m && \
-	passwd -d builduser && \
-	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
 # INSTALL HNSD
 USER builduser
 RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean && \
-		sudo chmod +x /usr/bin/hnsd
+		makepkg -si --noconfirm --rmdeps --clean 
 USER root
 
 
@@ -101,9 +83,6 @@ RUN echo "root:root" | chpasswd
 
 # enable systemd-resolved
 RUN systemctl enable systemd-resolved
-
-# enable zerotier-one
-RUN systemctl enable zerotier-one
 
 # =================================================================
 # CLEANUP: Make the OS new and shiny.
@@ -138,7 +117,8 @@ RUN systemctl enable firstboot && \
 
 # HNSD Service
 COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
-RUN systemctl enable hnsd
+RUN systemctl enable hnsd && \
+	sudo chmod +x /usr/bin/hnsd
 
 # Greet Users Warmly
 COPY contrib/motd /etc/

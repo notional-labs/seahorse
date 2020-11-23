@@ -29,7 +29,7 @@ jobs:
 
       - name: Build
         run: bash build.sh
-      
+
       - name: Compress
         run: |
           sudo apt install -y pbzip2
@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/sos.img
+          path: images/sos.img.bz2
