@@ -53,7 +53,7 @@ RUN pacman --noconfirm -Syyu \
 				base-devel \
 				unbound
 
-				
+
 # build with the whole pi by default
 RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 
@@ -69,7 +69,7 @@ USER builduser
 RUN cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean 
+		makepkg -si --noconfirm --rmdeps --clean
 USER root
 
 
@@ -109,11 +109,15 @@ RUN rm -rf \
 # In the future, check that there is enough space
 RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 
-# First Boot service
+# First Boot services
 COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
+COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
+COPY ./contrib/resizerootfs.service /etc/systemd/system
 RUN systemctl enable firstboot && \
-	chmod +x /usr/local/bin/firstboot.sh
+	systemctl enable resizerootfs && \
+	chmod +x /usr/local/bin/firstboot.sh && \
+	chmod +x /usr/sbin/resizerootfs
 
 # HNSD Service
 COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
