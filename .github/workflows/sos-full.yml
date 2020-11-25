@@ -28,7 +28,9 @@ jobs:
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Build
-        run: bash full/build.sh
+        run: |
+		  cd full
+		  build.sh
 
       - name: Compress
         run: |
