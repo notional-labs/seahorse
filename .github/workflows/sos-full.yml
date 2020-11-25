@@ -1,9 +1,9 @@
-name: sos
+name: sos-full
 
 on: [push, pull_request]
 
 jobs:
-  sos:
+  sos-full:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
