@@ -30,6 +30,7 @@ jobs:
       - name: Build
         run: |
           cd full
+		  ls
           build.sh
 
       - name: Compress
