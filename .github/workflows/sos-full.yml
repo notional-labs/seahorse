@@ -1,9 +1,9 @@
-name: sos
+name: sos-full
 
 on: [push, pull_request]
 
 jobs:
-  sos:
+  sos-full:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,7 +28,10 @@ jobs:
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Build
-        run: bash build.sh
+        run: |
+          cd full
+          ls
+          bash build.sh
 
       - name: Compress
         run: |
