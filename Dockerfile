@@ -79,8 +79,7 @@ RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl enable rngd
 
 # Set root password to root and make sure the user changes it at next login
-RUN echo "root:root" | chpasswd && \
-	passwd -e root
+RUN echo "root:root" | chpasswd 
 
 # enable systemd-resolved
 RUN systemctl enable systemd-resolved
