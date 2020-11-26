@@ -42,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/sos-full.img.bz2
+          path: full/images/sos-full.img.bz2
