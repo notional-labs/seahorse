@@ -36,7 +36,7 @@ jobs:
       - name: Compress
         run: |
           sudo apt install -y pbzip2
-          pbzip2 images/sos.img
+          pbzip2 images/sos-full.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
