@@ -13,7 +13,6 @@ wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM
 docker buildx build --tag faddat/sos-base --platform linux/arm64 --load --cache-from faddat/sos-base:cache --cache-to faddat/sos-base:cache --progress plain .
 
 # TAG AND PUSH
-docker tag sos faddat/sos-base
 docker push faddat/sos-base
 
 # PREPARE TOOLBOX
