@@ -78,8 +78,9 @@ RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl disable haveged && \
 		systemctl enable rngd
 
-# Set root password to root
-RUN echo "root:root" | chpasswd
+# Set root password to root and make sure the user changes it at next login
+RUN echo "root:root" | chpasswd && \
+	passwd -e root
 
 # enable systemd-resolved
 RUN systemctl enable systemd-resolved
