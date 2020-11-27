@@ -1,7 +1,7 @@
 FROM faddat/sos
 
 RUN pacman -Syyu --noconfirm neovim \
-		 colordiff \
+		colordiff \
 		tree \
 		unzip \
 		unrar \
