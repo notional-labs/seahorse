@@ -60,9 +60,6 @@ RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 # Enable dropbear
 RUN systemctl enable dropbear
 
-# disable dnssec
-RUN echo "DNSSEC=no" >> /etc/systemd/resolved.conf && \
-		systemctl enable systemd-resolved
 
 # INSTALL HNSD
 USER builduser
@@ -114,22 +111,28 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-RUN systemctl enable firstboot && \
-	systemctl enable resizerootfs && \
-	chmod +x /usr/local/bin/firstboot.sh && \
-	chmod +x /usr/sbin/resizerootfs
-
-# HNSD Service
+# Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
+COPY contrib/dns /etc/systemd/resolved.conf
+# HNSD Service: In testing hnsd has been unreliable
 COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
-RUN systemctl enable hnsd && \
-	sudo chmod +x /usr/bin/hnsd
-
 # Greet Users Warmly
 COPY contrib/motd /etc/
 
-# symlink systemd-resolved stub resolver to /etc/resolv/conf
-RUN ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+# Start services
+RUN systemctl enable firstboot && \
+	systemctl enable resizerootfs && \
+	chmod +x /usr/local/bin/firstboot.sh && \
+	chmod +x /usr/sbin/resizerootfs && \
+	systemctl enable systemd-resolved && \
+	systemctl enable hnsd && \
+	chmod +x /usr/bin/hnsd && \
+	# symlink systemd-resolved stub resolver to /etc/resolv/conf
+	ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-# Copy DNS configuration so that stub resolver goes to hsd
-COPY contrib/dns /etc/systemd/resolved.conf.d/dns_servers.conf
+
+
+
+
+
+
 
