@@ -15,9 +15,6 @@ docker buildx build --tag faddat/sos-base --platform linux/arm64 --load --cache-
 # TAG AND PUSH
 docker push faddat/sos-base
 
-# PREPARE TOOLBOX
-# docker buildx build --rm --tag toolbox --file toolbox/Dockerfile.root --load  --progress plain toolbox
-
 # EXTRACT IMAGE
 # Make a temporary directory
 rm -rf .tmp | true
