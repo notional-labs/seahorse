@@ -15,9 +15,6 @@ docker buildx build --tag faddat/sos-base --platform linux/arm64 --load --cache-
 # TAG AND PUSH
 docker push faddat/sos-base
 
-# PREPARE TOOLBOX
-# docker buildx build --rm --tag toolbox --file toolbox/Dockerfile.root --load  --progress plain toolbox
-
 # EXTRACT IMAGE
 # Make a temporary directory
 rm -rf .tmp | true
@@ -61,7 +58,7 @@ rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 2G "images/sos-base.img"
+fallocate -l 3G "images/sos-base.img"
 
 # loop-mount the image file so it becomes a disk
 sudo losetup --find --show images/sos-base.img
