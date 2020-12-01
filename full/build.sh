@@ -18,8 +18,6 @@ set -exo pipefail
 # Print each command
 set -o xtrace
 
-# Get the 64 bit rpi rootfs for Pi 3 and 4: Moved to sos-base
-# wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
 docker buildx build --tag sos-full --platform linux/arm64 --progress plain --cache-to faddat/sos-full:cache --cache-from faddat/sos-full:cache --load .
@@ -44,6 +42,9 @@ docker save --output ./.tmp/result-rootfs.tar sos-full
 
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
+
+# Delete tarball to save space
+rm ./.tmp/result-rootfs.tar
 
 # Set hostname while the image is just in the filesystem.
 sudo bash -c "echo sos > ./.tmp/result-rootfs/etc/hostname"
