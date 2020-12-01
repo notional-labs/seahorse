@@ -31,9 +31,7 @@ jobs:
         run: bash build.sh
 
       - name: Compress
-        run: |
-          sudo apt install -y pbzip2
-          xz -T $(nproc) images/sos.img
+        run: xz -T $(nproc) images/sos.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
