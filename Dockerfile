@@ -94,7 +94,7 @@ RUN systemctl enable firstboot && \
 		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl disable haveged && \
 		systemctl enable rngd && \
-		pacman -R haveged
+		pacman -R --noconfirm haveged
 
 
 # Remove cruft and let pacman check for free disk space

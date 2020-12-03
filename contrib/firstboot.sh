@@ -8,7 +8,7 @@ timedatectl set-timezone UTC
 systemd-resolve --set-mdns=yes --interface=eth0
 
 # install go and npm
-pacman -Syyu npm go
+pacman -Syyu --noconfirm npm go
 
 # Don't run again
 systemctl disable firstboot
