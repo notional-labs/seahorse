@@ -58,7 +58,7 @@ jobs:
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Build
-        run: docker buildx build --tag sos --platform linux/arm64 --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos:cache --push .
+        run: docker buildx build --tag faddat/sos --platform linux/arm64 --progress plain --cache-to faddat/sos:cache --cache-from faddat/sos:cache --push .
 
   #      - name: Compress
   #        run: xz -T $(nproc) images/sos.img
