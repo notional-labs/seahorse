@@ -107,3 +107,6 @@ sudo umount mnt/boot mnt/rootfs
 
 # Drop the loop mount
 sudo losetup -d /dev/loop0
+
+# Delete .tmp
+sudo rm -rf ./.tmp
