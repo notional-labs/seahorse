@@ -7,8 +7,8 @@ MAINTAINER jacobgadikian@gmail.com
 ADD ArchLinuxARM-rpi-aarch64-latest.tar.gz /
 
 # Pacman Keyring
-RUN pacman-key --init \
-		&& pacman-key --populate archlinuxarm
+RUN pacman-key --init && \
+		pacman-key --populate archlinuxarm
 
 # Don't check disk space because we are in a container
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
