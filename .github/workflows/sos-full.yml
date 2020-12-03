@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   sos-full:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v2
