@@ -1,4 +1,4 @@
-name: sos-arm64
+name: graviton
 
 on: [push, pull_request]
 
