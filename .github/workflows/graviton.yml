@@ -28,7 +28,9 @@ jobs:
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Build
-        run: docker buildx build --tag faddat/sos-base --platform linux/arm64 --push --cache-from faddat/sos-base:cache --cache-to faddat/sos-base:cache --progress plain .
+        run: |
+		cd base
+		docker buildx build --tag faddat/sos-base --platform linux/arm64 --push --cache-from faddat/sos-base:cache --cache-to faddat/sos-base:cache --progress plain .
 
   sos:
     runs-on: arm64
