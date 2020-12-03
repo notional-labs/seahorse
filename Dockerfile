@@ -19,13 +19,11 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 ENV LC_ALL en_US.UTF-8
 
 
-# Don't check disk space because we are in a container
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
-
-
 # FINISH GETTING PACMAN TO LIFE
 # Get and install rpi 4 kernel
-RUN	pacman-key --init && \
+# Don't check disk space because we are in a container
+RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
+		pacman-key --init && \
 		pacman-key --populate archlinuxarm && \
 		pacman-db-upgrade && \
 		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
@@ -38,7 +36,6 @@ RUN	pacman-key --init && \
 				ca-certificates \
 				ca-certificates-mozilla \
 				ca-certificates-utils \
-				base \
 				bash-completion \
 				parted \
 				rng-tools \
@@ -61,12 +58,6 @@ RUN cd ~/ && \
 		makepkg -si --noconfirm --rmdeps --clean
 USER root
 
-
-# Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
-RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
-		systemctl disable haveged && \
-		systemctl enable rngd
-
 # Set root password to root and make sure the user changes it at next login
 RUN echo "root:root" | chpasswd
 
@@ -74,11 +65,6 @@ RUN echo "root:root" | chpasswd
 # =================================================================
 # CLEANUP: Make the OS new and shiny.
 # =================================================================
-
-# Remove build tools
-# RUN pacman -R --noconfirm base-devel
-# Leave base-devel for now so we can ship a build.  Later figure out how to cleanly remove it.
-
 
 # First Boot services
 COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
@@ -93,17 +79,23 @@ COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
 COPY contrib/motd /etc/
 
 # Enable services
+# Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN systemctl enable firstboot && \
-	systemctl enable resizerootfs && \
-	systemctl enable systemd-resolved && \
-	chmod +x /usr/local/bin/firstboot.sh && \
-	chmod +x /usr/sbin/resizerootfs && \
-	systemctl enable systemd-resolved && \
-	systemctl enable hnsd && \
-	chmod +x /usr/bin/hnsd && \
-	# symlink systemd-resolved stub resolver to /etc/resolv/conf
-	ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
-	systemctl enable dropbear
+		systemctl enable resizerootfs && \
+		systemctl enable systemd-resolved && \
+		chmod +x /usr/local/bin/firstboot.sh && \
+		chmod +x /usr/sbin/resizerootfs && \
+		systemctl enable systemd-resolved && \
+		systemctl enable hnsd && \
+		chmod +x /usr/bin/hnsd && \
+		# symlink systemd-resolved stub resolver to /etc/resolv/conf
+		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
+		systemctl enable dropbear && \
+		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
+		systemctl disable haveged && \
+		systemctl enable rngd && \
+		pacman -R haveged
+
 
 # Remove cruft and let pacman check for free disk space
 RUN rm -rf \
