@@ -24,3 +24,4 @@ mount -o remount,rw $rootpart
 resize2fs $rootpart
 
 exit 0
+

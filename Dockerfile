@@ -46,7 +46,6 @@ RUN	pacman-key --init && \
 				dropbear \
 				sudo \
 				git \
-				base-devel \
 				unbound
 
 

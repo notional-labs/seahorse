@@ -1,7 +1,7 @@
 [Unit]
 Description=Starport Pi - firstboot configuration
 After=systemd-modules-load.service
-Before=sshd.service
+After=resizerootfs.service
 
 [Service]
 Type=oneshot
