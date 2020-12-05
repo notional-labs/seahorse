@@ -27,7 +27,6 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman-db-upgrade
 
 
-
 # Add builduser
 RUN useradd builduser -m && \
 	passwd -d builduser && \
