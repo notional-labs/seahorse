@@ -77,7 +77,7 @@ sudo mkfs.ext4 -F $(echo $LOOP)p1
 # soon will not use toolbox
 
 sudo mkdir -p mnt/rootfs
-sudo mount $(echo $LOOP)p2 mnt/rootfs
+sudo mount $(echo $LOOP)p1 mnt/rootfs
 sudo rsync -a ./.tmp/result-rootfs/* mnt/rootfs
 cd mnt/rootfs/boot
 ./sd_fusing.sh $(echo $LOOP)
