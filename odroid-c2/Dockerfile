@@ -24,8 +24,6 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		sudo \
 		git \
 		unbound
-		pacman-db-upgrade
-
 
 # Add builduser
 RUN useradd builduser -m && \
