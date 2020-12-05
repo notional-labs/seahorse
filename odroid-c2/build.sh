@@ -7,7 +7,7 @@ set -exo pipefail
 set -o xtrace
 
 # Get the 64 bit rpi rootfs for Pi 3 and 4
-wget -N --progress=bar:force:noscroll wget http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
+wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
 
 # Build the base image
 docker buildx build --tag faddat/sos-base:c2 --platform linux/arm64 --load --cache-from faddat/sos-base:c2cache --cache-to faddat/sos-base:c2cache --progress plain .
