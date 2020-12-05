@@ -1,20 +1,14 @@
-# spos
+# SOS
+Arch-based Linux OS for P2P apps.
 
-Embedded development environment for Starport with sane defaults and p2p tooling.
-
-Peer to peer applications tend to involve a complex stack and are therefore difficult to begin developing. SPOS provides you with a complete development environment, As well as patterns and ideas to follow.
+Peer to peer applications tend to involve a complex stack and are therefore difficult to begin developing. SOS provides you with a complete development environment, As well as patterns and ideas to follow.
 
 This image represents an opinionated approach to the construction of distributed and p2p applications.
 
 Currently, it only supports the Raspberry Pi 3 and 4. This will rapidly expand to a wide variety of devices, beginning with the ones [curently supported](https://archlinuxarm.org/platforms/armv8) by Arch Linux Arm. In preparation for the launch of a router that uses the Allwinner S922X chipset, we will support the Odroid N2 board in coming weeks.
 
-[Arch Linux]( was a very deliberate choice: In contrast to other distributions, arch packages are always up-to-date. Additionally, the arch user repository offers a wide variety of easy to install packages contributed by the community.
+[Arch Linux](archlinux.org) was a very deliberate choice: In contrast to other distributions, arch packages are always up-to-date. Additionally, the arch user repository offers a wide variety of easy to install packages contributed by the community.
 
-## Binfmt_misc
-
-```
-docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
-```
 
 ## Vital Information:
 
@@ -41,8 +35,10 @@ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credent
       - Chromebook Flip
       - Chromebook R13
   - SBC
-    - Raspberry Pi 3 & 4 :check-mark:
-    - Odroid N2 & C2
+    - ~~Raspberry Pi 3 & 4~~
+    - Odroid 
+      - ~~C2~~
+      - N2
     - Dragonboard 410C
     - Pine64
     - Rock64
