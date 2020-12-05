@@ -80,6 +80,7 @@ sudo mkdir -p mnt/rootfs
 sudo mount $(echo $LOOP)p2 mnt/rootfs
 sudo rsync -a ./.tmp/result-rootfs/* mnt/rootfs
 cd mnt/rootfs/boot
+./sd_fusing.sh $(echo $LOOP)
 sudo umount mnt/boot mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
