@@ -61,7 +61,7 @@ mkdir -p images
 fallocate -l 3G "images/sos-base.img"
 
 # loop-mount the image file so it becomes a disk
-export LOOP=$(sudo losetup --find --show images/sos-full.img)
+export LOOP=$(sudo losetup --find --show images/sos-base.img)
 
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos

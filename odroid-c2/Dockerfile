@@ -7,13 +7,26 @@ MAINTAINER jacobgadikian@gmail.com
 ADD ArchLinuxARM-odroid-c2-latest.tar.gz /
 
 # Pacman Keyring
-RUN pacman-key --init && \
-		pacman-key --populate archlinuxarm
-
 # Don't check disk space because we are in a container
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
+		pacman-key --init && \
+		pacman-key --populate archlinuxarm && \
+		pacman-db-upgrade && \
+		pacman -Syyu --noconfirm git sudo base-devel archlinux-keyring \
+		ca-certificates \
+		ca-certificates-mozilla \
+		ca-certificates-utils \
+		bash-completion \
+		parted \
+		rng-tools \
+		e2fsprogs \
+		dropbear \
+		sudo \
+		git \
+		unbound
+		pacman-db-upgrade
 
-RUN pacman -Syyu --noconfirm git sudo base-devel
+
 
 # Add builduser
 RUN useradd builduser -m && \

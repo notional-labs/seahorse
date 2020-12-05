@@ -7,19 +7,16 @@ MAINTAINER jacobgadikian@gmail.com
 ADD ArchLinuxARM-rpi-aarch64-latest.tar.gz /
 
 # Pacman Keyring
-RUN pacman-key --init && \
-		pacman-key --populate archlinuxarm
-
 # Don't check disk space because we are in a container
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
-
-RUN pacman -Syyu --noconfirm git sudo base-devel
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
+		pacman-key --init && \
+		pacman-key --populate archlinuxarm && \
+		pacman -Syyu --noconfirm git sudo base-devel
 
 # Add builduser
 RUN useradd builduser -m && \
 	passwd -d builduser && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
-
 USER builduser
 
 # YAY
@@ -30,7 +27,6 @@ RUN cd ~/ && \
 USER root
 
 # give the wheel group sudo
-RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
-
 # In the future, check that there is enough space
-RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel && \
+		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
