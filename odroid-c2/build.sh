@@ -10,10 +10,10 @@ set -o xtrace
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
 
 # Build the base image
-docker buildx build --tag faddat/sos-base:c2 --platform linux/arm64 --load --cache-from faddat/sos-base:c2cache --cache-to faddat/sos-base:c2cache --progress plain .
+docker buildx build --tag faddat/sos:c2 --platform linux/arm64 --load --cache-from faddat/sos:c2cache --cache-to faddat/sos:c2cache --progress plain .
 
 # TAG AND PUSH
-docker push faddat/sos-base:c2
+docker push faddat/sos:c2
 
 # EXTRACT IMAGE
 # Make a temporary directory
@@ -24,7 +24,7 @@ mkdir .tmp
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox rm -rf ./.tmp/result-rootfs
 
 # save the image to result-rootfs.tar
-docker save --output ./.tmp/result-rootfs.tar faddat/sos-base:c2
+docker save --output ./.tmp/result-rootfs.tar faddat/sos:c2
 
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
@@ -58,10 +58,10 @@ rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 3G "images/sos-base.img"
+fallocate -l 3G "images/c2.img"
 
 # loop-mount the image file so it becomes a disk
-export LOOP=$(sudo losetup --find --show images/sos-base.img)
+export LOOP=$(sudo losetup --find --show images/c2.img)
 
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos
