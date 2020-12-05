@@ -83,11 +83,10 @@ COPY contrib/motd /etc/
 RUN systemctl enable firstboot && \
 		systemctl enable resizerootfs && \
 		systemctl enable systemd-resolved && \
+		chmod +x /usr/bin/hnsd && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
-		systemctl enable systemd-resolved && \
 		systemctl enable hnsd && \
-		chmod +x /usr/bin/hnsd && \
 		# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
