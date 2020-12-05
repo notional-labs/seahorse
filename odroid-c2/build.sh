@@ -6,14 +6,16 @@ set -exo pipefail
 # Print each command
 set -o xtrace
 
+sudo losetup -D
+
 # Get the 64 bit rpi rootfs for Pi 3 and 4
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
 
 # Build the base image
-docker buildx build --tag faddat/sos:c2 --platform linux/arm64 --load --cache-from faddat/sos:c2cache --cache-to faddat/sos:c2cache --progress plain ..
+docker buildx build --tag faddat/sos-c2 --platform linux/arm64 --load --cache-from faddat/sos-c2:cache --cache-to faddat/sos-c2:cache --progress plain ..
 
 # TAG AND PUSH
-docker push faddat/sos:c2
+docker push faddat/sos-c2
 
 # EXTRACT IMAGE
 # Make a temporary directory
@@ -24,7 +26,7 @@ mkdir .tmp
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox rm -rf ./.tmp/result-rootfs
 
 # save the image to result-rootfs.tar
-docker save --output ./.tmp/result-rootfs.tar faddat/sos:c2
+docker save --output ./.tmp/result-rootfs.tar faddat/sos-c2
 
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
