@@ -76,11 +76,12 @@ sudo mkfs.ext4 -F $(echo $LOOP)p1
 # make a folder so we can mount the boot partition
 # soon will not use toolbox
 
+cd ./.tmp/result-rootfs/boot
+./sd_fusing.sh $(echo $LOOP)
+
 sudo mkdir -p mnt/rootfs
 sudo mount $(echo $LOOP)p1 mnt/rootfs
 sudo rsync -a ./.tmp/result-rootfs/* mnt/rootfs
-cd mnt/rootfs/boot
-./sd_fusing.sh $(echo $LOOP)
 sudo umount mnt/boot mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
