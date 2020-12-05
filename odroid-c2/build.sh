@@ -10,10 +10,10 @@ set -o xtrace
 wget -N --progress=bar:force:noscroll wget http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
 
 # Build the base image
-docker buildx build --tag faddat/sos-base --platform linux/arm64 --load --cache-from faddat/sos-base:cache --cache-to faddat/sos-base:cache --progress plain .
+docker buildx build --tag faddat/sos-base:c2 --platform linux/arm64 --load --cache-from faddat/sos-base:c2cache --cache-to faddat/sos-base:c2cache --progress plain .
 
 # TAG AND PUSH
-docker push faddat/sos-base
+docker push faddat/sos-base:c2
 
 # EXTRACT IMAGE
 # Make a temporary directory
@@ -24,7 +24,7 @@ mkdir .tmp
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox rm -rf ./.tmp/result-rootfs
 
 # save the image to result-rootfs.tar
-docker save --output ./.tmp/result-rootfs.tar faddat/sos-base
+docker save --output ./.tmp/result-rootfs.tar faddat/sos-base:c2
 
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
@@ -65,8 +65,7 @@ export LOOP=$(sudo losetup --find --show images/sos-full.img)
 
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos
-sudo parted --script $LOOP mkpart primary fat32 0% 200M
-sudo parted --script $LOOP mkpart primary ext4 200M 100%
+sudo parted --script $LOOP mkpart primary ext4 0% 100%
 
 # format the newly partitioned loop-mounted disk
 sudo mkfs.vfat -F32 $(echo $LOOP)p1
