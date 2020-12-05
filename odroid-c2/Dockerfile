@@ -25,10 +25,11 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		git \
 		unbound
 
-# Add builduser
+# Add builduser and give wheel group sudos
 RUN useradd builduser -m && \
 	passwd -d builduser && \
-	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
+	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
+	echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 
 USER builduser
 
@@ -40,7 +41,67 @@ RUN cd ~/ && \
 USER root
 
 # give the wheel group sudo
-RUN echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
+RUN
 
-# In the future, check that there is enough space
-RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+
+# INSTALL HNSD
+USER builduser
+RUN cd ~/ && \
+		git clone https://github.com/faddat/hnsd-git && \
+		cd hnsd-git && \
+		makepkg -si --noconfirm --rmdeps --clean
+USER root
+
+
+# First Boot services
+COPY contrib/firstboot.sh /usr/local/bin/firstboot.sh
+COPY contrib/firstboot.service /etc/systemd/system/firstboot.service
+COPY contrib/resizerootfs /usr/sbin/resizerootfs
+COPY contrib/resizerootfs.service /etc/systemd/system
+# Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
+COPY contrib/dns /etc/systemd/resolved.conf
+# HNSD Service: In testing hnsd has been unreliable
+COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
+# Greet Users Warmly
+COPY contrib/motd /etc/
+
+
+# Enable services
+# Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
+RUN systemctl enable firstboot && \
+		systemctl enable resizerootfs && \
+		systemctl enable systemd-resolved && \
+		chmod +x /usr/bin/hnsd && \
+		chmod +x /usr/local/bin/firstboot.sh && \
+		chmod +x /usr/sbin/resizerootfs && \
+		systemctl enable hnsd && \
+		# symlink systemd-resolved stub resolver to /etc/resolv/conf
+		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
+		systemctl enable dropbear && \
+		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
+		systemctl disable haveged && \
+		systemctl enable rngd && \
+		pacman -R --noconfirm haveged && \
+		echo "root:root" | chpasswd
+
+
+# =================================================================
+# CLEANUP: Make the OS new and shiny.
+# =================================================================
+
+
+# Remove cruft and let pacman check for free disk space
+RUN rm -rf \
+		/etc/*- \
+		/var/lib/systemd/* \
+		/var/lib/private/* \
+		/var/log/* \
+		/var/tmp/* \
+		/tmp/* \
+		/root/.bash_history \
+		/root/.cache \
+		/home/*/.bash_history \
+		/home/*/.cache \
+		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
+		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+
