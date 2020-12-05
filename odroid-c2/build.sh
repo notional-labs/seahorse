@@ -78,8 +78,10 @@ sudo mkfs.ext4 -F $(echo $LOOP)p1
 # make a folder so we can mount the boot partition
 # soon will not use toolbox
 
-cd ./.tmp/result-rootfs/boot
-./sd_fusing.sh $(echo $LOOP)
+
+# might neeed sd_fusing for u-boot
+# cd ./.tmp/result-rootfs/boot
+# ./sd_fusing.sh $(echo $LOOP)
 
 sudo mkdir -p mnt/rootfs
 sudo mount $(echo $LOOP)p1 mnt/rootfs
