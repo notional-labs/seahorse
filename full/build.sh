@@ -27,7 +27,7 @@ docker tag sos-full faddat/sos-full
 docker push faddat/sos-full
 
 # PREPARE TOOLBOX
-# docker buildx build --rm --tag toolbox --file toolbox/Dockerfile.root --load  --progress plain toolbox
+# docker buildx build --rm --tag toolbox --file toolbox/Dockerfile --load  --progress plain toolbox
 
 # EXTRACT IMAGE
 # Make a temporary directory

@@ -40,10 +40,6 @@ RUN cd ~/ && \
 		makepkg -si --noconfirm --clean --rmdeps
 USER root
 
-# give the wheel group sudo
-RUN
-
-
 # INSTALL HNSD
 USER builduser
 RUN cd ~/ && \
@@ -53,15 +49,20 @@ RUN cd ~/ && \
 USER root
 
 
-# First Boot services
+# First Boot service
 COPY contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY contrib/firstboot.service /etc/systemd/system/firstboot.service
+
+# Resize root fs
 COPY contrib/resizerootfs /usr/sbin/resizerootfs
 COPY contrib/resizerootfs.service /etc/systemd/system
+
 # Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
 COPY contrib/dns /etc/systemd/resolved.conf
+
 # HNSD Service: In testing hnsd has been unreliable
 COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
+
 # Greet Users Warmly
 COPY contrib/motd /etc/
 
