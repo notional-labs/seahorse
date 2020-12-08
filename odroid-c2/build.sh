@@ -18,7 +18,7 @@ docker push faddat/sos-c2
 # New rootfs extraction
 # https://chromium.googlesource.com/external/github.com/docker/containerd/+/refs/tags/v0.2.0/docs/bundle.md
 # create the container with a temp name so that we can export it
-docker create --name tempc2 faddat/sos-c2
+docker create --name tempc2 faddat/sos-c2 /bin/bash
 
 # export it into the rootfs directory
 docker export tempc2 | tar -C ./.tmp/result-rootfs -xf -
