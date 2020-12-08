@@ -15,16 +15,27 @@ docker buildx build --tag faddat/sos-c2 --platform linux/arm64 --load --cache-fr
 # TAG AND PUSH
 docker push faddat/sos-c2
 
+# New rootfs extraction
+# https://chromium.googlesource.com/external/github.com/docker/containerd/+/refs/tags/v0.2.0/docs/bundle.md
+# create the container with a temp name so that we can export it
+docker create --name tempc2 faddat/sos-c2
+
+# export it into the rootfs directory
+docker export tempc2 | tar -C ./.tmp/result-rootfs -xf -
+
+# remove the container now that we have exported
+docker rm tempc2
+
 # EXTRACT IMAGE
 # Make a temporary directory
-rm -rf .tmp | true
-mkdir .tmp
+# rm -rf .tmp | true
+# mkdir .tmp
 
 # save the image to result-rootfs.tar
-docker save --output ./.tmp/result-rootfs.tar faddat/sos-c2
+# docker save --output ./.tmp/result-rootfs.tar faddat/sos-c2
 
 # Extract the image using docker-extract
-docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
+# docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
 
 # Set hostname while the image is just in the filesystem.
 sudo bash -c "echo sos > ./.tmp/result-rootfs/etc/hostname"
