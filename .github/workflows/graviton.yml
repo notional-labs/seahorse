@@ -33,7 +33,6 @@ jobs:
           docker buildx build --tag faddat/toolbox --platform linux/arm64 --push --cache-from faddat/toolbox:cache --cache-to faddat/toolbox:cache --progress plain .
 
   sos-full:
-    needs: sos
     runs-on: arm64
     steps:
       - name: Checkout
