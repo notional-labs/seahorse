@@ -175,4 +175,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: odroid-c2s/images/c2.img.xz
+          path: odroid-c2/images/c2.img.xz
