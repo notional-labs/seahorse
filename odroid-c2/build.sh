@@ -18,10 +18,12 @@ docker push faddat/sos-c2
 # New rootfs extraction
 # https://chromium.googlesource.com/external/github.com/docker/containerd/+/refs/tags/v0.2.0/docs/bundle.md
 # create the container with a temp name so that we can export it
-docker create --name tempc2 faddat/sos-c2
+docker create --name tempc2 faddat/sos-c2 /bin/bash
 
 # export it into the rootfs directory
-docker export tempc2 | tar -C ./.tmp/result-rootfs -xf -
+sudo rm -rf .tmp/
+mkdir -p .tmp/result-rootfs
+docker export tempc2 | tar -C .tmp/result-rootfs -xf -
 
 # remove the container now that we have exported
 docker rm tempc2
@@ -92,7 +94,7 @@ sudo mkfs.ext4 -F $(echo $LOOP)p1
 sudo mkdir -p mnt/rootfs
 sudo mount $(echo $LOOP)p1 mnt/rootfs
 sudo rsync -a ./.tmp/result-rootfs/* mnt/rootfs
-sudo umount mnt/boot mnt/rootfs
+sudo umount mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
