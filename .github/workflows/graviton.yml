@@ -29,11 +29,8 @@ jobs:
 
       - name: Build
         run: |
-          cd tooolbox
+          cd toolbox
           docker buildx build --tag faddat/toolbox --platform linux/arm64,linux/amd64 --push --cache-from faddat/toolbox:cache --cache-to faddat/toolbox:cache --progress plain .
-
-
-  
 
   base:
     runs-on: arm64
