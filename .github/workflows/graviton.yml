@@ -3,8 +3,7 @@ on: [push, pull_request]
 
 jobs:
 
-  toolbox
-  :
+  toolbox:
     runs-on: arm64
     steps:
       - name: Checkout
