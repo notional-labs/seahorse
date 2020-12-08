@@ -21,7 +21,9 @@ docker push faddat/sos-c2
 docker create --name tempc2 faddat/sos-c2 /bin/bash
 
 # export it into the rootfs directory
-docker export tempc2 | tar -C ./.tmp/result-rootfs -xf -
+sudo rm -rf .tmp/
+mkdir -p .tmp/result-rootfs
+docker export tempc2 | tar -C .tmp/result-rootfs -xf -
 
 # remove the container now that we have exported
 docker rm tempc2
