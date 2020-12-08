@@ -94,7 +94,7 @@ sudo mkfs.ext4 -F $(echo $LOOP)p1
 sudo mkdir -p mnt/rootfs
 sudo mount $(echo $LOOP)p1 mnt/rootfs
 sudo rsync -a ./.tmp/result-rootfs/* mnt/rootfs
-sudo umount mnt/boot mnt/rootfs
+sudo umount mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
 # sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
