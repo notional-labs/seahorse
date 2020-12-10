@@ -33,16 +33,14 @@ RUN useradd builduser -m && \
 
 USER builduser
 
-# YAY
+# YAY AND HNSD
 RUN cd ~/ && \
 		git clone https://aur.archlinux.org/yay.git yay && \
 		cd yay && \
-		makepkg -si --noconfirm --clean --rmdeps
-USER root
-
-# INSTALL HNSD
-USER builduser
-RUN cd ~/ && \
+		makepkg -si --noconfirm --clean --rmdeps && \
+		cd .. && \
+		rm -rf yay && \
+		cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
