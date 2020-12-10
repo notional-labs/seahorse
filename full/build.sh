@@ -22,7 +22,7 @@ set -o xtrace
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
-docker buildx build --tag sos-full --platform linux/arm64 --progress plain --cache-to faddat/sos-full:cache --cache-from faddat/sos-full:cache --load .
+docker buildx build --tag sos-full --platform linux/arm64 --progress plain --cache-to faddat/sos-full:cache --cache-from faddat/sos-full:cache --load ..
 
 # TAG AND PUSH
 docker tag sos-full faddat/sos-full
