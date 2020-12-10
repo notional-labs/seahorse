@@ -105,11 +105,11 @@ COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
 COPY ./contrib/ipfs.service /etc/systemd/system
 # Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
-COPY contrib/dns /etc/systemd/resolved.conf
+COPY ./contrib/dns /etc/systemd/resolved.conf
 # HNSD Service: In testing hnsd has been unreliable
-COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
+COPY ./contrib/hnsd.service /etc/systemd/system/hnsd.service
 # Greet Users Warmly
-COPY contrib/motd /etc/
+COPY ./contrib/motd /etc/
 
 # Enable services
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
