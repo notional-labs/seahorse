@@ -1,5 +1,3 @@
-FROM scratch
-
 # Start with nothing
 FROM scratch
 
