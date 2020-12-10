@@ -4,7 +4,7 @@ FROM scratch
 MAINTAINER jacobgadikian@gmail.com
 
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
-ADD ArchLinuxARM-odroid-c2-latest.tar.gz /
+ADD odroid-c2/ArchLinuxARM-odroid-c2-latest.tar.gz /
 
 # Pacman Keyring
 # Don't check disk space because we are in a container
@@ -33,16 +33,14 @@ RUN useradd builduser -m && \
 
 USER builduser
 
-# YAY
+# YAY AND HNSD
 RUN cd ~/ && \
 		git clone https://aur.archlinux.org/yay.git yay && \
 		cd yay && \
-		makepkg -si --noconfirm --clean --rmdeps
-USER root
-
-# INSTALL HNSD
-USER builduser
-RUN cd ~/ && \
+		makepkg -si --noconfirm --clean --rmdeps && \
+		cd .. && \
+		rm -rf yay && \
+		cd ~/ && \
 		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
