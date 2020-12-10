@@ -33,28 +33,28 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				sudo \
 				git \
 				unbound \
-                		git \ 
-                		sudo \ 
-                		base-devel \
-                		neovim \
-		        	colordiff \
-		        	tree \
-		        	unzip \
-		        	unrar \
-		        	htop \
-		        	nmap \
-		        	iftop \
-		        	iotop \
-		        	strace \
-		        	lsof \
-		        	git \
-		        	jshon \
-		        	nano \
-		        	bc \
-		        	wget \
-		        	go-ipfs \
-		        	jq \
-		        	go 
+				git \ 
+				sudo \ 
+				base-devel \
+				neovim \
+				colordiff \
+				tree \
+				unzip \
+				unrar \
+				htop \
+				nmap \
+				iftop \
+				iotop \
+				strace \
+				lsof \
+				git \
+				jshon \
+				nano \
+				bc \
+				wget \
+				go-ipfs \
+				jq \
+				go 
 
 
 # Add builduser
@@ -64,10 +64,19 @@ RUN useradd builduser -m && \
 USER builduser
 
 # YAY
-RUN cd ~/ && \
-		git clone https://aur.archlinux.org/yay.git yay && \
+RUN git clone https://aur.archlinux.org/yay.git yay && \
 		cd yay && \
-		makepkg -si --noconfirm --clean --rmdeps
+		makepkg -si --noconfirm --clean --rmdeps && \
+		cd .. && \ 
+		rm -rf yay
+
+
+RUN git clone https://github.com/faddat/hnsd-git && \
+		cd hnsd-git && \
+		makepkg -si --noconfirm --rmdeps --clean && \
+		cd .. && \
+		rm -rf hnsd-git
+
 USER root
 
 # Set System Locale
@@ -78,15 +87,6 @@ ENV LC_ALL en_US.UTF-8
 
 # build with the whole pi by default
 RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
-
-
-# INSTALL HNSD
-USER builduser
-RUN cd ~/ && \
-		git clone https://github.com/faddat/hnsd-git && \
-		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean
-USER root
 
 # Set root password to root and make sure the user changes it at next login
 RUN echo "root:root" | chpasswd && \
@@ -126,7 +126,7 @@ RUN systemctl enable firstboot && \
 		systemctl disable haveged && \
 		systemctl enable rngd && \
 		pacman -R --noconfirm haveged && \
-        echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel 
+	        echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel 
 
 
 # Add development environment dependencies
