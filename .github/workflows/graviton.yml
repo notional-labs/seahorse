@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: full/images/sos-rpi4.img.xz
+          path: full/images/sos-full.img.xz
 
   c2:
     runs-on: arm64
