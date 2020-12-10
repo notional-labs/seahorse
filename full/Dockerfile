@@ -64,14 +64,16 @@ RUN useradd builduser -m && \
 USER builduser
 
 # YAY
-RUN git clone https://aur.archlinux.org/yay.git yay && \
+RUN cd ~\ && \
+		git clone https://aur.archlinux.org/yay.git yay && \
 		cd yay && \
 		makepkg -si --noconfirm --clean --rmdeps && \
 		cd .. && \ 
 		rm -rf yay
 
-
-RUN git clone https://github.com/faddat/hnsd-git && \
+# HNSD
+RUN cd ~\ && \
+		git clone https://github.com/faddat/hnsd-git && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean && \
 		cd .. && \
