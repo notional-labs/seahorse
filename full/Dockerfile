@@ -33,28 +33,28 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				sudo \
 				git \
 				unbound \
-                git \ 
-                sudo \ 
-                base-devel \
-                neovim \
-		        colordiff \
-		        tree \
-		        unzip \
-		        unrar \
-		        htop \
-		        nmap \
-		        iftop \
-		        iotop \
-		        strace \
-		        lsof \
-		        git \
-		        jshon \
-		        nano \
-		        bc \
-		        wget \
-		        go-ipfs \
-		        jq \
-		        go 
+                		git \ 
+                		sudo \ 
+                		base-devel \
+                		neovim \
+		        	colordiff \
+		        	tree \
+		        	unzip \
+		        	unrar \
+		        	htop \
+		        	nmap \
+		        	iftop \
+		        	iotop \
+		        	strace \
+		        	lsof \
+		        	git \
+		        	jshon \
+		        	nano \
+		        	bc \
+		        	wget \
+		        	go-ipfs \
+		        	jq \
+		        	go 
 
 
 # Add builduser
@@ -89,7 +89,8 @@ RUN cd ~/ && \
 USER root
 
 # Set root password to root and make sure the user changes it at next login
-RUN echo "root:root" | chpasswd
+RUN echo "root:root" | chpasswd && \
+		passwd -e root
 
 
 # =================================================================
