@@ -73,12 +73,19 @@ fallocate -l 3G "images/c2.img"
 # loop-mount the image file so it becomes a disk
 export LOOP=$(sudo losetup --find --show images/c2.img)
 
+
+dd if=/dev/zero of=$LOOP bs=1M count=8
+
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos
 sudo parted --script $LOOP mkpart primary ext4 0% 100%
 
-# format the newly partitioned loop-mounted disk
-sudo mkfs.ext4 -F $(echo $LOOP)p1
+# Format the disk
+sudo mkfs.ext4 -O ^metadata_csum,^64bit $(echo $LOOP)p1
+
+tar -xpf ArchLinuxARM-odroid-c2-latest.tar.gz -C root
+cd root/boot
+./sd_fusing.sh $LOOP
 
 # Use the toolbox to copy the rootfs into the filesystem we formatted above.
 # * mount the disk's /boot and / partitions
