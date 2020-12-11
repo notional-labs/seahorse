@@ -6,7 +6,7 @@ set -exo pipefail
 # Print each command
 set -o xtrace
 
-# Get the 64 bit rpi rootfs for Pi 3 and 4
+# Get the 64 bit rpi rootfs for Odroid C2
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
 
 # Build the base image
@@ -73,19 +73,19 @@ fallocate -l 3G "images/c2.img"
 # loop-mount the image file so it becomes a disk
 export LOOP=$(sudo losetup --find --show images/c2.img)
 
-
-dd if=/dev/zero of=$LOOP bs=1M count=8
+# Zero the first 8 1MB blocks
+sudo dd if=/dev/zero of=$LOOP bs=1M count=8
 
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos
-sudo parted --script $LOOP mkpart primary ext4 0% 100%
+sudo parted --script $LOOP mkpart primary ext4 8M 100%
 
 # Format the disk
 sudo mkfs.ext4 -O ^metadata_csum,^64bit $(echo $LOOP)p1
 
 tar -xpf ArchLinuxARM-odroid-c2-latest.tar.gz -C root
 cd root/boot
-./sd_fusing.sh $LOOP
+sudo ./sd_fusing.sh $LOOP
 
 # Use the toolbox to copy the rootfs into the filesystem we formatted above.
 # * mount the disk's /boot and / partitions
@@ -112,5 +112,3 @@ sudo losetup -d $LOOP
 # Delete .tmp and mnt
 sudo rm -rf ./.tmp
 sudo rm -rf mnt
-
-
