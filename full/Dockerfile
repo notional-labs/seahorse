@@ -48,7 +48,6 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				strace \
 				lsof \
 				git \
-				jshon \
 				nano \
 				bc \
 				wget \
