@@ -83,20 +83,19 @@ sudo parted --script $LOOP mkpart primary ext4 8M 100%
 # Format the disk
 sudo mkfs.ext4 -O ^metadata_csum,^64bit $(echo $LOOP)p1
 
-tar -xpf ArchLinuxARM-odroid-c2-latest.tar.gz -C root
-cd root/boot
-sudo ./sd_fusing.sh $LOOP
+# might neeed sd_fusing for u-boot
+cd ./.tmp/result-rootfs/root/boot
+./sd_fusing.sh $(echo $LOOP)
+
+# tar -xpf ArchLinuxARM-odroid-c2-latest.tar.gz -C root
+# cd root/boot
+#sudo ./sd_fusing.sh $LOOP
 
 # Use the toolbox to copy the rootfs into the filesystem we formatted above.
 # * mount the disk's /boot and / partitions
 # * use rsync to copy files into the filesystem
 # make a folder so we can mount the boot partition
 # soon will not use toolbox
-
-
-# might neeed sd_fusing for u-boot
-# cd ./.tmp/result-rootfs/boot
-# ./sd_fusing.sh $(echo $LOOP)
 
 sudo mkdir -p mnt/rootfs
 sudo mount $(echo $LOOP)p1 mnt/rootfs
