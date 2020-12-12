@@ -12,6 +12,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman-key --init && \
 		pacman-key --populate archlinuxarm && \
 		pacman-db-upgrade && \
+		pacman -R --noconfirm openssh && \
 		pacman -Syyu --noconfirm git sudo base-devel archlinux-keyring \
 		ca-certificates \
 		ca-certificates-mozilla \
@@ -45,6 +46,8 @@ RUN cd ~/ && \
 		cd hnsd-git && \
 		makepkg -si --noconfirm --rmdeps --clean
 USER root
+
+
 
 
 # First Boot service
