@@ -84,7 +84,7 @@ sudo parted --script $LOOP mkpart primary ext4 8M 100%
 sudo mkfs.ext4 -O ^metadata_csum,^64bit $(echo $LOOP)p1
 
 # might neeed sd_fusing for u-boot
-cd ./.tmp/result-rootfs/root/boot
+cd ./.tmp/result-rootfs/boot
 ./sd_fusing.sh $(echo $LOOP)
 
 # tar -xpf ArchLinuxARM-odroid-c2-latest.tar.gz -C root
