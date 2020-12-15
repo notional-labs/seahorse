@@ -33,6 +33,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				dropbear \
 				unbound \ 
                 docker \
+                fakeroot \
                 git
 
 # Add builduser
