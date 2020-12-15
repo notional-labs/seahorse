@@ -34,10 +34,10 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) full/images/sos-full.img
+        run: xz -T $(nproc) images/sos-full.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: full/images/sos-full.img.xz
+          path: images/sos-full.img.xz

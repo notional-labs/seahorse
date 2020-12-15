@@ -31,10 +31,9 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				e2fsprogs \
 				dropbear \
 				sudo \
-				git \
 				unbound \
-				git \ 
 				sudo \ 
+                fish \
 				base-devel \
 				neovim \
 				colordiff \

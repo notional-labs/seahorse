@@ -100,7 +100,7 @@ RUN systemctl enable firstboot && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
 		systemctl enable hnsd && \
-		# symlink systemd-resolved stub resolver to /etc/resolv/conf
+	# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
 		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
