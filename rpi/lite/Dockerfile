@@ -27,6 +27,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				ca-certificates-utils \
 				bash-completion \
 				parted \
+                sudo \
 				rng-tools \
 				e2fsprogs \
 				dropbear \
