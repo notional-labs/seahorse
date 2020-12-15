@@ -99,7 +99,7 @@ jobs:
 
       - name: Build
         run: |
-          cd full
+          cd rpi/full
           bash build.sh
 
       - name: Compress
