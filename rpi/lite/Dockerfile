@@ -4,7 +4,7 @@ FROM scratch
 MAINTAINER jacobgadikian@gmail.com
 
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
-ADD full/ArchLinuxARM-rpi-aarch64-latest.tar.gz /
+ADD rpi/lite/ArchLinuxARM-rpi-aarch64-latest.tar.gz /
 
 # Pacman Keyring
 # Don't check disk space because we are in a container
@@ -37,6 +37,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 RUN useradd builduser -m && \
 	passwd -d builduser && \
 	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
+
 USER builduser
 
 # YAY
