@@ -1,32 +1,33 @@
 
-	         __                              __
-	   _____/ /_____ __________  ____  _____/ /_
-	  / ___/ __/ __ `/ ___/ __ \/ __ \/ ___/ __/
-	 (__  ) /_/ /_/ / /  / /_/ / /_/ / /  / /_
-	/____/\__/\__,_/_/  / .___/\____/_/   \__/
-        	           /_/
+   __  ___              ___      _            ____  ____        ___  __         __    ___             ___                  
+  /  |/  /__ ___ ____ _/ _ \____(_)  _____   / __ \/ __/ ____  / _ )/ /_ ______/ /_  / _ | ___  ___  / (_)__ ____  _______ 
+ / /|_/ / -_) _ `/ _ `/ // / __/ / |/ / -_) / /_/ /\ \  /___/ / _  / / // / __/ __/ / __ |/ _ \/ _ \/ / / _ `/ _ \/ __/ -_)
+/_/  /_/\__/\_, /\_,_/____/_/ /_/|___/\__/  \____/___/       /____/_/\_,_/_/  \__/ /_/ |_/ .__/ .__/_/_/\_,_/_//_/\__/\__/ 
+           /___/                                                                        /_/  /_/                           
 
-
-    Starport - Fast, sovereign blockchain development and deployment.
+   
+    MegaDrive OS - Self-contained Arch Linux Blurt blockchain node
     ____________________________________________________________________________
 
-    This is a self-contained blockchain development environment.
+    This build has everything you need to deploy a Blurt Witness, Full Node
+    or Condenser blog UI appliance in your local network environment.
 
-    It has everything you need to scaffold, test, and (soon) deploy
-    fully-sovereign blockcchains with zero dependencies on cloud services.
-
-    * Arch Linux
-    * Go
-    * nodejs, npm and yarn
-    * ZeroTier Virtual Network
-    * hsd p2p dns
-	* IPFS Daemon
-
-    By deploying your blockchain as hardware, your community gains independence.
+    System Requirements:
+      * 1GB RAM Minimum
+      * Ethernet Port
+      * 64-Bit Architecture 
+      * Example - Raspberry Pi, NanoPi etc 	 
+ 
+    Global distribution of privately operated, self-sovereign Blurt blockchain appliances
+    serves to harden the Blurt social media blockchain to become uncensorable and unstoppable,
+    with less overall dependencies on cloud services.
+ 
+    By deploying the Blurt blockchain as hardware, the community gains independence!
 
     To prevent kernel messages from printing to the terminal use "dmesg -n 1".
 
-
     Useful links:
-      * https://github.com/tendermint/starport
+      * https://gitlab.com/blurt/blurt
+      * https://blocks.blurtwallet.com
+      * https://blurtwallet.com
 
