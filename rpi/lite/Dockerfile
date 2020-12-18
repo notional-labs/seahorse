@@ -33,12 +33,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				dropbear \
 				unbound \ 
                 docker \
-                fakeroot \
-				# Remove at the next refactor
-
-
-
-
+                fakeroot 
 
 
 # Set System Locale, set build config, get rid of the builduser
@@ -64,7 +59,6 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-COPY ./contrib/ipfs.service /etc/systemd/system
 # Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
 COPY ./contrib/dns /etc/systemd/resolved.conf
 # HNSD Service: In testing hnsd has been unreliable
