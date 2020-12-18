@@ -43,7 +43,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 # Set System Locale, set build config, get rid of the builduser
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
-		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf && \
+		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 		 
 ENV LC_ALL en_US.UTF-8
 
