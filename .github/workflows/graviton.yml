@@ -63,13 +63,13 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/sos-lite.img
+        run: xz -T $(nproc) rpi/lite/images/sos-lite.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/sos-lite.img.xz
+          path: rpi/lite/images/sos-lite.img.xz
 
 
 
@@ -103,13 +103,13 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/sos-full.img
+        run: xz -T $(nproc) rpi/full/images/sos-full.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/sos-full.img.xz
+          path: rpi/full/images/sos-full.img.xz
 
   c2:
     runs-on: arm64
