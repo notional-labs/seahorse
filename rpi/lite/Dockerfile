@@ -27,14 +27,15 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				ca-certificates-utils \
 				bash-completion \
 				parted \
-                sudo \
+                		sudo \
 				rng-tools \
 				e2fsprogs \
 				dropbear \
 				unbound \ 
-                docker \
-                fakeroot \
-                git
+                		docker \
+                		fakeroot \
+                		git \
+				binutils
 
 # Add builduser
 RUN useradd builduser -m && \
@@ -62,14 +63,15 @@ RUN cd ~/ && \
 USER root
 
 
-# Set System Locale
+# Set System Locale, set build config
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
-		 locale-gen
+		 locale-gen && \
+		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf && \
+		 userdel builduser
+		 
 ENV LC_ALL en_US.UTF-8
 
 
-# build with the whole pi by default
-RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 
 # Set root password to root and make sure the user changes it at next login
 RUN echo "root:root" | chpasswd && \
@@ -127,4 +129,4 @@ RUN rm -rf \
 		/home/*/.cache \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
 		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf && \
-        systemctl enable docker
+        	systemctl enable docker
