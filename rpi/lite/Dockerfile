@@ -36,6 +36,8 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
                 		fakeroot \
                 		git \
 				binutils \
+				# Remove at the next refactor
+				base-devel \
 				make
 
 # Add builduser
