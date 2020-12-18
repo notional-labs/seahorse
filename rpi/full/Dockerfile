@@ -83,12 +83,10 @@ USER root
 # Set System Locale
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
-         userdel builduser 
+         userdel builduser && \
+         sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 ENV LC_ALL en_US.UTF-8
 
-
-# build with the whole pi by default
-RUN sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 
 # Set root password to root and make sure the user changes it at next login
 RUN echo "root:root" | chpasswd && \
