@@ -35,7 +35,8 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
                 		docker \
                 		fakeroot \
                 		git \
-				binutils
+				binutils \
+				make
 
 # Add builduser
 RUN useradd builduser -m && \
@@ -63,7 +64,7 @@ RUN cd ~/ && \
 USER root
 
 
-# Set System Locale, set build config
+# Set System Locale, set build config, get rid of the builduser
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
 		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf && \
@@ -111,8 +112,8 @@ RUN systemctl enable firstboot && \
 		systemctl disable haveged && \
 		systemctl enable rngd && \
 		pacman -R --noconfirm haveged base-devel && \
-	    echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel && \
-        echo "ipfs init" /usr/local/bin/firstboot.sh
+	    	echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel && \
+        	echo "ipfs init" /usr/local/bin/firstboot.sh
 
 
 # Remove cruft and let pacman check for free disk space
