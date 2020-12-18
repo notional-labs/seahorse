@@ -27,50 +27,24 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				ca-certificates-utils \
 				bash-completion \
 				parted \
-                		sudo \
+                sudo \
 				rng-tools \
 				e2fsprogs \
 				dropbear \
 				unbound \ 
-                		docker \
-                		fakeroot \
-                		git \
-				binutils \
+                docker \
+                fakeroot \
 				# Remove at the next refactor
-				base-devel \
-				make
 
-# Add builduser
-RUN useradd builduser -m && \
-	passwd -d builduser && \
-	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 
-USER builduser
 
-# YAY
-RUN cd ~/ && \
-		git clone https://aur.archlinux.org/yay.git yay && \
-		cd yay && \
-		makepkg -si --noconfirm --clean --rmdeps && \
-		cd .. && \ 
-		rm -rf yay
 
-# HNSD
-RUN cd ~/ && \
-		git clone https://github.com/faddat/hnsd-git && \
-		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean && \
-		cd .. && \
-		rm -rf hnsd-git
-
-USER root
 
 
 # Set System Locale, set build config, get rid of the builduser
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
 		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf && \
-		 userdel builduser
 		 
 ENV LC_ALL en_US.UTF-8
 
@@ -94,7 +68,6 @@ COPY ./contrib/ipfs.service /etc/systemd/system
 # Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
 COPY ./contrib/dns /etc/systemd/resolved.conf
 # HNSD Service: In testing hnsd has been unreliable
-COPY ./contrib/hnsd.service /etc/systemd/system/hnsd.service
 # Greet Users Warmly
 COPY ./contrib/motd /etc/
 
@@ -106,16 +79,15 @@ RUN systemctl enable firstboot && \
 		chmod +x /usr/bin/hnsd && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
-		systemctl enable hnsd && \
 	# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
 		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		systemctl disable haveged && \
 		systemctl enable rngd && \
-		pacman -R --noconfirm haveged base-devel && \
-	    	echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel && \
-        	echo "ipfs init" /usr/local/bin/firstboot.sh
+		pacman -R --noconfirm haveged && \
+	    echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel && \
+        echo "ipfs init" /usr/local/bin/firstboot.sh
 
 
 # Remove cruft and let pacman check for free disk space
@@ -132,4 +104,4 @@ RUN rm -rf \
 		/home/*/.cache \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
 		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf && \
-        	systemctl enable docker
+        systemctl enable docker
