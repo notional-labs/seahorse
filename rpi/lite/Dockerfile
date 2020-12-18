@@ -27,13 +27,17 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				ca-certificates-utils \
 				bash-completion \
 				parted \
-                sudo \
+				sudo \
 				rng-tools \
 				e2fsprogs \
 				dropbear \
 				unbound \ 
-                docker \
-                fakeroot 
+		                docker \
+				fakeroot 
+
+
+
+
 
 
 # Set System Locale, set build config, get rid of the builduser
@@ -80,9 +84,7 @@ RUN systemctl enable firstboot && \
 		systemctl disable haveged && \
 		systemctl enable rngd && \
 		pacman -R --noconfirm haveged && \
-	    echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel && \
-        echo "ipfs init" /usr/local/bin/firstboot.sh
-
+		echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel 
 
 # Remove cruft and let pacman check for free disk space
 RUN rm -rf \
@@ -98,4 +100,4 @@ RUN rm -rf \
 		/home/*/.cache \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
 		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf && \
-        systemctl enable docker
+		systemctl enable docker
