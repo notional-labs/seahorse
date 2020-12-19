@@ -36,10 +36,6 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				fakeroot 
 
 
-
-
-
-
 # Set System Locale, set build config, get rid of the builduser
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
