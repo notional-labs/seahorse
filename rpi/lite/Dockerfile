@@ -65,6 +65,9 @@ COPY ./contrib/dns /etc/systemd/resolved.conf
 # Greet Users Warmly
 COPY ./contrib/motd /etc/
 
+# Enable Memory cgroups
+COPY ./rpi/cmdline.txt /boot/cmdline.txt
+
 # Enable services
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN systemctl enable firstboot && \
