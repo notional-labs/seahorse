@@ -24,7 +24,8 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		dropbear \
 		sudo \
 		git \
-		unbound
+		unbound \
+		docker
 
 # Add builduser and give wheel group sudos
 RUN useradd builduser -m && \
@@ -84,7 +85,8 @@ RUN systemctl enable firstboot && \
 		systemctl disable haveged && \
 		systemctl enable rngd && \
 		pacman -R --noconfirm haveged && \
-		echo "root:root" | chpasswd
+		echo "root:root" | chpasswd && \
+		userdel builduser
 
 
 # =================================================================
