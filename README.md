@@ -16,6 +16,7 @@ This image represents an opinionated approach to the construction of distributed
     * Docker
     * Go
     * Node.js
+    * Zerotier
 * Lite
   * Docker
   * Docker-compose
