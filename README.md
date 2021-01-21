@@ -14,6 +14,8 @@ This image represents an opinionated approach to the construction of distributed
     * IPFS
     * Gox
     * Docker
+    * Go
+    * Node.js
 * Lite
   * Docker
   * Docker-compose
