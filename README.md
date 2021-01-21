@@ -5,7 +5,21 @@ Peer to peer applications tend to involve a complex stack and are therefore diff
 
 This image represents an opinionated approach to the construction of distributed and p2p applications.
 
-### Supported Devices
+### Variants
+
+* Full
+  * The full image is a development environment with P2P development tooling ready to go:
+    * Starport
+    * HNS or HNSD
+    * IPFS
+    * Gox
+    * Docker
+* Lite
+  * Docker
+  * Docker-compose
+
+### Supported Devices & Platforms
+SOS targets ARM64 and AMD64 processors. 
 
 * Raspberry Pi 3
 * Raspberry Pi 4
@@ -14,9 +28,9 @@ This image represents an opinionated approach to the construction of distributed
 [Arch Linux](archlinux.org) was a very deliberate choice: In contrast to other distributions, arch packages are always up-to-date. Additionally, the arch user repository offers a wide variety of easy to install packages contributed by the community.
 
 
-## Vital Information:
+### Vital Information:
 
-- designed to be used with your favorite CI system
+- designed to be consumed by your favorite CI system and used in the production of ready made system images.
 
   - defaults to GitHub Actions
 
