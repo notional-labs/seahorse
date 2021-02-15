@@ -17,8 +17,8 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman-db-upgrade && \
 		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
 		pacman -Syy --noconfirm wget && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-2/linux-raspberrypi4-aarch64-5.4.72-2-aarch64.pkg.tar.xz && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.72-2/linux-raspberrypi4-aarch64-headers-5.4.72-2-aarch64.pkg.tar.xz && \
+		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.79-2/linux-raspberrypi4-aarch64-5.4.79-2-aarch64.pkg.tar.xz && \
+		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.79-2/linux-raspberrypi4-aarch64-headers-5.4.79-2-aarch64.pkg.tar.xz && \
 		pacman -U --noconfirm *.tar.xz && \
 		rm *.tar.xz && \
 		pacman --noconfirm -Syyu \
