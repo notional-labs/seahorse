@@ -80,7 +80,6 @@ RUN systemctl enable firstboot && \
 		# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
-		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 		echo "root:root" | chpasswd && \
 		userdel builduser
 
