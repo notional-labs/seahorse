@@ -19,7 +19,6 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		ca-certificates-utils \
 		bash-completion \
 		parted \
-		rng-tools \
 		e2fsprogs \
 		dropbear \
 		sudo \
@@ -82,9 +81,6 @@ RUN systemctl enable firstboot && \
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
 		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
-		systemctl disable haveged && \
-		systemctl enable rngd && \
-		pacman -R --noconfirm haveged && \
 		echo "root:root" | chpasswd && \
 		userdel builduser
 
