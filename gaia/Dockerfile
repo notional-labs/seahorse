@@ -12,7 +12,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         pacman -Syyu --noconfirm net-tools ufw vnstat iftop zerotier-one wget protobuf git && \
         # Install Gaia
         wget https://github.com/cosmos/gaia/releases/download/v4.0.5/gaiad-4.0.5-linux-arm64 && \
-        mv gaiad-4.0.5-linux-arm64 /usr/bin && \
+        mv gaiad-4.0.5-linux-arm64 /usr/bin/gaiad && \
         chmod +x /usr/bin/gaiad && \
         systemctl enable gaia.service && \
         sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
