@@ -7,7 +7,7 @@ set -exo pipefail
 set -o xtrace
 
 # Build the system image in Docker
-docker buildx build --file akash/Dockerfile --platform linux/arm64 --tag akash --load --progress plain .
+docker buildx build --platform linux/arm64 --tag akash --load --progress plain .
 
 # docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
@@ -66,10 +66,10 @@ rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 4G "images/akash.img"
+fallocate -l 4G "images/gaia.img"
 
 # loop-mount the image file so it becomes a disk
-export LOOP=$(sudo losetup --find --show images/akash.img)
+export LOOP=$(sudo losetup --find --show images/gaia.img)
 
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos

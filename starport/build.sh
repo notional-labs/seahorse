@@ -7,7 +7,7 @@ set -exo pipefail
 set -o xtrace
 
 # Build the system image in Docker
-docker buildx build --file starport/Dockerfile --platform linux/arm64 --tag starport --load --progress plain .
+docker buildx build --platform linux/arm64 --tag starport --load --progress plain .
 
 # docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
