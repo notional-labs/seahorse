@@ -2,7 +2,7 @@ FROM faddat/sos-lite
 
 COPY motd /etc/motd
 
-COPY 
+COPY akash.service /etc/systemd/system/akash.service
 
 # Go Env Vars
 ENV PATH=$PATH:/root/go/bin
@@ -42,7 +42,6 @@ USER root
 # Configure the first boot script
 RUN echo "sleep 80" >> /usr/local/bin/firstboot.sh && \
         echo "runuser -l akash -c 'akash init --chain-id akashnet-2 akashpi-$RANDOM'" >> /usr/local/bin/firstboot.sh && \
+        echo "curl -s "$AKASH_NET/genesis.json" > $HOME/.akash/config/genesis.json" && \
         echo "systemctl enable akash" >> /usr/local/bin/firstboot.sh && \
-        echo "systemctl start akash" >> /usr/local/bin/firstboot.sh && \
-        echo "curl -s "$AKASH_NET/genesis.json" > $HOME/.akash/config/genesis.json"
-        
+        echo "systemctl start akash" >> /usr/local/bin/firstboot.sh 
