@@ -30,13 +30,19 @@ RUN useradd akash -m && \
 	passwd -d akash && \
 USER akash
 
-# Install Akash
+# Install Akash as Akash user
 RUN echo 'export AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/mainnet' > /home/akash/.bash_profile && \
         echo 'export KASH_VERSION="$(curl -s "$AKASH_NET/version.txt")' /home/akash/.bash_profile && \
         echo 'export AKASH_CHAIN_ID="$(curl -s "$AKASH_NET/chain-id.txt")' /home/akash/.bash_profile && \
         echo 'PATH=$PATH:/home/akash/.bin' /home/akash/.bash_profile && \
         curl https://raw.githubusercontent.com/ovrclk/akash/master/godownloader.sh | sh -s -- "$AKASH_VERSION" && \
 
+USER root
+
 # Configure the first boot script
 RUN echo "sleep 80" >> /usr/local/bin/firstboot.sh && \
-        echo akash init --chain-id akashnet-2 akashpi-$RANDOM >> /usr/local/bin/firstboot.sh
+        echo "runuser -l akash -c 'akash init --chain-id akashnet-2 akashpi-$RANDOM'" >> /usr/local/bin/firstboot.sh && \
+        echo "systemctl enable akash" >> /usr/local/bin/firstboot.sh && \
+        echo "systemctl start akash" >> /usr/local/bin/firstboot.sh && \
+        echo "curl -s "$AKASH_NET/genesis.json" > $HOME/.akash/config/genesis.json"
+        
