@@ -3,7 +3,7 @@ name: iris
 on: [push, pull_request]
 
 jobs:
-  sos:
+  iris:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -3,7 +3,7 @@ name: starport
 on: [push, pull_request]
 
 jobs:
-  sos:
+  starport:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -1,7 +1,5 @@
 FROM faddat/sos-lite
 
-COPY motd /etc/motd
-
 # Go Env Vars
 ENV PATH=$PATH:/root/go/bin
 ENV GOPATH=/root/go

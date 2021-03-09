@@ -1,6 +1,6 @@
 FROM faddat/sos-lite
 
-COPY motd /etc/motd
+# COPY motd /etc/motd
 
 COPY akash.service /etc/systemd/system/akash.service
 

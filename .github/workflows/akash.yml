@@ -3,7 +3,7 @@ name: akash
 on: [push, pull_request]
 
 jobs:
-  sos:
+  akash:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

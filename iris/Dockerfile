@@ -1,8 +1,8 @@
 FROM faddat/sos-lite
 
-COPY motd /etc/motd
+# COPY motd /etc/motd
 
-COPY 
+COPY iris.service /etc/systemd/system/iris.service 
 
 # Go Env Vars
 ENV PATH=$PATH:/root/go/bin

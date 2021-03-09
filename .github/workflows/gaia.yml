@@ -3,7 +3,7 @@ name: gaia
 on: [push, pull_request]
 
 jobs:
-  sos:
+  gaia:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
