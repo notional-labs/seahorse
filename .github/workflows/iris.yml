@@ -1,4 +1,4 @@
-name: gaia
+name: iris
 
 on: [push, pull_request]
 
@@ -29,15 +29,15 @@ jobs:
 
       - name: Build
         run: |
-          cd gaia
+          cd iris
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/gaia.img
+        run: xz -T $(nproc) images/iris.img
     
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/gaia.img.xz
+          path: images/iris.img.xz

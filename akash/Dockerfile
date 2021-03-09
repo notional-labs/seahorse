@@ -39,4 +39,4 @@ RUN echo 'export AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/
 
 # Configure the first boot script
 RUN echo "sleep 80" >> /usr/local/bin/firstboot.sh && \
-        echo "akashd init akashpi$RANDOM" >> /usr/local/bin/firstboot.sh
+        echo akash init --chain-id akashnet-2 akashpi-$RANDOM >> /usr/local/bin/firstboot.sh
