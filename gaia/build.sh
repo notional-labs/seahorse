@@ -7,7 +7,7 @@ set -exo pipefail
 set -o xtrace
 
 # Build the system image in Docker
-docker buildx build --file starport/Dockerfile --platform linux/arm64 --tag starport --load --progress plain .
+docker buildx build --file akash/Dockerfile --platform linux/arm64 --tag akash --load --progress plain .
 
 # docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
@@ -24,7 +24,7 @@ mkdir .tmp/
 # docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox rm -rf ./.tmp/result-rootfs
 
 # save the image to result-rootfs.tar
-docker save --output ./.tmp/result-rootfs.tar starport
+docker save --output ./.tmp/result-rootfs.tar gaia
 
 # Extract the image using docker-extract
 docker run --rm --tty --volume $(pwd)/./.tmp:/root/./.tmp --workdir /root/./.tmp/.. faddat/toolbox /tools/docker-extract --root ./.tmp/result-rootfs  ./.tmp/result-rootfs.tar
@@ -66,10 +66,10 @@ rm -rf images || true
 mkdir -p images
 
 # Make the image file
-fallocate -l 5G "images/starport.img"
+fallocate -l 4G "images/akash.img"
 
 # loop-mount the image file so it becomes a disk
-export LOOP=$(sudo losetup --find --show images/starport.img)
+export LOOP=$(sudo losetup --find --show images/akash.img)
 
 # partition the loop-mounted disk
 sudo parted --script $LOOP mklabel msdos

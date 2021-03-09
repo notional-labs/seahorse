@@ -1,4 +1,4 @@
-name: starport
+name: akash
 
 on: [push, pull_request]
 
@@ -29,15 +29,15 @@ jobs:
 
       - name: Build
         run: |
-          cd starport
+          cd akash
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/starport.img
+        run: xz -T $(nproc) images/akash.img
     
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/starport.img.xz
+          path: images/akash.img.xz

@@ -33,7 +33,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				e2fsprogs \
 				dropbear \
 				unbound \ 
-		                docker \
+		        docker \
 				fakeroot 
 
 

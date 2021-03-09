@@ -1,0 +1,16 @@
+# /etc/systemd/system/akash.service
+[Unit]
+Description=Cosmos akash Node
+After=firstboot.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/root/.bin/akash start
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target

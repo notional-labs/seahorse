@@ -1,4 +1,4 @@
-name: starport
+name: gaia
 
 on: [push, pull_request]
 
@@ -29,15 +29,15 @@ jobs:
 
       - name: Build
         run: |
-          cd starport
+          cd gaia
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/starport.img
+        run: xz -T $(nproc) images/gaia.img
     
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/starport.img.xz
+          path: images/gaia.img.xz
