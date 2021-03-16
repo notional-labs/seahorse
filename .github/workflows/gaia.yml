@@ -40,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/gaia.img.xz
+          path: gaia/images/gaia.img.xz

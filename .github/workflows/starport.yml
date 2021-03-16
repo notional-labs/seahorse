@@ -33,11 +33,11 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/starport.img
+        run: xz -T $(nproc) starport/images/starport.img
     
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: images/starport.img.xz
+          path: starport/images/starport.img.xz
