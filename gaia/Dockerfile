@@ -15,6 +15,8 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         mv gaiad-4.1.0-linux-arm64 /usr/bin/gaiad && \
         chmod +x /usr/bin/gaiad && \
         systemctl enable gaia.service && \
+	echo 'INIT=gaiad init gaiapi$RANDOM' >> /usr/local/bin/firstboot.sh && \
+	echo 'sudo -H -u gaia bash -c $INIT' >> /usr/local/bin/firstboot.sh && \
         sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 
 
