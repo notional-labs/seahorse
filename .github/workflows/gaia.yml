@@ -33,7 +33,7 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) images/gaia.img
+        run: xz -T $(nproc) gaia/images/gaia.img
     
 
       - name: Upload image
