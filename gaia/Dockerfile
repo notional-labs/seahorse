@@ -12,7 +12,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         pacman -Syyu --noconfirm wget sudo && \
         # Install Gaia
         wget https://github.com/cosmos/gaia/releases/download/v4.1.0/gaiad-v4.1.0-linux-arm64 && \
-        mv gaiad-4.1.0-linux-arm64 /usr/bin/gaiad && \
+        mv gaiad-v4.1.0-linux-arm64 /usr/bin/gaiad && \
         chmod +x /usr/bin/gaiad && \
         systemctl enable gaia.service && \
 	echo 'INIT=gaiad init gaiapi$RANDOM' >> /usr/local/bin/firstboot.sh && \
