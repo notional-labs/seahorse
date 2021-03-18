@@ -13,10 +13,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         mkdir /root/go && \
         git clone https://github.com/tendermint/starport && \
         cd starport && \
-        make && \
-        mv build/starport /usr/bin && \
-        chmod +x /usr/bin/starport && \
-        mkdir /root/go && \
+        make install && \
         echo "export PATH=$PATH:/root/go/bin" > /root/.bash_profile && \
         echo "export GOPATH=/root/go" >> /root/.bash_profile && \
         sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
