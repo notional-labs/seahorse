@@ -1,5 +1,5 @@
 # SOS
-[![gaia](https://github.com/faddat/sos/actions/workflows/gaia.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/gaia.yml)
+[![gaia](https://github.com/faddat/sos/actions/workflows/gaia.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/gaia.yml) [![graviton](https://github.com/faddat/sos/actions/workflows/graviton.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/graviton.yml)
 
 Arch-based Linux OS for P2P apps. 
 
