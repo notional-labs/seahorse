@@ -1,4 +1,6 @@
 # SOS
+[![gaia](https://github.com/faddat/sos/actions/workflows/gaia.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/gaia.yml)
+
 Arch-based Linux OS for P2P apps. 
 
 Peer to peer applications tend to involve a complex stack and are therefore difficult to begin developing. SOS provides you with a complete development environment, As well as patterns and ideas to follow.
