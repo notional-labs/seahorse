@@ -1,10 +1,10 @@
 name: akash
 
-on: [push, pull_request]
+on: workflow_dispatch
 
 jobs:
   akash:
-    runs-on: ubuntu-latest
+    runs-on: arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v2
