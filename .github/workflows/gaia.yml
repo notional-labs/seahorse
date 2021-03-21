@@ -39,5 +39,5 @@ jobs:
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
-          name: sos
+          name: gaia
           path: gaia/images/gaia.img.xz
