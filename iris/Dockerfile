@@ -13,7 +13,7 @@ ENV GOPATH=/root/go
 # Download starport, too
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         # Dependencies & monitoring tools
-        pacman -Syyu --noconfirm vnstat base-devel iftop go git && \
+        pacman -Syyu --noconfirm vnstat base-devel iftop mom go git && \
         mkdir /root/go && \
         git clone https://github.com/irisnet/irishub && \
         cd irishub && \
