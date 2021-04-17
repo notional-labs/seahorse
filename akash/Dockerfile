@@ -13,7 +13,7 @@ ENV GOPATH=/root/go
 # Download starport, too
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         # Dependencies & monitoring tools
-        pacman -Syyu --noconfirm net-tools ufw vnstat iftop zerotier-one wget protobuf git && \
+        pacman -Syyu --noconfirm net-tools ufw vnstat unzip base-devel iftop zerotier-one wget protobuf git && \
         mkdir /root/go && \
         curl https://get.starport.network/starport! | bash && \
         echo "export PATH=$PATH:/root/go/bin" > /root/.bash_profile && \
