@@ -13,7 +13,7 @@ ENV GOPATH=/root/go
 # Download starport, too
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         # Dependencies & monitoring tools
-        pacman -Syyu --noconfirm net-tools ufw vnstat unzip base-devel iftop zerotier-one wget protobuf git && \
+        pacman -Syyu --noconfirm net-tools curl ufw vnstat unzip base-devel iftop zerotier-one wget protobuf git && \
         mkdir /root/go && \
         curl https://get.starport.network/starport! | bash && \
         echo "export PATH=$PATH:/root/go/bin" > /root/.bash_profile && \
@@ -27,7 +27,7 @@ USER akash
 
 # Install Akash as Akash user
 RUN echo 'export AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/mainnet' > /home/akash/.bash_profile && \
-        echo 'export KASH_VERSION="$(curl -s "$AKASH_NET/version.txt")' /home/akash/.bash_profile && \
+        echo 'export AKASH_VERSION="$(curl -s "$AKASH_NET/version.txt")' /home/akash/.bash_profile && \
         echo 'export AKASH_CHAIN_ID="$(curl -s "$AKASH_NET/chain-id.txt")' /home/akash/.bash_profile && \
         echo 'PATH=$PATH:/home/akash/.bin' /home/akash/.bash_profile && \
         curl https://raw.githubusercontent.com/ovrclk/akash/master/godownloader.sh | sh -s -- "$AKASH_VERSION" && \
