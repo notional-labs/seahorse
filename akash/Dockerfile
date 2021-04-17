@@ -15,12 +15,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         # Dependencies & monitoring tools
         pacman -Syyu --noconfirm net-tools ufw vnstat iftop zerotier-one wget protobuf git && \
         mkdir /root/go && \
-        git clone https://github.com/tendermint/starport && \
-        cd starport && \
-        make && \
-        mv build/starport /usr/bin && \
-        chmod +x /usr/bin/starport && \
-        mkdir /root/go && \
+        curl https://get.starport.network/starport! | bash && \
         echo "export PATH=$PATH:/root/go/bin" > /root/.bash_profile && \
         echo "export GOPATH=/root/go" >> /root/.bash_profile && \
         sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
