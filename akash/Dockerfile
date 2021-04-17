@@ -22,7 +22,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 
 # Add Akash user
 RUN useradd akash -m && \
-	passwd -d akash && \
+	passwd -d akash
 USER akash
 
 # Install Akash as Akash user
