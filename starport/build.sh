@@ -6,6 +6,8 @@ set -exo pipefail
 # Print each command
 set -o xtrace
 
+docker image prune -f
+
 # Build the system image in Docker
 docker buildx build --platform linux/arm64 --tag starport --load --progress plain .
 
