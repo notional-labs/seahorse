@@ -10,8 +10,8 @@ ENV GOPATH=/root/go
 
 # Akash Env
 ENV AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/mainnet"
-ENV AKASH_VERSION="$(curl -s "$AKASH_NET/version.txt")
-ENV AKASH_CHAIN_ID="$(curl -s "$AKASH_NET/chain-id.txt")
+ENV AKASH_VERSION="$(curl -s https://raw.githubusercontent.com/ovrclk/net/master/mainnet/version.txt)"
+ENV AKASH_CHAIN_ID="$(curl -s https://raw.githubusercontent.com/ovrclk/net/master/mainnet/chain-id.txt)"
 
 
 # Disk space thing
