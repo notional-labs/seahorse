@@ -31,7 +31,7 @@ RUN useradd akash -m && \
 USER akash
 
 # Install Akash as Akash user
-RUN echo 'export AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/mainnet' > /home/akash/.bash_profile && \
+RUN echo 'export AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/mainnet"' > /home/akash/.bash_profile && \
         echo 'export AKASH_VERSION="$(curl -s "$AKASH_NET/version.txt")' /home/akash/.bash_profile && \
         echo 'export AKASH_CHAIN_ID="$(curl -s "$AKASH_NET/chain-id.txt")' /home/akash/.bash_profile && \
         echo 'PATH=$PATH:/home/akash/.bin' /home/akash/.bash_profile && \
