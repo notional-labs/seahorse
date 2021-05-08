@@ -35,7 +35,7 @@ RUN echo 'export AKASH_NET="https://raw.githubusercontent.com/ovrclk/net/master/
         echo 'export AKASH_VERSION="$(curl -s "$AKASH_NET/version.txt")' /home/akash/.bash_profile && \
         echo 'export AKASH_CHAIN_ID="$(curl -s "$AKASH_NET/chain-id.txt")' /home/akash/.bash_profile && \
         echo 'PATH=$PATH:/home/akash/.bin' /home/akash/.bash_profile && \
-        curl https://raw.githubusercontent.com/ovrclk/akash/master/godownloader.sh | sh -s -- "$AKASH_VERSION"
+        curl https://raw.githubusercontent.com/ovrclk/akash/master/godownloader.sh | sh
 
 USER root
 
