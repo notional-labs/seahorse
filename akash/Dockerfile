@@ -18,7 +18,7 @@ ENV AKASH_CHAIN_ID="$(curl -s https://raw.githubusercontent.com/ovrclk/net/maste
 # Download starport, too
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         # Dependencies & monitoring tools
-        pacman -Syyu --noconfirm net-tools curl ufw vnstat unzip base-devel iftop zerotier-one wget protobuf git && \
+        pacman -Syyu --noconfirm net-tools curl ufw go rust vnstat unzip base-devel iftop zerotier-one wget protobuf git && \
         mkdir /root/go && \
         curl https://get.starport.network/starport! | bash && \
         echo "export PATH=$PATH:/root/go/bin" > /root/.bash_profile && \
