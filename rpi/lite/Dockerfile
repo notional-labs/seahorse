@@ -34,11 +34,6 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				dropbear \
 				unbound \ 
 		        	docker \
-				base-devel \
-				git \
-				go \
-				protobuf \
-				go-ipfs \
 				fakeroot 
 
 
