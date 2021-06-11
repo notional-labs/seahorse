@@ -42,7 +42,7 @@ jobs:
           path: rpi/lite/images/sos-lite.img.xz
 
   c2:
-    runs-on: arm64
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
