@@ -76,7 +76,7 @@ RUN systemctl enable firstboot && \
 # 		chmod +x /usr/bin/hnsd && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
-		systemctl enable hnsd && \
+#		systemctl enable hnsd && \
 		# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
