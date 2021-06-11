@@ -80,8 +80,7 @@ RUN systemctl enable firstboot && \
 		# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
-		echo "root:root" | chpasswd && \
-# 		userdel builduser
+		echo "root:root" | chpasswd
 
 
 # =================================================================
