@@ -14,4 +14,9 @@ jobs:
         uses: jgehrcke/github-repo-stats@HEAD
         with:
           ghpagesprefix: https://faddat.github.io/sos
+          # Required token privileges: Can read the target
+          # repo, and can push to the repository this
+          # workflow file lives in (to store data and
+          # the report files).
+          ghtoken: ${{ secrets.ghrs_github_api_token }}
 
