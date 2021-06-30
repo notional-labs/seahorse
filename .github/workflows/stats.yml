@@ -12,3 +12,6 @@ jobs:
     steps:
       - name: run-ghrs
         uses: jgehrcke/github-repo-stats@v1.1.0
+        with:
+          ghpagesprefix: https://faddat.github.io/sos
+
