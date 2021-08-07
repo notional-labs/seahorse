@@ -11,7 +11,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
         # Dependencies & monitoring tools
         pacman -Syyu --noconfirm wget sudo && \
         # Install Gaia
-        wget https://github.com/cosmos/gaia/releases/download/v5.0.4/gaiad-v5.0.4-linux-arm64 && \
+        wget https://github.com/cosmos/gaia/releases/download/v5.0.5/gaiad-v5.0.5-linux-arm64 && \
         mv gaiad-v5.0.4-linux-arm64 /usr/bin/gaiad && \
         chmod +x /usr/bin/gaiad && \
         systemctl enable gaia.service && \
