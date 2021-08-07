@@ -46,9 +46,9 @@ ENV LC_ALL en_US.UTF-8
 
 
 
-# Set root password to root and make sure the user changes it at next login
-RUN echo "root:root" | chpasswd && \
-		passwd -e root
+# Set root password to root
+RUN echo "root:root" | chpasswd
+
 
 
 # =================================================================
@@ -60,9 +60,7 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-# Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
 COPY ./contrib/dns /etc/systemd/resolved.conf
-# HNSD Service: In testing hnsd has been unreliable
 # Greet Users Warmly
 COPY ./contrib/motd /etc/
 
