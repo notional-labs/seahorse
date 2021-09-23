@@ -22,7 +22,7 @@ set -o xtrace
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 
 # BUILD IMAGE
-docker buildx build --tag sos-lite --file Dockerfile --platform linux/arm64 --progress plain --cache-to ghcr.io/faddat/sos-lite:cache --cache-from ghcr.io/faddat/sos-lite:cache --load ../..
+docker buildx build --tag sos-lite --file Dockerfile --platform linux/arm64 --progress plain --load ../..
 
 # TAG AND PUSH
 docker tag sos-lite ghcr.io/faddat/sos-lite
