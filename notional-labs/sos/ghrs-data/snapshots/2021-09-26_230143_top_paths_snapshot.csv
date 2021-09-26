@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/notional-labs/sos,32,11
+/notional-labs/sos/actions,26,3
+/notional-labs/sos/actions/workflows/graviton.yml,18,2
+/notional-labs/sos/actions/workflows/sos-full.yml,12,1
+/notional-labs/sos/actions/runs/1264669819,11,2
+/notional-labs/sos/actions/runs/1264956093,8,4
+/notional-labs/sos/actions/workflows/odroid-c2.yml,6,1
+/notional-labs/sos/tree/master/rpi/lite,5,3
+/notional-labs/sos/actions/runs/1264669819/workflow,5,2
+/notional-labs/sos/issues,5,2
