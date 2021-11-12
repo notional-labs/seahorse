@@ -17,8 +17,8 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman-db-upgrade && \
 		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
 		pacman -Syy --noconfirm wget && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.79-2/linux-raspberrypi4-aarch64-5.4.79-2-aarch64.pkg.tar.xz && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.79-2/linux-raspberrypi4-aarch64-headers-5.4.79-2-aarch64.pkg.tar.xz && \
+		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.10.17-1/linux-raspberrypi4-aarch64-5.10.17-1-aarch64.pkg.tar.xz && \
+		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.10.17-1/linux-raspberrypi4-aarch64-headers-5.10.17-1-aarch64.pkg.tar.xz && \
 		pacman -U --noconfirm *.tar.xz && \
 		rm *.tar.xz && \
 		pacman --noconfirm -Syyu \
@@ -33,7 +33,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				e2fsprogs \
 				dropbear \
 				unbound \ 
-		        docker \
+		        	docker \
 				fakeroot 
 
 
@@ -46,9 +46,9 @@ ENV LC_ALL en_US.UTF-8
 
 
 
-# Set root password to root and make sure the user changes it at next login
-RUN echo "root:root" | chpasswd && \
-		passwd -e root
+# Set root password to root
+RUN echo "root:root" | chpasswd
+
 
 
 # =================================================================
@@ -60,9 +60,7 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-# Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
 COPY ./contrib/dns /etc/systemd/resolved.conf
-# HNSD Service: In testing hnsd has been unreliable
 # Greet Users Warmly
 COPY ./contrib/motd /etc/
 

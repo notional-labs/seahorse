@@ -27,25 +27,25 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		docker
 
 # Add builduser and give wheel group sudos
-RUN useradd builduser -m && \
-	passwd -d builduser && \
-	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
-	echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
+#RUN useradd builduser -m && \
+#	passwd -d builduser && \
+#	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
+#	echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 
-USER builduser
+#USER builduser
 
 # YAY AND HNSD
-RUN cd ~/ && \
-		git clone https://aur.archlinux.org/yay.git yay && \
-		cd yay && \
-		makepkg -si --noconfirm --clean --rmdeps && \
-		cd .. && \
-		rm -rf yay && \
-		cd ~/ && \
-		git clone https://github.com/faddat/hnsd-git && \
-		cd hnsd-git && \
-		makepkg -si --noconfirm --rmdeps --clean
-USER root
+#RUN cd ~/ && \
+#		git clone https://aur.archlinux.org/yay.git yay && \
+#		cd yay && \
+#		makepkg -si --noconfirm --clean --rmdeps && \
+#		cd .. && \
+#		rm -rf yay && \
+#		cd ~/ && \
+#		git clone https://github.com/faddat/hnsd-git && \
+# 		cd hnsd-git && \
+# 		makepkg -si --noconfirm --rmdeps --clean
+# USER root
 
 
 
@@ -62,7 +62,7 @@ COPY contrib/resizerootfs.service /etc/systemd/system
 COPY contrib/dns /etc/systemd/resolved.conf
 
 # HNSD Service: In testing hnsd has been unreliable
-COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
+# COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
 
 # Greet Users Warmly
 COPY contrib/motd /etc/
@@ -73,15 +73,14 @@ COPY contrib/motd /etc/
 RUN systemctl enable firstboot && \
 		systemctl enable resizerootfs && \
 		systemctl enable systemd-resolved && \
-		chmod +x /usr/bin/hnsd && \
+# 		chmod +x /usr/bin/hnsd && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
-		systemctl enable hnsd && \
+#		systemctl enable hnsd && \
 		# symlink systemd-resolved stub resolver to /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
-		echo "root:root" | chpasswd && \
-		userdel builduser
+		echo "root:root" | chpasswd
 
 
 # =================================================================
