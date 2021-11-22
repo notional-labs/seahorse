@@ -9,18 +9,12 @@ ADD rpi/full/ArchLinuxARM-rpi-aarch64-latest.tar.gz /
 # Pacman Keyring
 # Don't check disk space because we are in a container
 # FINISH GETTING PACMAN TO LIFE
-# Get and install rpi 4 kernel
 # Don't check disk space because we are in a container
 RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman-key --init && \
 		pacman-key --populate archlinuxarm && \
 		pacman-db-upgrade && \
-		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
-		pacman -Syy --noconfirm wget && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.79-2/linux-raspberrypi4-aarch64-5.4.79-2-aarch64.pkg.tar.xz && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.4.79-2/linux-raspberrypi4-aarch64-headers-5.4.79-2-aarch64.pkg.tar.xz && \
-		pacman -U --noconfirm *.tar.xz && \
-		rm *.tar.xz && \
+		pacman -R --noconfirm openssh && \
 		pacman --noconfirm -Syyu \
 				archlinux-keyring \
 				ca-certificates \
