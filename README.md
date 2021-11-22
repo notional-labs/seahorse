@@ -1,5 +1,4 @@
 # SOS
-[![gaia](https://github.com/faddat/sos/actions/workflows/gaia.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/gaia.yml) [![graviton](https://github.com/faddat/sos/actions/workflows/graviton.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/graviton.yml) [![iris](https://github.com/faddat/sos/actions/workflows/iris.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/iris.yml) [![akash](https://github.com/faddat/sos/actions/workflows/akash.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/akash.yml) [![starport](https://github.com/faddat/sos/actions/workflows/starport.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/starport.yml) [![toolbox](https://github.com/faddat/sos/actions/workflows/toolbox.yml/badge.svg)](https://github.com/faddat/sos/actions/workflows/toolbox.yml)
 
 Arch-based Linux OS for P2P apps. 
 
@@ -29,6 +28,7 @@ SOS targets ARM64 and AMD64 processors.
 * Raspberry Pi 3
 * Raspberry Pi 4
 * Odroid C2
+* Minimus
 
 [Arch Linux](archlinux.org) was a very deliberate choice: In contrast to other distributions, arch packages are always up-to-date. Additionally, the arch user repository offers a wide variety of easy to install packages contributed by the community.
 
