@@ -10,10 +10,10 @@ set -o xtrace
 wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
 
 # Build the base image
-docker buildx build --file Dockerfile --tag ghcr.io/faddat/sos-c2 --platform linux/arm64 --load --progress plain ..
+docker buildx build --file Dockerfile --tag ghcr.io/faddat/sos/c2 --platform linux/arm64 --load --progress plain ..
 
 # TAG AND PUSH
-docker push ghcr.io/faddat/sos-c2
+docker push ghcr.io/faddat/sos/c2
 
 # New rootfs extraction
 # https://chromium.googlesource.com/external/github.com/docker/containerd/+/refs/tags/v0.2.0/docs/bundle.md
