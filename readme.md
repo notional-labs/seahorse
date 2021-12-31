@@ -1,52 +1,25 @@
 # seahorse
-**seahorse** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://starport.com).
+**seahorse** is 369 or so males pumping out 2000 or so young per batch and a teaching project for new validators. 
 
-## Get started
+We don't have a cla or anything.  BE NICE to each other.  Understand that this is a place where genderbendy jokes and god knows what else is okay.  But not mean ones.  
 
-```
-starport chain serve
-```
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
 
-### Configure
+# Goals
+* Train new validators in cosmos
+* Train new relayers in cosmos
+* research overlay networks
+* research launches that cost tiny amounts of money
+* have a validator web ui so that validation is:
+  * connect power
+  * boot
+  * dhcp (wired only)
+  * state sync
+  * web ui with node info
+* Train new cosmos validators and request their feedback on their learning experience to figure out how to create other "learn by doing" blockchains
+* Drain all liquidity away from lum as punishment for denying their market manipulation and thinking that the past connects to the present.  Maybe we can find them a shrink but they're confused.  For now tho.
+  * We will incentivize the movement of liquidity lum->sea
+* ibc in and out of as many chains as can be
+* 
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Starport docs](https://docs.starport.com).
 
-### Web Frontend
-
-Starport has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
-
-```
-cd vue
-npm install
-npm run serve
-```
-
-The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Starport front-end development](https://github.com/tendermint/vue).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
-```
-git tag v0.1
-git push origin v0.1
-```
-
-After a draft release is created, make your final changes from the release page and publish it.
-
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
-
-```
-curl https://get.starport.com/notional-labs/seahorse@latest! | sudo bash
-```
-`notional-labs/seahorse` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
-
-## Learn more
-
-- [Starport](https://starport.com)
-- [Tutorials](https://docs.starport.com/guide)
-- [Starport docs](https://docs.starport.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/H6wGTY8sxw)
