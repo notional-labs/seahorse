@@ -1,7 +1,7 @@
 # seahorse
 **seahorse** is 369 or so males pumping out 2000 or so young per batch and a teaching project for new validators. 
 
-We don't have a cla or anything.  BE NICE to each other.  Understand that this is a place where genderbendy jokes and god knows what else is okay.  But not mean ones.  No obligation to make sense.  No pre-sale.  369 validators with equal stake and all of that safely vaested/
+We don't have a cla or anything.  BE NICE to each other.  Understand that this is a place where genderbendy jokes and god knows what else is okay.  But not mean ones.  No obligation to make sense.  No pre-sale.  369 validators with equal stake and all of that safely vested.
 
 
 
@@ -20,6 +20,3 @@ We don't have a cla or anything.  BE NICE to each other.  Understand that this i
 * Drain all liquidity away from lum as punishment for denying their market manipulation and thinking that the past connects to the present.  Maybe we can find them a shrink but they're confused.  For now tho.
   * We will incentivize the movement of liquidity lum->sea
 * ibc in and out of as many chains as can be
-* 
-
-
