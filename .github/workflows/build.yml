@@ -1,9 +1,9 @@
-name: build
+name: build for devices
 on: [push,pull_request,workflow_dispatch]
 
 jobs:
 
-  sos-lite:
+  rpi:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
