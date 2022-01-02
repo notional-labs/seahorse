@@ -31,17 +31,17 @@ jobs:
 
       - name: Build
         run: |
-          cd rpi/lite
+          cd rpi
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) rpi/lite/images/sos-lite.img
+        run: xz -T $(nproc) rpi/images/sos-lite.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: rpi/lite/images/sos-lite.img.xz
+          path: rpi/images/sos-lite.img.xz
 
   c2:
     runs-on: ubuntu-latest
