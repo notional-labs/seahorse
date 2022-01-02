@@ -1,7 +1,7 @@
 # Start with nothing
 FROM scratch
 
-MAINTAINER jacobgadikian@gmail.com
+LABEL maintainer="jacobgadikian@gmail.com"
 
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
 ADD rpi/ArchLinuxARM-rpi-aarch64-latest.tar.gz /
@@ -15,12 +15,8 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman-key --init && \
 		pacman-key --populate archlinuxarm && \
 		pacman-db-upgrade && \
-		pacman -R --noconfirm openssh linux-aarch64 uboot-raspberrypi && \
+		pacman -R --noconfirm openssh && \
 		pacman -Syy --noconfirm wget && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.10.17-1/linux-raspberrypi4-aarch64-5.10.17-1-aarch64.pkg.tar.xz && \
-		wget https://github.com/Biswa96/linux-raspberrypi4-aarch64/releases/download/5.10.17-1/linux-raspberrypi4-aarch64-headers-5.10.17-1-aarch64.pkg.tar.xz && \
-		pacman -U --noconfirm *.tar.xz && \
-		rm *.tar.xz && \
 		pacman --noconfirm -Syyu \
 				archlinux-keyring \
 				ca-certificates \
@@ -33,7 +29,6 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 				e2fsprogs \
 				dropbear \
 				unbound \ 
-		        	docker \
 				fakeroot 
 
 
