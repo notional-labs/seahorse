@@ -9,8 +9,11 @@ ENV LC_ALL en_US.UTF-8
 # This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there. 
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
+
 RUN pacman-key --init && \
-		pacman-key --populate archlinuxarm && \
+		pacman -Syy && \
+		sudo pacman-key --refresh-keys && \
+		pacman-key --populate archlinuxarm manjaro && \
 		pacman-db-upgrade && \
 		pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
