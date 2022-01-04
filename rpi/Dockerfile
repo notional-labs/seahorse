@@ -17,8 +17,13 @@ RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
 
 # RUN pacman-key --refresh-keys 
 
+
+# Don't check to make sure there's free disk space when using pacman
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
-RUN pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
+
+
+# Install packages
+RUN pacman -Syyu --noconfirm sed wget linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
 
 
@@ -44,7 +49,10 @@ COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
 COPY ./contrib/dns /etc/systemd/resolved.conf
+
+
 # Greet Users Warmly
+# TODO: Update to Notional Brand
 COPY ./contrib/motd /etc/
 
 # Enable services
@@ -63,6 +71,8 @@ RUN systemctl enable firstboot && \
 		pacman -R --noconfirm haveged && \
 		echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel 
 
+RUN	sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+
 # Remove cruft and let pacman check for free disk space
 RUN rm -rf \
 		/etc/*- \
@@ -78,5 +88,4 @@ RUN rm -rf \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'`
 
 
-RUN	sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 
