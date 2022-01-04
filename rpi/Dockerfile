@@ -9,7 +9,7 @@ LABEL maintainer="jacobgadikian@gmail.com"
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
-RUN pacman-mirrors --api --set-branch unstable
+RUN pacman-mirrors --api --set-branch unstable --continent asia
 RUN pacman-key --init 
 RUN	pacman-key --populate archlinuxarm 
 RUN	pacman-key --populate manjaro 
@@ -48,7 +48,6 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-COPY ./contrib/dns /etc/systemd/resolved.conf
 
 
 # Greet Users Warmly
@@ -59,7 +58,6 @@ COPY ./contrib/motd /etc/
 # Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
 RUN systemctl enable firstboot && \
 		systemctl enable resizerootfs && \
-		systemctl enable systemd-resolved && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
 # SYMLINK RESOLVED STUB RESOLVER /etc/resolv/conf
