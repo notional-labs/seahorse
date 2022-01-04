@@ -6,9 +6,7 @@ ENV LC_ALL en_US.UTF-8
 
 
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
-ADD rpi/ArchLinuxARM-rpi-aarch64-latest.tar.gz /
-
-RUN sed -i 's/mmcblk0/mmcblk1/g' /etc/fstab
+ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # Pacman Keyring
 # Don't check disk space because we are in a container
@@ -23,6 +21,7 @@ RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman -Syy --noconfirm wget && \
 		pacman --noconfirm -Syyu \
 				archlinux-keyring \
+				linux-rpi4-mainline \
 				ca-certificates \
 				ca-certificates-mozilla \
 				ca-certificates-utils \
