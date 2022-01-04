@@ -23,7 +23,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 
 # Install packages
-RUN pacman -Syyu --noconfirm sed wget linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
+RUN pacman -Syyu --noconfirm sed wget linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils fish parted rng-tools e2fsprogs dropbear unbound fakeroot
 
 
 
