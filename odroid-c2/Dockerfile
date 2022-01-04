@@ -1,92 +1,79 @@
 # Start with nothing
+# We're building a Manjaro linux image for Raspberry Pi 4.
 FROM scratch
 
-MAINTAINER jacobgadikian@gmail.com
+LABEL maintainer="jacobgadikian@gmail.com"
 
-# Add and decompress Arch Linux ARM rpi arm64 rootfs at /
-ADD odroid-c2/ArchLinuxARM-odroid-c2-latest.tar.gz /
 
-# Pacman Keyring
-# Don't check disk space because we are in a container
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
-		pacman-key --init && \
-		pacman-key --populate archlinuxarm && \
-		pacman-db-upgrade && \
-		pacman -R --noconfirm openssh && \
-		pacman -Syyu --noconfirm git sudo base-devel archlinux-keyring \
-		ca-certificates \
-		ca-certificates-mozilla \
-		ca-certificates-utils \
-		bash-completion \
-		parted \
-		e2fsprogs \
-		dropbear \
-		sudo \
-		git \
-		unbound \
-		docker
+# Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
+# This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
+ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
-# Add builduser and give wheel group sudos
-#RUN useradd builduser -m && \
-#	passwd -d builduser && \
-#	printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers && \
-#	echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
+# INSTALL OS PACKAGES FOR NOW
+# RUN pacman-mirrors --api --set-branch unstable
+RUN pacman-key --init
+RUN pacman-key --populate archlinuxarm manjaro
+RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
 
-#USER builduser
+# RUN pacman-key --refresh-keys
 
-# YAY AND HNSD
-#RUN cd ~/ && \
-#		git clone https://aur.archlinux.org/yay.git yay && \
-#		cd yay && \
-#		makepkg -si --noconfirm --clean --rmdeps && \
-#		cd .. && \
-#		rm -rf yay && \
-#		cd ~/ && \
-#		git clone https://github.com/faddat/hnsd-git && \
-# 		cd hnsd-git && \
-# 		makepkg -si --noconfirm --rmdeps --clean
-# USER root
+
+# Don't check to make sure there's free disk space when using pacman
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+
+
+# Install packages common to NOS
+RUN pacman -Syyu --noconfirm sed wget ca-certificates ca-certificates-mozilla ca-certificates-utils fish parted rng-tools e2fsprogs dropbear unbound fakeroot
 
 
 
-
-# First Boot service
-COPY contrib/firstboot.sh /usr/local/bin/firstboot.sh
-COPY contrib/firstboot.service /etc/systemd/system/firstboot.service
-
-# Resize root fs
-COPY contrib/resizerootfs /usr/sbin/resizerootfs
-COPY contrib/resizerootfs.service /etc/systemd/system
-
-# Copy DNS configuration so that stub resolver goes to hsd and falls back to GOOD(tm) public DNS
-COPY contrib/dns /etc/systemd/resolved.conf
-
-# HNSD Service: In testing hnsd has been unreliable
-# COPY contrib/hnsd.service /etc/systemd/system/hnsd.service
-
-# Greet Users Warmly
-COPY contrib/motd /etc/
+# Make the Odroid c2 happy: device specific stuff
+RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro xf86-video-fbturbo-git btrfs-progs fbset amlogic oc2-post-install
 
 
-# Enable services
-# Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
-RUN systemctl enable firstboot && \
-		systemctl enable resizerootfs && \
-		systemctl enable systemd-resolved && \
-# 		chmod +x /usr/bin/hnsd && \
-		chmod +x /usr/local/bin/firstboot.sh && \
-		chmod +x /usr/sbin/resizerootfs && \
-#		systemctl enable hnsd && \
-		# symlink systemd-resolved stub resolver to /etc/resolv/conf
-		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
-		systemctl enable dropbear && \
-		echo "root:root" | chpasswd
+# Set System Locale, set build config, get rid of the builduser
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+		 locale-gen && \
+		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
+
+
+
+# Set root password to root
+RUN echo "root:root" | chpasswd
+
 
 
 # =================================================================
 # CLEANUP: Make the OS new and shiny.
 # =================================================================
 
+# First Boot services
+COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
+COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
+COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
+COPY ./contrib/resizerootfs.service /etc/systemd/system
+
+
+# Greet Users Warmly
+# TODO: Update to Notional Brand
+COPY ./contrib/motd /etc/
+
+# Enable services
+# Use the Pi's Hardware rng.  You may wish to modify depending on your needs and desires: https://wiki.archlinux.org/index.php/Random_number_generation#Alternatives
+RUN systemctl enable firstboot && \
+		systemctl enable resizerootfs && \
+		chmod +x /usr/local/bin/firstboot.sh && \
+		chmod +x /usr/sbin/resizerootfs && \
+# SYMLINK RESOLVED STUB RESOLVER /etc/resolv/conf
+#		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
+		systemctl enable dropbear && \
+#		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
+#		systemctl disable haveged && \
+#		systemctl enable rngd
+#		pacman -R --noconfirm haveged && \
+#		echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
+
+RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 
 # Remove cruft and let pacman check for free disk space
 RUN rm -rf \
@@ -100,6 +87,4 @@ RUN rm -rf \
 		/root/.cache \
 		/home/*/.bash_history \
 		/home/*/.cache \
-		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
-		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
-
+		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'`
