@@ -19,7 +19,7 @@ set -exo pipefail
 set -o xtrace
 
 # Get rootfs
-wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
+wget -N --progress=bar:force:noscroll https://osdn.net/projects/manjaro-arm/storage/.rootfs/Manjaro-ARM-aarch64-latest.tar.gz
 
 # BUILD IMAGE
 docker buildx build --tag sos-lite --file Dockerfile --platform linux/arm64 --progress plain --load ..
