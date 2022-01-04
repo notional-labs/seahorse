@@ -10,7 +10,7 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
 RUN pacman-mirrors --api --set-branch unstable
-RUN pacman -Syy archlinux-keyring manjaro-keyring
+RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring
 RUN pacman-key --init 
 RUN	pacman-key --populate archlinuxarm 
 RUN	pacman-key --populate manjaro 
