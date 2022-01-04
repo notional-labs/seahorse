@@ -2,7 +2,6 @@
 FROM scratch
 
 LABEL maintainer="jacobgadikian@gmail.com"
-ENV LC_ALL en_US.UTF-8
 
 
 # Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
@@ -11,10 +10,11 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOS
 RUN pacman-key --init && \
-		pacman -Syy && \
 		pacman-key --populate archlinuxarm manjaro && \
+		pacman-db-upgrade && \
 		pacman-key --refresh-keys && \
 		pacman-db-upgrade && \
+		pacman -Syy && \
 		pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
 
