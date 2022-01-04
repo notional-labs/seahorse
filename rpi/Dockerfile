@@ -9,11 +9,15 @@ LABEL maintainer="jacobgadikian@gmail.com"
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
-RUN pacman-key --init && \
-		pacman-key --populate archlinuxarm && \
-		pacman-key --populate manjaro \
-		pacman-key --refresh-keys && \
-		pacman -Syy && \
+RUN pacman-mirrors --api --set-branch unstable
+RUN pacman -Syy archlinux-keyring manjaro-keyring
+RUN pacman-key --init 
+RUN	pacman-key --populate archlinuxarm 
+RUN	pacman-key --populate manjaro 
+RUN pacman-key --refresh-keys 
+
+
+RUN pacman -Syy && \
 		pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
 
