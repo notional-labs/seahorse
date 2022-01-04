@@ -14,7 +14,7 @@ RUN pacman-key --init
 RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring
 RUN	pacman-key --populate archlinuxarm 
 RUN	pacman-key --populate manjaro 
-RUN pacman-key --refresh-keys 
+# RUN pacman-key --refresh-keys 
 
 
 RUN pacman -Syy && \
