@@ -68,6 +68,4 @@ RUN rm -rf \
 		/root/.cache \
 		/home/*/.bash_history \
 		/home/*/.cache \
-		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
-		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf 
-		
+		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` 		
