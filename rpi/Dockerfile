@@ -9,7 +9,7 @@ LABEL maintainer="jacobgadikian@gmail.com"
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
-RUN pacman-mirrors --api --set-branch unstable --continent asia
+RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init 
 RUN	pacman-key --populate archlinuxarm 
 RUN	pacman-key --populate manjaro 
