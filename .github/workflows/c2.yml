@@ -3,7 +3,7 @@ on: [push,pull_request,workflow_dispatch]
 
 jobs:
 
-  rpi:
+  c2:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,8 +15,8 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.PAT }}
-          
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up QEMU
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
 
@@ -31,14 +31,14 @@ jobs:
 
       - name: Build
         run: |
-          cd rpi
+          cd odroid-c2
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) rpi/images/sos-lite.img
+        run: xz -T $(nproc) odroid-c2/images/c2.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
         with:
           name: sos
-          path: rpi/images/sos-lite.img.xz
+          path: odroid-c2/images/c2.img.xz
