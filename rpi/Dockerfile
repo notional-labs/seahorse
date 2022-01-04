@@ -17,7 +17,7 @@ RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
 
 # RUN pacman-key --refresh-keys 
 
-RUN RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 RUN pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
 
