@@ -14,6 +14,8 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 RUN pacman-key --init
 RUN pacman-key --populate archlinuxarm manjaro
 RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
+RUN pacman-mirrors --fasttrack 5 && pacman -Syyu --noconfirm
+
 
 # RUN pacman-key --refresh-keys
 
@@ -28,7 +30,7 @@ RUN pacman -Syyu --noconfirm sed wget linux-rpi4-mainline ca-certificates ca-cer
 
 
 # Make the Odroid c2 happy: device specific stuff
-RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro xf86-video-fbturbo-git btrfs-progs fbset amlogic oc2-post-install
+# RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro xf86-video-fbturbo-git btrfs-progs fbset amlogic oc2-post-install
 
 
 # Set System Locale, set build config, get rid of the builduser

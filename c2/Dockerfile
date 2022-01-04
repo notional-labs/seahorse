@@ -1,5 +1,5 @@
 # Start with nothing
-# We're building a Manjaro linux image for Raspberry Pi 4.
+# We're building a Manjaro linux image for HardKernel Odroid C2
 FROM scratch
 
 LABEL maintainer="jacobgadikian@gmail.com"
@@ -14,6 +14,10 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 RUN pacman-key --init
 RUN pacman-key --populate archlinuxarm manjaro
 RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
+RUN pacman-mirrors --fasttrack 5 && pacman -Syyu --noconfirm
+
+
+
 
 # RUN pacman-key --refresh-keys
 
@@ -28,7 +32,7 @@ RUN pacman -Syyu --noconfirm sed wget ca-certificates ca-certificates-mozilla ca
 
 
 # Make the Odroid c2 happy: device specific stuff
-RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro xf86-video-fbturbo-git btrfs-progs fbset amlogic oc2-post-install
+RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro btrfs-progs fbset amlogic oc2-post-install
 
 
 # Set System Locale, set build config, get rid of the builduser
@@ -66,7 +70,7 @@ RUN systemctl enable firstboot && \
 		chmod +x /usr/sbin/resizerootfs && \
 # SYMLINK RESOLVED STUB RESOLVER /etc/resolv/conf
 #		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
-		systemctl enable dropbear && \
+		systemctl enable dropbear 
 #		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 #		systemctl disable haveged && \
 #		systemctl enable rngd
