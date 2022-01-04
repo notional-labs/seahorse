@@ -13,11 +13,11 @@ RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init 
 RUN	pacman-key --populate archlinuxarm 
 RUN	pacman-key --populate manjaro 
-RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring
+RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
 
 # RUN pacman-key --refresh-keys 
 
-
+RUN RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 RUN pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
 
@@ -75,4 +75,6 @@ RUN rm -rf \
 		/root/.cache \
 		/home/*/.bash_history \
 		/home/*/.cache \
-		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` 		
+		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
+		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+		
