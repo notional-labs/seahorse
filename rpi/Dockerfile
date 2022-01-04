@@ -5,13 +5,14 @@ LABEL maintainer="jacobgadikian@gmail.com"
 ENV LC_ALL en_US.UTF-8
 
 
-# Add and decompress Arch Linux ARM rpi arm64 rootfs at /
+# Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
+# This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there. 
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 RUN pacman-key --init && \
 		pacman-key --populate archlinuxarm && \
 		pacman-db-upgrade && \
-		pacman -Syyu sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
+		pacman -Syyu --noconfirm sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
 
 
