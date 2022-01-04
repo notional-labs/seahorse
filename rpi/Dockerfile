@@ -88,4 +88,6 @@ RUN rm -rf \
 		/home/*/.bash_history \
 		/home/*/.cache \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
-		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf 
+		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf && \
+		
+RUN sed -i 's/mmcblk0/mmcblk1/g' root/etc/fstab
