@@ -2,9 +2,13 @@
 FROM scratch
 
 LABEL maintainer="jacobgadikian@gmail.com"
+ENV LC_ALL en_US.UTF-8
+
 
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
 ADD rpi/ArchLinuxARM-rpi-aarch64-latest.tar.gz /
+
+RUN sed -i 's/mmcblk0/mmcblk1/g' /etc/fstab
 
 # Pacman Keyring
 # Don't check disk space because we are in a container
@@ -37,8 +41,6 @@ RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
 		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
 		 
-ENV LC_ALL en_US.UTF-8
-
 
 
 # Set root password to root
@@ -66,7 +68,7 @@ RUN systemctl enable firstboot && \
 		systemctl enable systemd-resolved && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
-	# symlink systemd-resolved stub resolver to /etc/resolv/conf
+# SYMLINK RESOLVED STUB RESOLVER /etc/resolv/conf
 		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
 		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
@@ -90,4 +92,3 @@ RUN rm -rf \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'` && \
 		sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf 
 		
-RUN sed -i 's/mmcblk0/mmcblk1/g' /etc/fstab
