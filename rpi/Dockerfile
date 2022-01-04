@@ -11,29 +11,8 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 RUN pacman-key --init && \
 		pacman-key --populate archlinuxarm && \
 		pacman-db-upgrade && \
-		pacman -Syyu sed
+		pacman -Syyu sed wget archlinux-keyring linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils bash-completion fish fisher parted sudo rng-tools e2fsprogs dropbear unbound fakeroot
 
-# Pacman Keyring
-# Don't check disk space because we are in a container
-# FINISH GETTING PACMAN TO LIFE
-# Get and install rpi 4 kernel
-# Don't check disk space because we are in a container
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
-		pacman -Syy --noconfirm wget && \
-		pacman --noconfirm -Syyu \
-				archlinux-keyring \
-				linux-rpi4-mainline \
-				ca-certificates \
-				ca-certificates-mozilla \
-				ca-certificates-utils \
-				bash-completion \
-				parted \
-				sudo \
-				rng-tools \
-				e2fsprogs \
-				dropbear \
-				unbound \ 
-				fakeroot 
 
 
 # Set System Locale, set build config, get rid of the builduser
