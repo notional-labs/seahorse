@@ -8,15 +8,16 @@ ENV LC_ALL en_US.UTF-8
 # Add and decompress Arch Linux ARM rpi arm64 rootfs at /
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
+RUN pacman-key --init && \
+		pacman-key --populate archlinuxarm && \
+		pacman-db-upgrade 
+
 # Pacman Keyring
 # Don't check disk space because we are in a container
 # FINISH GETTING PACMAN TO LIFE
 # Get and install rpi 4 kernel
 # Don't check disk space because we are in a container
-RUN	sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
-		pacman-key --init && \
-		pacman-key --populate archlinuxarm && \
-		pacman-db-upgrade && \
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf && \
 		pacman -R --noconfirm openssh && \
 		pacman -Syy --noconfirm wget && \
 		pacman --noconfirm -Syyu \
