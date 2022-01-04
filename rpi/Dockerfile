@@ -1,21 +1,22 @@
 # Start with nothing
+# We're building a Manjaro linux image for Raspberry Pi 4.
 FROM scratch
 
 LABEL maintainer="jacobgadikian@gmail.com"
 
 
 # Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
-# This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there. 
+# This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
-RUN pacman-mirrors --api --set-branch unstable
-RUN pacman-key --init 
-RUN	pacman-key --populate archlinuxarm 
-RUN	pacman-key --populate manjaro 
+# RUN pacman-mirrors --api --set-branch unstable
+RUN pacman-key --init
+RUN pacman-key --populate archlinuxarm
+RUN pacman-key --populate manjaro
 RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
 
-# RUN pacman-key --refresh-keys 
+# RUN pacman-key --refresh-keys
 
 
 # Don't check to make sure there's free disk space when using pacman
@@ -31,7 +32,7 @@ RUN pacman -Syyu --noconfirm sed wget linux-rpi4-mainline ca-certificates ca-cer
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
 		 locale-gen && \
 		 sed -i -e "s/^#MAKEFLAGS=.*/MAKEFLAGS=-j5/g" /etc/makepkg.conf
-		 
+
 
 
 # Set root password to root
@@ -61,15 +62,15 @@ RUN systemctl enable firstboot && \
 		chmod +x /usr/local/bin/firstboot.sh && \
 		chmod +x /usr/sbin/resizerootfs && \
 # SYMLINK RESOLVED STUB RESOLVER /etc/resolv/conf
-		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
+#		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
 		systemctl enable dropbear && \
 		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
-		systemctl disable haveged && \
-		systemctl enable rngd && \
-		pacman -R --noconfirm haveged && \
-		echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel 
+#		systemctl disable haveged && \
+		systemctl enable rngd
+#		pacman -R --noconfirm haveged && \
+#		echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 
-RUN	sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
+RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 
 # Remove cruft and let pacman check for free disk space
 RUN rm -rf \
@@ -84,6 +85,3 @@ RUN rm -rf \
 		/home/*/.bash_history \
 		/home/*/.cache \
 		`LC_ALL=C pacman -Qo /var/cache/* 2>&1 | grep 'error: No package owns' | awk '{print $5}'`
-
-
-
