@@ -1,5 +1,5 @@
 # Start with nothing
-# We're building a Manjaro linux image for Raspberry Pi 4.
+# We're building a Manjaro linux image for HardKernel Odroid C2
 FROM scratch
 
 LABEL maintainer="jacobgadikian@gmail.com"
@@ -7,19 +7,20 @@ LABEL maintainer="jacobgadikian@gmail.com"
 
 # Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
 # This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
-ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
-
-
-
+ADD c2/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
 # RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init
 RUN pacman-key --populate archlinuxarm manjaro
-RUN pacman -Syy --noconfirm sed
+RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
+
 # Don't check to make sure there's free disk space when using pacman
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
-RUN pacman-mirrors --fasttrack 5
+
+RUN pacman-mirrors --fasttrack 5 && pacman -Syyu --noconfirm
+
+
 
 
 # RUN pacman-key --refresh-keys
@@ -28,13 +29,13 @@ RUN pacman-mirrors --fasttrack 5
 
 
 
-# Install packages
-RUN pacman -Syyu --noconfirm sed wget linux-rpi4-mainline ca-certificates ca-certificates-mozilla ca-certificates-utils fish parted rng-tools e2fsprogs dropbear unbound fakeroot
+# Install packages common to NOS
+RUN pacman -Syyu --noconfirm sed wget ca-certificates ca-certificates-mozilla ca-certificates-utils fish parted rng-tools e2fsprogs dropbear unbound fakeroot
 
 
 
 # Make the Odroid c2 happy: device specific stuff
-# RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro xf86-video-fbturbo-git btrfs-progs fbset amlogic oc2-post-install
+RUN pacman -Syyu --noconfirm linux-vim uboot-odroid-c2-mainline plymouth plymouth-theme-manjaro btrfs-progs fbset amlogic oc2-post-install
 
 
 # Set System Locale, set build config, get rid of the builduser
@@ -72,10 +73,10 @@ RUN systemctl enable firstboot && \
 		chmod +x /usr/sbin/resizerootfs && \
 # SYMLINK RESOLVED STUB RESOLVER /etc/resolv/conf
 #		ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf && \
-		systemctl enable dropbear && \
-		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
+		systemctl enable dropbear 
+#		echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng"' > /etc/conf.d/rngd && \
 #		systemctl disable haveged && \
-		systemctl enable rngd
+#		systemctl enable rngd
 #		pacman -R --noconfirm haveged && \
 #		echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers.d/wheel
 

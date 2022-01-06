@@ -7,7 +7,7 @@ set -exo pipefail
 set -o xtrace
 
 # Get the 64 bit rpi rootfs for Odroid C2
-wget -N --progress=bar:force:noscroll http://os.archlinuxarm.org/os/ArchLinuxARM-odroid-c2-latest.tar.gz
+wget --progress=bar:force:noscroll https://osdn.net/projects/manjaro-arm/storage/.rootfs/Manjaro-ARM-aarch64-latest.tar.gz
 
 # Build the base image
 docker buildx build --file Dockerfile --tag ghcr.io/faddat/sos/c2 --platform linux/arm64 --load --progress plain ..

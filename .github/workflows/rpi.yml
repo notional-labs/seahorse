@@ -1,4 +1,4 @@
-name: build for devices
+name: Raspberry Pi
 on: [push,pull_request,workflow_dispatch]
 
 jobs:
@@ -42,43 +42,3 @@ jobs:
         with:
           name: sos
           path: rpi/images/sos-lite.img.xz
-
-  c2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      -
-        name: Login to GitHub Container Registry
-        uses: docker/login-action@v1 
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up QEMU
-        run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1.6.0
-        with:
-          version: latest
-
-      - name: Available platforms
-        run: echo ${{ steps.buildx.outputs.platforms }}
-
-      - name: Build
-        run: |
-          cd odroid-c2
-          bash build.sh
-
-      - name: Compress
-        run: xz -T $(nproc) odroid-c2/images/c2.img
-
-      - name: Upload image
-        uses: actions/upload-artifact@v2
-        with:
-          name: sos
-          path: odroid-c2/images/c2.img.xz
