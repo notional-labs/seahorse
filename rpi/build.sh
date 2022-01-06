@@ -106,7 +106,7 @@ sudo mkdir mnt/rootfs/boot
 sudo umount mnt/boot mnt/rootfs
 
 # Tell pi where its memory card is:  This is needed only with the mainline linux kernel provied by linux-aarch64
-# sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
+sed -i 's/mmcblk0/mmcblk1/g' ./.tmp/result-rootfs/etc/fstab
 
 # Drop the loop mount
 sudo losetup -d $LOOP
