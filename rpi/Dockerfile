@@ -9,6 +9,14 @@ LABEL maintainer="jacobgadikian@gmail.com"
 # This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
 ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
+
+
+# Don't check to make sure there's free disk space when using pacman
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+
+
+
+
 # INSTALL OS PACKAGES FOR NOW
 # RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init
@@ -21,7 +29,7 @@ RUN pacman-mirrors --fasttrack 5 && pacman -Syyu --noconfirm
 
 
 # Don't check to make sure there's free disk space when using pacman
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+# RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 
 # Install packages
