@@ -7,7 +7,7 @@ LABEL maintainer="jacobgadikian@gmail.com"
 
 # Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
 # This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
-ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
+ADD c2/Manjaro-ARM-aarch64-latest.tar.gz /
 
 # INSTALL OS PACKAGES FOR NOW
 # RUN pacman-mirrors --api --set-branch unstable
