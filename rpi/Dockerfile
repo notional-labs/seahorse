@@ -11,8 +11,7 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 
 
-# Don't check to make sure there's free disk space when using pacman
-RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+
 
 
 
@@ -21,7 +20,7 @@ RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 # RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init
 RUN pacman-key --populate archlinuxarm manjaro
-RUN pacman -Syy --noconfirm archlinux-keyring manjaro-keyring sed
+RUN pacman -Syy --noconfirm sed
 RUN pacman-mirrors --fasttrack 5 && pacman -Syyu --noconfirm
 
 
@@ -29,7 +28,7 @@ RUN pacman-mirrors --fasttrack 5 && pacman -Syyu --noconfirm
 
 
 # Don't check to make sure there's free disk space when using pacman
-# RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
 
 
 # Install packages

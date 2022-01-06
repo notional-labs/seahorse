@@ -1,4 +1,4 @@
-name: build for devices
+name: ODROID
 on: [push,pull_request,workflow_dispatch]
 
 jobs:

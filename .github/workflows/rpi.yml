@@ -1,4 +1,4 @@
-name: build for devices
+name: Raspberry Pi
 on: [push,pull_request,workflow_dispatch]
 
 jobs:
