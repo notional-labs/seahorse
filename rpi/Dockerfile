@@ -29,7 +29,7 @@ RUN pacman-mirrors --fasttrack 5
 
 
 # Install packages
-RUN pacman -Syyu --noconfirm sed wget linux-rpi4-rc linux-rpi4-rc-headers uboot-raspberrypi firmware-raspberrypi ca-certificates ca-certificates-mozilla ca-certificates-utils parted rng-tools e2fsprogs dropbear unbound fakeroot
+RUN pacman -Syyu --noconfirm sed wget linux-rpi4-rc linux-rpi4-rc-headers firmware-raspberrypi ca-certificates ca-certificates-mozilla ca-certificates-utils parted rng-tools e2fsprogs dropbear unbound fakeroot
 
 
 
