@@ -7,7 +7,7 @@ LABEL maintainer="jacobgadikian@gmail.com"
 
 # Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
 # This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
-ADD amd64/manjaro-xfce-21.2.1-minimal-220103-linux510.iso /
+ADD amd64/manjaro-xfce-21.2.1-minimal-220103-linux515.iso /
 
 
 
