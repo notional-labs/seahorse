@@ -35,8 +35,9 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: ls -a
-        run: xz -T $(nproc) rpi/images/sos-lite.img
+        run: |
+            ls -a
+            xz -T $(nproc) rpi/images/sos-lite.img
 
       - name: Upload image
         uses: actions/upload-artifact@v2
