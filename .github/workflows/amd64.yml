@@ -35,7 +35,7 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: xz -T $(nproc) amd64/images/sos-amd64.img
+        run: ls -a
 
       - name: Upload image
         uses: actions/upload-artifact@v2
