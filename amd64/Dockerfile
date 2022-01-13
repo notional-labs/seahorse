@@ -1,13 +1,11 @@
 # Start with nothing
-# We're building a Manjaro linux image for Raspberry Pi 4.
-FROM scratch
+FROM manjarolinux/base
 
 LABEL maintainer="jacobgadikian@gmail.com"
 
 
 # Add and decompress ~Arch~ Manjaro Linux ARM rpi arm64 rootfs at /
 # This used to be an arch build, but Manjaro really has a better selection of kernels, so we will contribute there.
-ADD amd64/manjaro-xfce-21.2.1-minimal-220103-linux515.iso /
 
 
 
@@ -15,7 +13,7 @@ ADD amd64/manjaro-xfce-21.2.1-minimal-220103-linux515.iso /
 # INSTALL OS PACKAGES FOR NOW
 # RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init
-RUN pacman-key --populate archlinux
+RUN pacman-key --populate manjaro
 RUN pacman -Syy --noconfirm sed
 # Don't check to make sure there's free disk space when using pacman
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf

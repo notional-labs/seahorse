@@ -19,7 +19,7 @@ set -exo pipefail
 set -o xtrace
 
 # Get rootfs
-wget -N --progress=bar:force:noscroll https://download.manjaro.org/xfce/21.2.1/manjaro-xfce-21.2.1-minimal-220103-linux515.iso
+# wget  https://download.manjaro.org/xfce/21.2.1/manjaro-xfce-21.2.1-minimal-220103-linux515.iso
 
 # BUILD IMAGE
 docker buildx build --tag sos-amd64 --file Dockerfile --platform linux/amd64 --progress plain --load ..
