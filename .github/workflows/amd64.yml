@@ -35,7 +35,7 @@ jobs:
           bash build.sh
 
       - name: Compress
-        run: ls -a
+        run: ls -a amd64
 
       - name: Upload image
         uses: actions/upload-artifact@v2
