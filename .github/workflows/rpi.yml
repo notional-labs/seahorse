@@ -35,6 +35,7 @@ jobs:
           bash build.sh
 
       - name: Compress
+        run: ls -a
         run: xz -T $(nproc) rpi/images/sos-lite.img
 
       - name: Upload image
