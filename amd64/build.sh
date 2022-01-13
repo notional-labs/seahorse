@@ -27,3 +27,4 @@ docker buildx build --tag sos-amd64 --file Dockerfile --platform linux/amd64 --p
 # TAG AND PUSH
 docker tag sos-amd64  ghcr.io/notional-labs/sos
 docker push ghcr.io/notional-labs/sos
+docker save --output ./result-rootfs.tar sos-amd64
