@@ -2,7 +2,7 @@ Description='Baked in profile'
 Interface=wlan0
 Connection=wireless
 Security=wpa
-ESSID="SSID"
+ESSID="unifi"
 IP=dhcp
-Key="PASSWORD"
+Key="giantchicke"
 
