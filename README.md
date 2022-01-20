@@ -1,4 +1,6 @@
-# SOS
+# Seahorse
+
+Seahorse is the distillation of Notional's knowledge about validation, relaying, networking, and systems into a linux distro that includes a blockchain.
 
 Arch-based Linux OS for P2P apps. 
 
