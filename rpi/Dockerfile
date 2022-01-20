@@ -25,10 +25,8 @@ RUN pacman-mirrors --fasttrack 5
 # RUN pacman-key --refresh-keys
 
 
-
-
-
 # Install packages
+
 RUN pacman -Syyu --noconfirm sed wget linux-rpi4-rc linux-rpi4-rc-headers firmware-raspberrypi ca-certificates ca-certificates-mozilla ca-certificates-utils parted rng-tools e2fsprogs dropbear unbound fakeroot
 
 
@@ -58,6 +56,7 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
+COPY ./contrib/fstab /etc/fstab
 
 
 # Greet Users Warmly
