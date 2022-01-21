@@ -13,12 +13,12 @@ ADD rpi/Manjaro-ARM-aarch64-latest.tar.gz /
 
 
 # INSTALL OS PACKAGES FOR NOW
-# RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-key --init
 RUN pacman-key --populate archlinuxarm manjaro
 RUN pacman -Syy --noconfirm sed
 # Don't check to make sure there's free disk space when using pacman
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+RUN pacman-mirrors --api --set-branch unstable
 RUN pacman-mirrors --fasttrack 5
 
 
@@ -56,7 +56,7 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-COPY ./contrib/fstab /etc/fstab
+COPY ./contrib/rpifstab /etc/fstab
 
 
 # Greet Users Warmly
