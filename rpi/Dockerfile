@@ -56,7 +56,7 @@ COPY ./contrib/firstboot.sh /usr/local/bin/firstboot.sh
 COPY ./contrib/firstboot.service /etc/systemd/system/firstboot.service
 COPY ./contrib/resizerootfs /usr/sbin/resizerootfs
 COPY ./contrib/resizerootfs.service /etc/systemd/system
-COPY ./contrib/rpifstab /etc/fstab
+COPY ./contrib/fstabrpi /etc/fstab
 
 
 # Greet Users Warmly
