@@ -1,0 +1,206 @@
+{
+  "app_message": {
+    "auth": {
+      "accounts": [
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1lxh0u07haj646pt9e0l2l4qc3d8htfx5se2ntp", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1fpsv3uk2tqq362zvh82777gjexjduu79t8z29v", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1f4sjvl8ujk9g6vtdvratlzmz7k7a5d9dnm325l", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft165qvsanfcnm075vld6r90haypxwe27rjlzw6r7", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1uc8a9f43fqc4pum8ejfr3n69l87c87r2ja2xwq", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1nzd8jnu69w8eux3dcg4axxyarm7age86p4pjd4", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1ray0cavvxaa92xp08affex2casrekddgxt2lcl", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft12sczd7vmheqat355txqducgm6fk86ye4s5lkz8", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1h2kjnnnryh9ezgzj6yrax4snzfner9qaqjfqr9", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1pcal3gqemz4g9e6p52had37azx2p9hg64rapfk", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft13t0vcrdlj3vju5pqgwzlyr7lcw9s96kahfgla4", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1f0043tu4clcs7skhzs7760hw095xzv6tflvvfd", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft18r6j04h3pa49kmhazdqz6plt5t35jxswdv4y93", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1j8s87w3fctz7nlcqtkl5clnc805r2404eu8xvq", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1gmgck2kytg9tj60m2c3m9gdaavencp7l77nwd6", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1s42j67d3f6julvx4nhjgmcxf74xfph26t9vcn2", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1r8qt0k0t7kywdndjs2udlem4j7m2yk29ua47mm", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1fasl4wc76fxxxmvkrkzre9cejyn0x2lmgckyqz", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1hg49kyr022qvj9hq6esvm5g9gtax4c262hutn2", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1f0l4wt43gyktrveku2aqc3mw9tz3dk9j7nwese", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft14l4g4lvwl0tg6thmpl5q9337drs3he44mr0795", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1dv3v662kd3pp6pxfagck4zyysas82ads89ldp8", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1w9rugshphy0a849yp56klt5ul8y55mne7g7vf0", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1ddd9vf56hv5jntdqkd85dv6je6xes25g3ykyn4", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft145r7j5u2868er6ylj3nt9zzg5lnc9gyt4d6282", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1me3g0a2nr24sjykmhvpl687f6zt66nlvhv0y9h", "pub_key": null, "account_number": "0", "sequence": "0" },
+        {"@type": "/cosmos.auth.v1beta1.BaseAccount","address": "craft1ugjgu3hg7jcmafq3tr6g857950vuyj0kua0hka", "pub_key": null, "account_number": "0", "sequence": "0" }        
+      ],
+      "params": {
+        "max_memo_characters": "512",
+        "sig_verify_cost_ed25519": "590",
+        "sig_verify_cost_secp256k1": "1000",
+        "tx_sig_limit": "7",
+        "tx_size_cost_per_byte": "10"
+      }
+    },
+    "authz": {
+      "authorization": []
+    },
+    "bank": {
+      "balances": [
+        {"address": "craft1lxh0u07haj646pt9e0l2l4qc3d8htfx5se2ntp", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1fpsv3uk2tqq362zvh82777gjexjduu79t8z29v", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1f4sjvl8ujk9g6vtdvratlzmz7k7a5d9dnm325l", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft165qvsanfcnm075vld6r90haypxwe27rjlzw6r7", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1uc8a9f43fqc4pum8ejfr3n69l87c87r2ja2xwq", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1nzd8jnu69w8eux3dcg4axxyarm7age86p4pjd4", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1ray0cavvxaa92xp08affex2casrekddgxt2lcl", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft12sczd7vmheqat355txqducgm6fk86ye4s5lkz8", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1h2kjnnnryh9ezgzj6yrax4snzfner9qaqjfqr9", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1pcal3gqemz4g9e6p52had37azx2p9hg64rapfk", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft13t0vcrdlj3vju5pqgwzlyr7lcw9s96kahfgla4", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1f0043tu4clcs7skhzs7760hw095xzv6tflvvfd", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft18r6j04h3pa49kmhazdqz6plt5t35jxswdv4y93", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1j8s87w3fctz7nlcqtkl5clnc805r2404eu8xvq", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1gmgck2kytg9tj60m2c3m9gdaavencp7l77nwd6", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1s42j67d3f6julvx4nhjgmcxf74xfph26t9vcn2", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1r8qt0k0t7kywdndjs2udlem4j7m2yk29ua47mm", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1fasl4wc76fxxxmvkrkzre9cejyn0x2lmgckyqz", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1hg49kyr022qvj9hq6esvm5g9gtax4c262hutn2", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1f0l4wt43gyktrveku2aqc3mw9tz3dk9j7nwese", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft14l4g4lvwl0tg6thmpl5q9337drs3he44mr0795", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1dv3v662kd3pp6pxfagck4zyysas82ads89ldp8", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1w9rugshphy0a849yp56klt5ul8y55mne7g7vf0", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1ddd9vf56hv5jntdqkd85dv6je6xes25g3ykyn4", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft145r7j5u2868er6ylj3nt9zzg5lnc9gyt4d6282", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1me3g0a2nr24sjykmhvpl687f6zt66nlvhv0y9h", "coins": [{"denom": "exp", "amount": "10000"}]},
+        {"address": "craft1ugjgu3hg7jcmafq3tr6g857950vuyj0kua0hka", "coins": [{"denom": "exp", "amount": "10000"}]}
+      ],
+      "denom_metadata": [],
+      "params": {
+        "default_send_enabled": true,
+        "send_enabled": []
+      },
+      "supply": []
+    },
+    "capability": {
+      "index": "1",
+      "owners": []
+    },
+    "crisis": {
+      "constant_fee": {
+        "amount": "1000",
+        "denom": "craft"
+      }
+    },
+    "distribution": {
+      "delegator_starting_infos": [],
+      "delegator_withdraw_infos": [],
+      "fee_pool": {
+        "community_pool": []
+      },
+      "outstanding_rewards": [],
+      "params": {
+        "base_proposer_reward": "0.010000000000000000",
+        "bonus_proposer_reward": "0.040000000000000000",
+        "community_tax": "0.050000000000000000",
+        "withdraw_addr_enabled": true
+      },
+      "previous_proposer": "",
+      "validator_accumulated_commissions": [],
+      "validator_current_rewards": [],
+      "validator_historical_rewards": [],
+      "validator_slash_events": []
+    },
+    "evidence": {
+      "evidence": []
+    },
+    "feegrant": {
+      "allowances": []
+    },
+    "genutil": {
+      "gen_txs": []
+    },
+    "gov": {
+      "deposit_params": {
+        "max_deposit_period": "172800s",
+        "min_deposit": [
+          {
+            "amount": "10000000",
+            "denom": "craft"
+          }
+        ]
+      },
+      "deposits": [],
+      "proposals": [],
+      "starting_proposal_id": "1",
+      "tally_params": {
+        "quorum": "0.334000000000000000",
+        "threshold": "0.500000000000000000",
+        "veto_threshold": "0.334000000000000000"
+      },
+      "votes": [],
+      "voting_params": {
+        "voting_period": "172800s"
+      }
+    },
+    "group": {
+      "group_members": [],
+      "group_policies": [],
+      "group_policy_seq": "0",
+      "group_seq": "0",
+      "groups": [],
+      "proposal_seq": "0",
+      "proposals": [],
+      "votes": []
+    },
+    "mint": {
+      "minter": {
+        "annual_provisions": "0.000000000000000000",
+        "inflation": "0.130000000000000000"
+      },
+      "params": {
+        "blocks_per_year": "6311520",
+        "goal_bonded": "0.670000000000000000",
+        "inflation_max": "0.200000000000000000",
+        "inflation_min": "0.070000000000000000",
+        "inflation_rate_change": "0.130000000000000000",
+        "mint_denom": "craft"
+      }
+    },
+    "nft": {
+      "classes": [],
+      "entries": []
+    },
+    "params": null,
+    "slashing": {
+      "missed_blocks": [],
+      "params": {
+        "downtime_jail_duration": "600s",
+        "min_signed_per_window": "0.500000000000000000",
+        "signed_blocks_window": "10000",
+        "slash_fraction_double_sign": "0.150000000000000000",
+        "slash_fraction_downtime": "0.000100000000000000"
+      },
+      "signing_infos": []
+    },
+    "staking": {
+      "delegations": [],
+      "exported": false,
+      "last_total_power": "0",
+      "last_validator_powers": [],
+      "params": {
+        "bond_denom": "exp",
+        "historical_entries": 10000,
+        "max_entries": 7,
+        "max_validators": 100,
+        "min_commission_rate": "6.900000000000000000",
+        "unbonding_time": "1814400s"
+      },
+      "redelegations": [],
+      "unbonding_delegations": [],
+      "validators": []
+    },
+    "upgrade": {},
+    "vesting": {}
+  },
+  "chain_id": "craft-1",
+  "gentxs_dir": "",
+  "moniker": "test",
+  "node_id": "57ac4af470d08b0053c7aacdf902b51fa2389893"
+}
