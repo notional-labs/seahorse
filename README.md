@@ -8,13 +8,27 @@ Seahorse is the distillation of Notional's knowledge about validation, relaying,
 After a great deal of thought, the seashorse blockchain software stack is looking like:
 
 * Cosmos SDK v0.45.0
+  * Because it's good
 * CosmWasm
+  * To give juno a friend to play with and allow feature development without chain upgrades
 * Tendermint v0.34.15
+  * the latest and greatest
+
+
+This is a quite vanilla, but highly extensible stack.  Should run just about anywhere after arm issues are fixed for cosmwasm.
+
+
 
 
 ## You, the validators, make the plan
 
 Typically a blockchain team awards themselves a good deal of stake when making a chain, and typically, I reckon this is the right pattern.  That said, a while back I became enamored with the idea that there needs to be a test of what happens when the valset begins with completely equal VotePower and the chain evolves over time using governance.  
+
+**In short, this means**
+* Validators run the chain
+* Validators determine how the chain is placed in the market
+* Validators brand the chain
+* Validators build the chain
 
 I am not going to dictate the strategy with Seahorse.  Its validators will.  Beyond getting the software into an inital, known-good state, I also don't intend to write a lot of software for it.  My expectastion is that governance, initially run entirely by the valset, with equal VotePower will choose the eventual direction of seahorse. Because design and branding are important, I do have someone in mind for that, and he/she/it will be validating, but they'd need to be hired by governance after launch.  
 
