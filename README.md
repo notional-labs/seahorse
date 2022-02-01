@@ -30,7 +30,7 @@ Well, any sufficiently fast processor with an nvme 1.4 pcie4x4 hard drive seems 
 
 
 
-
+# Why strap Linux to it?
 
 Peer to peer applications tend to involve a complex stack and are therefore difficult to begin developing. SOS provides you with a complete development environment, As well as patterns and ideas to follow.
 
