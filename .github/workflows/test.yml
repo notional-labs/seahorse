@@ -38,8 +38,8 @@ jobs:
     needs: prepare_release
     strategy:
       matrix:
-        DEVICE: [rpi4]
-        EDITION: [gnome,kde-plasma,minimal,mate,sway,xfce]
+        DEVICE: [rpi4,pbpro,rockpro64,rockpi4b,rockpi4c,on2,on2-plus,oc4,oc2,pinebook,pine64-lts,pine64,pine-h64,rock64,roc-cc,nanopc-t4,vim3,vim2,vim1,gt1-ultimate]
+        EDITION: [minimal]
         BRANCH: [unstable]
     steps:
       - 
