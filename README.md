@@ -1,5 +1,9 @@
 # Seahorse
 
+* Blockchain
+* Hardware
+* Technical community
+
 Seahorse is the distillation of Notional's knowledge about validation, relaying, networking, and systems into a linux distro that includes a blockchain.  It is specifically being launched because of the many, many potential validators who contacted us after we began to work on improving Osmosis epoch times. 
 
 
